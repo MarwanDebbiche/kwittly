@@ -1,5 +1,6 @@
+import { convexQuery } from '@convex-dev/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { useQuery } from 'convex/react'
 import { ArrowLeft, Plus, Share2 } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
@@ -16,14 +17,18 @@ import { Sheet } from '../ui/Sheet'
 
 export function GroupPage({ groupId }: { groupId: string }) {
   const navigate = useNavigate()
-  const group = useQuery(api.groups.get, { groupId })
+  // Group data is server-rendered (see the route loader), then kept live.
+  const { data: group } = useQuery(convexQuery(api.groups.get, { groupId }))
+  const { data: balances } = useQuery(convexQuery(api.balances.get, group ? { groupId: group._id } : 'skip'))
+  // Who the user is comes from localStorage or the account: known only in the
+  // browser, so the personal parts appear right after hydration.
   const { state, save, forget } = useMyGroups()
   const saved = state.status === 'ready' ? state.groups.find((g) => g.id === groupId) : undefined
   const [tab, setTab] = useState<'expenses' | 'balances'>('expenses')
   const [sheet, setSheet] = useState<'add' | 'share' | 'identity' | null>(null)
-  const balances = useQuery(api.balances.get, group ? { groupId: group._id } : 'skip')
+  const [joinDismissed, setJoinDismissed] = useState(false)
 
-  if (group === undefined || state.status === 'loading') return <GroupSkeleton />
+  if (group === undefined) return <GroupSkeleton />
   if (group === null)
     return (
       <div className="pt-16 text-center">
@@ -42,16 +47,9 @@ export function GroupPage({ groupId }: { groupId: string }) {
       </div>
     )
 
-  // Opened from a share link: ask who the user is before showing the group.
-  if (!saved)
-    return (
-      <>
-        <BackLink />
-        <WhoAreYou group={group} onPick={(me) => save(groupId, me)} variant="join" />
-      </>
-    )
-
-  const me = group.participants.find((p) => p._id === saved.me)
+  // Opened from a share link: ask who the user is, on top of the group.
+  const showJoin = state.status === 'ready' && !saved && !joinDismissed
+  const me = group.participants.find((p) => p._id === saved?.me)
   const myBalance = balances?.balances.find((b) => b.participantId === me?._id)?.balanceCents
 
   return (
@@ -66,9 +64,11 @@ export function GroupPage({ groupId }: { groupId: string }) {
       <h1 className="font-display text-3xl font-semibold tracking-tight">{group.name}</h1>
       <div className="mt-2 flex items-center gap-2 text-sm text-muted">
         <AvatarStack names={group.participants.map((p) => p.name)} max={6} />
-        <button className="underline-offset-2 hover:text-ink hover:underline" onClick={() => setSheet('identity')}>
-          {me ? `Tu es ${me.name}` : 'Qui es-tu ?'}
-        </button>
+        {state.status === 'ready' && (
+          <button className="underline-offset-2 hover:text-ink hover:underline" onClick={() => setSheet('identity')}>
+            {me ? `Tu es ${me.name}` : 'Qui es-tu ?'}
+          </button>
+        )}
       </div>
 
       <div className="card mt-5 grid grid-cols-2 divide-x divide-line">
@@ -112,15 +112,17 @@ export function GroupPage({ groupId }: { groupId: string }) {
         )}
       </div>
 
-      <button
-        className="mt-12 block w-full text-center text-xs text-muted hover:text-owe"
-        onClick={async () => {
-          await forget(groupId)
-          navigate({ to: '/' })
-        }}
-      >
-        {state.mode === 'account' ? 'Retirer ce groupe de mon compte' : 'Retirer ce groupe de cet appareil'}
-      </button>
+      {state.status === 'ready' && saved && (
+        <button
+          className="mt-12 block w-full text-center text-xs text-muted hover:text-owe"
+          onClick={async () => {
+            await forget(groupId)
+            navigate({ to: '/' })
+          }}
+        >
+          {state.mode === 'account' ? 'Retirer ce groupe de mon compte' : 'Retirer ce groupe de cet appareil'}
+        </button>
+      )}
 
       <button
         onClick={() => setSheet('add')}
@@ -131,11 +133,17 @@ export function GroupPage({ groupId }: { groupId: string }) {
 
       {sheet === 'add' && <AddExpenseSheet group={group} me={me?._id} onClose={() => setSheet(null)} />}
       {sheet === 'share' && <ShareSheet group={group} onClose={() => setSheet(null)} />}
+      {showJoin && (
+        <Sheet title={`Rejoindre « ${group.name} »`} onClose={() => setJoinDismissed(true)}>
+          <p className="mb-5 text-muted">Qui es-tu dans ce groupe ? Ça permet d'afficher ce que tu dois ou ce qu'on te doit.</p>
+          <WhoAreYou group={group} onPick={(picked) => save(groupId, picked)} />
+        </Sheet>
+      )}
       {sheet === 'identity' && (
         <Sheet title="Qui es-tu ?" onClose={() => setSheet(null)}>
           <WhoAreYou
             group={group}
-            current={saved.me}
+            current={saved?.me}
             onPick={async (picked) => {
               await save(groupId, picked)
               setSheet(null)

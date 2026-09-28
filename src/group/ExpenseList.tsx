@@ -1,4 +1,5 @@
-import { useQuery } from 'convex/react'
+import { convexQuery } from '@convex-dev/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { Search, X } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
@@ -19,7 +20,7 @@ type Filters = {
 export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants'> }) {
   const [filters, setFilters] = useState<Filters>({})
   const [selected, setSelected] = useState<Expense | null>(null)
-  const expenses = useQuery(api.expenses.list, { groupId: group._id, ...filters })
+  const { data: expenses } = useQuery(convexQuery(api.expenses.list, { groupId: group._id, ...definedOnly(filters) }))
   const names = new Map<string, string>(group.participants.map((p) => [p._id, p.name]))
   const set = (key: keyof Filters, value: string) => setFilters((f) => ({ ...f, [key]: value || undefined }))
   const hasFilters = Object.values(filters).some(Boolean)
@@ -175,4 +176,9 @@ function dayLabel(timestamp: number) {
     month: 'long',
     year: date.getFullYear() === today.getFullYear() ? undefined : 'numeric',
   })
+}
+
+/** Drop unset filters so the query args (and cache key) match the server-rendered ones. */
+function definedOnly(filters: Filters): Filters {
+  return Object.fromEntries(Object.entries(filters).filter(([, v]) => v !== undefined))
 }

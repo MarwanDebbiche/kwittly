@@ -9,12 +9,10 @@ export function WhoAreYou({
   group,
   current,
   onPick,
-  variant,
 }: {
   group: Group
   current?: string
   onPick: (me: Id<'participants'> | undefined) => void | Promise<void>
-  variant?: 'join'
 }) {
   const addParticipant = useMutation(api.groups.addParticipant)
   const [newName, setNewName] = useState('')
@@ -26,15 +24,8 @@ export function WhoAreYou({
   }
 
   return (
-    <div className={variant === 'join' ? 'pt-6' : ''}>
-      {variant === 'join' && (
-        <>
-          <p className="label">Invitation</p>
-          <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight">{group.name}</h1>
-          <p className="mt-2 text-muted">Qui es-tu dans ce groupe ? Ça permet d'afficher ce que tu dois ou ce qu'on te doit.</p>
-        </>
-      )}
-      <ul className={`grid grid-cols-2 gap-2 ${variant === 'join' ? 'mt-6' : ''}`}>
+    <div>
+      <ul className="grid grid-cols-2 gap-2">
         {group.participants.map((p) => (
           <li key={p._id}>
             <button

@@ -1,4 +1,6 @@
-import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
+import type { ConvexQueryClient } from '@convex-dev/react-query'
+import type { QueryClient } from '@tanstack/react-query'
+import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import appCss from '../index.css?url'
 import { accountCache, anonymousGroups } from '../lib/savedGroups'
@@ -7,7 +9,10 @@ import { accountCache, anonymousGroups } from '../lib/savedGroups'
 // Returning users (with saved groups) are sent to their groups before first paint.
 const redirectReturningUsers = `try{if(location.pathname==='/'){var a=JSON.parse(localStorage.getItem('${anonymousGroups.key}')||'[]'),c=JSON.parse(localStorage.getItem('${accountCache.key}')||'null');if((Array.isArray(a)&&a.length)||(c&&c.groups&&c.groups.length))location.replace('/groups')}}catch(e){}`
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient
+  convexQueryClient: ConvexQueryClient
+}>()({
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
