@@ -18,7 +18,8 @@ export function PillSelect({
       <span className="whitespace-nowrap">{active ? options.find((o) => o.value === value)?.label : placeholder}</span>
       <ChevronDown className="pointer-events-none absolute right-2.5 size-4 opacity-60" />
       <select
-        className="absolute inset-0 cursor-pointer opacity-0"
+        // 16px: smaller text makes iOS zoom in on focus (the select is invisible anyway).
+        className="absolute inset-0 cursor-pointer text-base opacity-0"
         value={value ?? ''}
         onChange={(e) => onChange(e.target.value)}
         aria-label={placeholder}

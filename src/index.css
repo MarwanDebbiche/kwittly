@@ -22,11 +22,19 @@
   button {
     @apply cursor-pointer;
   }
+  /* iOS Safari zooms into any field whose text is smaller than 16px, and
+     stays zoomed afterwards (the page then scrolls sideways). Keep form
+     controls at 16px or more. */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }
 
 @layer components {
   .field {
-    @apply w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-[15px] outline-none transition placeholder:text-muted/70 focus:border-ink/40 focus:ring-4 focus:ring-ink/5;
+    @apply w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-base outline-none transition placeholder:text-muted/70 focus:border-ink/40 focus:ring-4 focus:ring-ink/5;
   }
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-xl bg-ink px-4 py-3 text-[15px] font-medium text-white transition hover:bg-ink/85 active:scale-[0.98] disabled:opacity-40;
