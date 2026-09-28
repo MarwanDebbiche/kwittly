@@ -6,7 +6,7 @@ import { api } from '../../convex/_generated/api'
 import type { Id } from '../../convex/_generated/dataModel'
 import { splitByShares } from '../../convex/lib/money'
 import { CATEGORIES } from '../lib/categories'
-import { parseCents } from '../lib/money'
+import { parseCents, sanitizeAmountInput } from '../lib/money'
 import { useFormatters, usePrefs } from '../lib/prefs'
 import { Avatar } from '../ui/Avatar'
 import { Sheet } from '../ui/Sheet'
@@ -142,7 +142,7 @@ export function ExpenseFormSheet({
             inputMode="decimal"
             placeholder={locale === 'fr' ? '0,00' : '0.00'}
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => setAmount(sanitizeAmountInput(e.target.value))}
             className="w-full min-w-0 bg-transparent text-center font-display text-5xl font-semibold tabular-nums outline-none placeholder:text-line"
             aria-label={t`Amount`}
           />
@@ -255,7 +255,7 @@ export function ExpenseFormSheet({
                       inputMode="decimal"
                       placeholder={locale === 'fr' ? '0,00' : '0.00'}
                       value={amounts[p._id] ?? ''}
-                      onChange={(e) => setAmounts({ ...amounts, [p._id]: e.target.value })}
+                      onChange={(e) => setAmounts({ ...amounts, [p._id]: sanitizeAmountInput(e.target.value) })}
                       className="field w-28 py-1.5 text-right tabular-nums"
                       aria-label={t`Amount for ${nameOf(p._id)}`}
                     />
