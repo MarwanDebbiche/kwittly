@@ -1,9 +1,10 @@
+import { convexQuery } from '@convex-dev/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { useQuery } from 'convex/react'
 import { ChevronRight, Cloud, Plus, Users } from 'lucide-react'
 import { api } from '../../convex/_generated/api'
 import { formatCents } from '../lib/money'
-import { useMyGroups } from '../lib/myGroups'
+import { summaryItems, useMyGroups } from '../lib/myGroups'
 import { AccountMenu } from '../ui/AccountMenu'
 import { AvatarStack } from '../ui/Avatar'
 import { BalanceBadge } from '../ui/BalanceBadge'
@@ -12,9 +13,8 @@ import { Wordmark } from '../ui/Wordmark'
 export function GroupsPage() {
   const { state, forget } = useMyGroups()
   const saved = state.status === 'ready' ? state.groups : undefined
-  const summaries = useQuery(
-    api.groups.summaries,
-    saved ? { items: saved.map((g) => (g.me ? { groupId: g.id, me: g.me } : { groupId: g.id })) } : 'skip',
+  const { data: summaries } = useQuery(
+    convexQuery(api.groups.summaries, saved ? { items: summaryItems(saved) } : 'skip'),
   )
 
   return (

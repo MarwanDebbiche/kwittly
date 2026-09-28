@@ -1,14 +1,14 @@
 import { Link, useNavigate } from '@tanstack/react-router'
-import { useConvexAuth } from 'convex/react'
 import { LogOut } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { api } from '../../convex/_generated/api'
+import { useAccountQuery } from '../lib/accountQuery'
 import { authClient } from '../lib/auth-client'
 import { clearDeviceGroups } from '../lib/savedGroups'
 import { Avatar } from './Avatar'
 
 export function AccountMenu() {
-  const { isAuthenticated, isLoading } = useConvexAuth()
-  const { data: session } = authClient.useSession()
+  const user = useAccountQuery(api.users.current)
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -20,8 +20,8 @@ export function AccountMenu() {
     return () => document.removeEventListener('mousedown', onClick)
   }, [open])
 
-  if (isLoading) return <span className="size-9" />
-  if (!isAuthenticated || !session)
+  if (user === undefined) return <span className="size-9" />
+  if (user === null)
     return (
       <Link to="/login" className="btn-ghost">
         Se connecter
@@ -35,7 +35,7 @@ export function AccountMenu() {
     navigate({ to: '/' })
   }
 
-  const email = session.user.email
+  const email = user.email
   return (
     <div ref={ref} className="relative">
       <button onClick={() => setOpen(!open)} className="rounded-full" aria-label="Mon compte" aria-expanded={open}>

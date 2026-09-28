@@ -17,6 +17,7 @@ import type * as lib_email from "../lib/email.js";
 import type * as lib_money from "../lib/money.js";
 import type * as lib_rateLimits from "../lib/rateLimits.js";
 import type * as memberships from "../memberships.js";
+import type * as users from "../users.js";
 
 import type {
   ApiFromModules,
@@ -34,6 +35,7 @@ declare const fullApi: ApiFromModules<{
   "lib/money": typeof lib_money;
   "lib/rateLimits": typeof lib_rateLimits;
   memberships: typeof memberships;
+  users: typeof users;
 }>;
 
 /**

@@ -1,9 +1,18 @@
+import { convexQuery } from '@convex-dev/react-query'
 import { createFileRoute } from '@tanstack/react-router'
+import { api } from '../../convex/_generated/api'
+import { summaryItems } from '../lib/myGroups'
+import type { SavedGroup } from '../lib/savedGroups'
 import { GroupsPage } from '../pages/GroupsPage'
 
-// Depends on localStorage: rendered in the browser only.
 export const Route = createFileRoute('/_app/groups/')({
-  ssr: false,
+  // Logged-in users: the account's groups were prefetched by the _app layout
+  // on the server; fetch their summaries so the list is in the HTML.
+  loader: async ({ context: { queryClient } }) => {
+    if (typeof window !== 'undefined') return
+    const mine = queryClient.getQueryData<SavedGroup[] | null>(convexQuery(api.memberships.mine, {}).queryKey)
+    if (mine?.length) await queryClient.ensureQueryData(convexQuery(api.groups.summaries, { items: summaryItems(mine) }))
+  },
   head: () => ({ meta: [{ title: 'Mes groupes · Kwittly' }] }),
   component: GroupsPage,
 })
