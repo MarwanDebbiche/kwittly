@@ -5,6 +5,8 @@ export default defineSchema({
   groups: defineTable({
     name: v.string(),
     currency: v.string(),
+    // Language of link previews: the creator's language at creation time.
+    locale: v.optional(v.string()),
   }),
 
   participants: defineTable({

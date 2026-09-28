@@ -1,3 +1,4 @@
+import { msg } from '@lingui/core/macro'
 import { convexQuery } from '@convex-dev/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { api } from '../../convex/_generated/api'
@@ -13,6 +14,6 @@ export const Route = createFileRoute('/_app/groups/')({
     const mine = queryClient.getQueryData<SavedGroup[] | null>(convexQuery(api.memberships.mine, {}).queryKey)
     if (mine?.length) await queryClient.ensureQueryData(convexQuery(api.groups.summaries, { items: summaryItems(mine) }))
   },
-  head: () => ({ meta: [{ title: 'Mes groupes · Kwittly' }] }),
+  head: ({ match }) => ({ meta: [{ title: match.context.i18n._(msg`My groups · Kwittly`) }] }),
   component: GroupsPage,
 })

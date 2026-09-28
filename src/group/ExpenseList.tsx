@@ -1,11 +1,12 @@
 import { convexQuery } from '@convex-dev/react-query'
+import { Plural, Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import { Search, X } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import type { Id } from '../../convex/_generated/dataModel'
 import { CATEGORIES, categoryFor } from '../lib/categories'
-import { formatCents } from '../lib/money'
+import { useFormatters } from '../lib/prefs'
 import { PillSelect } from '../ui/PillSelect'
 import { ExpenseDetailSheet } from './ExpenseDetailSheet'
 import type { Expense, Group } from './types'
@@ -18,6 +19,8 @@ type Filters = {
 }
 
 export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants'> }) {
+  const { t, i18n } = useLingui()
+  const format = useFormatters()
   const [filters, setFilters] = useState<Filters>({})
   const [selected, setSelected] = useState<Expense | null>(null)
   const { data: expenses } = useQuery(convexQuery(api.expenses.list, { groupId: group._id, ...definedOnly(filters) }))
@@ -32,7 +35,7 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
         <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted" />
         <input
           className="field pl-10"
-          placeholder="Rechercher une dépense"
+          placeholder={t`Search expenses`}
           value={filters.search ?? ''}
           onChange={(e) => set('search', e.target.value)}
         />
@@ -43,30 +46,30 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
             className={`chip ${filters.involving === me ? 'chip-on' : ''}`}
             onClick={() => set('involving', filters.involving === me ? '' : me)}
           >
-            Me concerne
+            <Trans>Involves me</Trans>
           </button>
         )}
         <PillSelect
-          placeholder="Payé par"
+          placeholder={t`Paid by`}
           value={filters.paidBy}
           onChange={(v) => set('paidBy', v)}
-          options={people.map((p) => ({ ...p, label: `Payé par ${p.label}` }))}
+          options={people.map((p) => ({ ...p, label: t`Paid by ${p.label}` }))}
         />
         <PillSelect
-          placeholder="Concerne"
+          placeholder={t`Involves`}
           value={filters.involving}
           onChange={(v) => set('involving', v)}
-          options={people.map((p) => ({ ...p, label: `Concerne ${p.label}` }))}
+          options={people.map((p) => ({ ...p, label: t`Involves ${p.label}` }))}
         />
         <PillSelect
-          placeholder="Catégorie"
+          placeholder={t`Category`}
           value={filters.category}
           onChange={(v) => set('category', v)}
-          options={CATEGORIES.map((c) => ({ value: c.name, label: c.name }))}
+          options={CATEGORIES.map((c) => ({ value: c.key, label: i18n._(c.label) }))}
         />
         {hasFilters && (
           <button className="btn-ghost shrink-0 py-1.5" onClick={() => setFilters({})}>
-            <X className="size-4" /> Effacer
+            <X className="size-4" /> <Trans>Clear</Trans>
           </button>
         )}
       </div>
@@ -75,15 +78,15 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
         <div className="mt-4 h-48 animate-pulse rounded-2xl bg-line" />
       ) : expenses.length === 0 ? (
         <p className="py-14 text-center text-sm text-muted">
-          {hasFilters ? 'Aucune dépense ne correspond à ces filtres.' : 'Aucune dépense. Ajoute la première !'}
+          {hasFilters ? <Trans>No expenses match these filters.</Trans> : <Trans>No expenses yet. Add the first one!</Trans>}
         </p>
       ) : (
         <>
           {hasFilters && (
             <p className="mt-4 text-sm text-muted">
-              {expenses.length} dépense{expenses.length > 1 ? 's' : ''} ·{' '}
+              <Plural value={expenses.length} one="# expense" other="# expenses" /> ·{' '}
               <span className="font-medium text-ink tabular-nums">
-                {formatCents(
+                {format.money(
                   expenses.reduce((sum, e) => sum + e.amountCents, 0),
                   group.currency,
                 )}
@@ -91,9 +94,11 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
             </p>
           )}
           <div className="mt-4 space-y-5">
-            {groupByDay(expenses).map(([day, items]) => (
+            {groupByDay(expenses, format.dayKey).map(([day, items]) => (
               <section key={day}>
-                <h3 className="label mb-2 px-1">{day}</h3>
+                <h3 className="label mb-2 px-1">
+                  <DayLabel dayKey={day} timestamp={items[0].date} />
+                </h3>
                 <ul className="card divide-y divide-line overflow-hidden">
                   {items.map((e) => (
                     <li key={e._id}>
@@ -125,6 +130,7 @@ function ExpenseRow({
   currency: string
   onClick: () => void
 }) {
+  const format = useFormatters()
   const category = categoryFor(expense.category)
   const Icon = category.icon
   const myShare = expense.splits.find((s) => s.participantId === me)?.shareCents ?? 0
@@ -137,45 +143,47 @@ function ExpenseRow({
       </span>
       <span className="min-w-0 flex-1">
         <span className="block truncate font-medium">{expense.title}</span>
-        <span className="block text-sm text-muted">Payé par {expense.paidBy === me ? 'toi' : payer}</span>
+        <span className="block text-sm text-muted">
+          {expense.paidBy === me ? <Trans>Paid by you</Trans> : <Trans>Paid by {payer}</Trans>}
+        </span>
       </span>
       <span className="text-right">
-        <span className="block font-semibold tabular-nums">{formatCents(expense.amountCents, currency)}</span>
+        <span className="block font-semibold tabular-nums">{format.money(expense.amountCents, currency)}</span>
         {me &&
           (lent > 0 ? (
-            <span className="block text-xs text-owed">tu prêtes {formatCents(lent, currency)}</span>
+            <span className="block text-xs text-owed">
+              <Trans>you lent {format.money(lent, currency)}</Trans>
+            </span>
           ) : myShare > 0 && expense.paidBy !== me ? (
-            <span className="block text-xs text-owe">ta part {formatCents(myShare, currency)}</span>
+            <span className="block text-xs text-owe">
+              <Trans>your share {format.money(myShare, currency)}</Trans>
+            </span>
           ) : (
-            <span className="block text-xs text-muted">non concerné</span>
+            <span className="block text-xs text-muted">
+              <Trans>not involved</Trans>
+            </span>
           ))}
       </span>
     </button>
   )
 }
 
-function groupByDay(expenses: Expense[]): [string, Expense[]][] {
+/** Expenses by calendar day (in the rendering time zone), newest first. */
+function groupByDay(expenses: Expense[], dayKey: (timestamp: number) => string): [string, Expense[]][] {
   const groups = new Map<string, Expense[]>()
   for (const e of expenses) {
-    const label = dayLabel(e.date)
-    groups.set(label, [...(groups.get(label) ?? []), e])
+    const key = dayKey(e.date)
+    groups.set(key, [...(groups.get(key) ?? []), e])
   }
   return [...groups]
 }
 
-function dayLabel(timestamp: number) {
-  const date = new Date(timestamp)
-  const today = new Date()
-  const yesterday = new Date()
-  yesterday.setDate(today.getDate() - 1)
-  if (date.toDateString() === today.toDateString()) return "Aujourd'hui"
-  if (date.toDateString() === yesterday.toDateString()) return 'Hier'
-  return date.toLocaleDateString('fr-FR', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: date.getFullYear() === today.getFullYear() ? undefined : 'numeric',
-  })
+function DayLabel({ dayKey, timestamp }: { dayKey: string; timestamp: number }) {
+  const format = useFormatters()
+  if (dayKey === format.todayKey()) return <Trans>Today</Trans>
+  if (dayKey === format.todayKey(-1)) return <Trans>Yesterday</Trans>
+  const sameYear = dayKey.slice(0, 4) === format.todayKey().slice(0, 4)
+  return format.date(timestamp, { weekday: 'long', day: 'numeric', month: 'long', year: sameYear ? undefined : 'numeric' })
 }
 
 /** Drop unset filters so the query args (and cache key) match the server-rendered ones. */

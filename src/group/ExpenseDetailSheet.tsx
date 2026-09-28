@@ -1,14 +1,17 @@
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useMutation } from 'convex/react'
 import { Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { categoryFor } from '../lib/categories'
-import { formatCents } from '../lib/money'
+import { useFormatters } from '../lib/prefs'
 import { Avatar } from '../ui/Avatar'
 import { Sheet } from '../ui/Sheet'
 import type { Expense, Group } from './types'
 
 export function ExpenseDetailSheet({ expense, group, onClose }: { expense: Expense; group: Group; onClose: () => void }) {
+  const { i18n } = useLingui()
+  const format = useFormatters()
   const removeExpense = useMutation(api.expenses.remove)
   const [confirming, setConfirming] = useState(false)
   const names = new Map<string, string>(group.participants.map((p) => [p._id, p.name]))
@@ -22,10 +25,10 @@ export function ExpenseDetailSheet({ expense, group, onClose }: { expense: Expen
           <Icon className="size-6" />
         </span>
         <div>
-          <p className="font-display text-3xl font-semibold tabular-nums">{formatCents(expense.amountCents, group.currency)}</p>
+          <p className="font-display text-3xl font-semibold tabular-nums">{format.money(expense.amountCents, group.currency)}</p>
           <p className="text-sm text-muted">
-            {expense.category ?? 'Sans catégorie'} ·{' '}
-            {new Date(expense.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+            {expense.category ? i18n._(category.label) : <Trans>No category</Trans>} ·{' '}
+            {format.date(expense.date, { day: 'numeric', month: 'long', year: 'numeric' })}
           </p>
         </div>
       </div>
@@ -34,14 +37,18 @@ export function ExpenseDetailSheet({ expense, group, onClose }: { expense: Expen
         <div className="flex items-center gap-3 p-3">
           <Avatar name={names.get(expense.paidBy) ?? '?'} size="sm" />
           <span className="flex-1">
-            <span className="font-medium">{names.get(expense.paidBy)}</span> a payé
+            <Trans>
+              <span className="font-medium">{names.get(expense.paidBy)}</span> paid
+            </Trans>
           </span>
-          <span className="font-semibold tabular-nums">{formatCents(expense.amountCents, group.currency)}</span>
+          <span className="font-semibold tabular-nums">{format.money(expense.amountCents, group.currency)}</span>
         </div>
         {expense.splits.map((s) => (
           <div key={s.participantId} className="flex items-center gap-3 p-3 pl-12 text-sm">
-            <span className="flex-1 text-muted">Part de {names.get(s.participantId)}</span>
-            <span className="tabular-nums">{formatCents(s.shareCents, group.currency)}</span>
+            <span className="flex-1 text-muted">
+              <Trans>{names.get(s.participantId)}'s share</Trans>
+            </span>
+            <span className="tabular-nums">{format.money(s.shareCents, group.currency)}</span>
           </div>
         ))}
       </div>
@@ -54,7 +61,7 @@ export function ExpenseDetailSheet({ expense, group, onClose }: { expense: Expen
           onClose()
         }}
       >
-        <Trash2 className="size-4" /> {confirming ? 'Confirmer la suppression' : 'Supprimer la dépense'}
+        <Trash2 className="size-4" /> {confirming ? <Trans>Confirm deletion</Trans> : <Trans>Delete expense</Trans>}
       </button>
     </Sheet>
   )

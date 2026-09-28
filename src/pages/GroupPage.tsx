@@ -1,4 +1,5 @@
 import { convexQuery } from '@convex-dev/react-query'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, Plus, Share2 } from 'lucide-react'
@@ -9,13 +10,15 @@ import { Balances } from '../group/Balances'
 import { ExpenseList } from '../group/ExpenseList'
 import { ShareSheet } from '../group/ShareSheet'
 import { WhoAreYou } from '../group/WhoAreYou'
-import { formatCents } from '../lib/money'
 import { useMyGroups } from '../lib/myGroups'
+import { useFormatters } from '../lib/prefs'
 import { AvatarStack } from '../ui/Avatar'
 import { BalanceBadge } from '../ui/BalanceBadge'
 import { Sheet } from '../ui/Sheet'
 
 export function GroupPage({ groupId }: { groupId: string }) {
+  const { t } = useLingui()
+  const format = useFormatters()
   const navigate = useNavigate()
   // Group data is server-rendered (see the route loader), then kept live.
   const { data: group } = useQuery(convexQuery(api.groups.get, { groupId }))
@@ -32,15 +35,19 @@ export function GroupPage({ groupId }: { groupId: string }) {
   if (group === null)
     return (
       <div className="pt-16 text-center">
-        <p className="font-display text-2xl font-semibold">Groupe introuvable</p>
-        <p className="mt-2 text-sm text-muted">Le lien est peut-être incorrect, ou le groupe a été supprimé.</p>
+        <p className="font-display text-2xl font-semibold">
+          <Trans>Group not found</Trans>
+        </p>
+        <p className="mt-2 text-sm text-muted">
+          <Trans>The link may be wrong, or the group was deleted.</Trans>
+        </p>
         <div className="mt-6 flex justify-center gap-2">
           <Link to="/groups" className="btn-primary">
-            Mes groupes
+            <Trans>My groups</Trans>
           </Link>
           {saved && (
             <button className="btn-ghost" onClick={() => forget(groupId)}>
-              Retirer de ma liste
+              <Trans>Remove from my list</Trans>
             </button>
           )}
         </div>
@@ -57,7 +64,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
       <header className="mb-5 flex items-center justify-between">
         <BackLink />
         <button className="btn-ghost -mr-2" onClick={() => setSheet('share')}>
-          <Share2 className="size-4" /> Partager
+          <Share2 className="size-4" /> <Trans>Share</Trans>
         </button>
       </header>
 
@@ -66,14 +73,16 @@ export function GroupPage({ groupId }: { groupId: string }) {
         <AvatarStack names={group.participants.map((p) => p.name)} max={6} />
         {state.status === 'ready' && (
           <button className="underline-offset-2 hover:text-ink hover:underline" onClick={() => setSheet('identity')}>
-            {me ? `Tu es ${me.name}` : 'Qui es-tu ?'}
+            {me ? t`You are ${me.name}` : t`Who are you?`}
           </button>
         )}
       </div>
 
       <div className="card mt-5 grid grid-cols-2 divide-x divide-line">
         <div className="flex flex-col justify-between p-4">
-          <p className="label">Ton solde</p>
+          <p className="label">
+            <Trans>Your balance</Trans>
+          </p>
           <div className="mt-1">
             {me && myBalance !== undefined ? (
               <BalanceBadge cents={myBalance} currency={group.currency} large />
@@ -83,23 +92,25 @@ export function GroupPage({ groupId }: { groupId: string }) {
           </div>
         </div>
         <div className="flex flex-col justify-between p-4 text-right">
-          <p className="label">Total dépensé</p>
+          <p className="label">
+            <Trans>Total spent</Trans>
+          </p>
           <p className="mt-1 font-display text-2xl font-semibold tabular-nums">
-            {balances ? formatCents(balances.totalCents, group.currency) : '…'}
+            {balances ? format.money(balances.totalCents, group.currency) : '…'}
           </p>
         </div>
       </div>
 
       <div className="mt-6 grid grid-cols-2 rounded-xl bg-ink/5 p-1">
-        {(['expenses', 'balances'] as const).map((t) => (
+        {(['expenses', 'balances'] as const).map((name) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
+            key={name}
+            onClick={() => setTab(name)}
             className={`rounded-lg py-2 text-sm font-medium transition ${
-              tab === t ? 'bg-surface text-ink shadow-sm' : 'text-muted hover:text-ink'
+              tab === name ? 'bg-surface text-ink shadow-sm' : 'text-muted hover:text-ink'
             }`}
           >
-            {t === 'expenses' ? 'Dépenses' : 'Équilibre'}
+            {name === 'expenses' ? <Trans>Expenses</Trans> : <Trans>Balances</Trans>}
           </button>
         ))}
       </div>
@@ -120,7 +131,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
             navigate({ to: '/' })
           }}
         >
-          {state.mode === 'account' ? 'Retirer ce groupe de mon compte' : 'Retirer ce groupe de cet appareil'}
+          {state.mode === 'account' ? <Trans>Remove this group from my account</Trans> : <Trans>Remove this group from this device</Trans>}
         </button>
       )}
 
@@ -128,19 +139,21 @@ export function GroupPage({ groupId }: { groupId: string }) {
         onClick={() => setSheet('add')}
         className="btn-primary fixed right-[max(1rem,calc(50vw-17rem))] bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-40 rounded-full px-5 py-3.5 shadow-lg shadow-ink/20"
       >
-        <Plus className="size-5" /> Dépense
+        <Plus className="size-5" /> <Trans>Expense</Trans>
       </button>
 
       {sheet === 'add' && <AddExpenseSheet group={group} me={me?._id} onClose={() => setSheet(null)} />}
       {sheet === 'share' && <ShareSheet group={group} onClose={() => setSheet(null)} />}
       {showJoin && (
-        <Sheet title={`Rejoindre « ${group.name} »`} onClose={() => setJoinDismissed(true)}>
-          <p className="mb-5 text-muted">Qui es-tu dans ce groupe ? Ça permet d'afficher ce que tu dois ou ce qu'on te doit.</p>
+        <Sheet title={t`Join “${group.name}”`} onClose={() => setJoinDismissed(true)}>
+          <p className="mb-5 text-muted">
+            <Trans>Who are you in this group? It lets us show what you owe or are owed.</Trans>
+          </p>
           <WhoAreYou group={group} onPick={(picked) => save(groupId, picked)} />
         </Sheet>
       )}
       {sheet === 'identity' && (
-        <Sheet title="Qui es-tu ?" onClose={() => setSheet(null)}>
+        <Sheet title={t`Who are you?`} onClose={() => setSheet(null)}>
           <WhoAreYou
             group={group}
             current={saved?.me}
@@ -158,7 +171,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
 function BackLink() {
   return (
     <Link to="/groups" className="btn-ghost -ml-3">
-      <ArrowLeft className="size-4" /> Mes groupes
+      <ArrowLeft className="size-4" /> <Trans>My groups</Trans>
     </Link>
   )
 }

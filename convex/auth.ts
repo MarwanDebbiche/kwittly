@@ -8,6 +8,7 @@ import { components } from "./_generated/api";
 import type { DataModel } from "./_generated/dataModel";
 import authConfig from "./auth.config";
 import { sendOtpEmail } from "./lib/email";
+import { resolveLocale } from "./lib/locale";
 import { rateLimiter } from "./lib/rateLimits";
 
 const DAY = 60 * 60 * 24;
@@ -34,7 +35,7 @@ export const createAuth = (ctx: GenericCtx<DataModel>) =>
         if (!global.ok) {
           throw APIError.from("TOO_MANY_REQUESTS", {
             code: "OTP_RATE_LIMITED",
-            message: "Trop de demandes de code. Réessaie dans quelques minutes.",
+            message: "Too many code requests. Try again in a few minutes.",
           });
         }
       }),
@@ -44,8 +45,11 @@ export const createAuth = (ctx: GenericCtx<DataModel>) =>
         otpLength: 6,
         expiresIn: 10 * 60,
         allowedAttempts: 5,
-        async sendVerificationOTP({ email, otp }) {
-          await sendOtpEmail(requireRunMutationCtx(ctx), email, otp);
+        async sendVerificationOTP({ email, otp }, endpointCtx) {
+          // The app's auth proxy forwards the browser's cookies (explicit
+          // language choice) and Accept-Language header.
+          const locale = resolveLocale(endpointCtx?.request?.headers ?? endpointCtx?.headers);
+          await sendOtpEmail(requireRunMutationCtx(ctx), email, otp, locale);
         },
       }),
       convex({ authConfig }),

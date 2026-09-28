@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useMutation } from 'convex/react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
@@ -14,6 +15,7 @@ export function WhoAreYou({
   current?: string
   onPick: (me: Id<'participants'> | undefined) => void | Promise<void>
 }) {
+  const { t } = useLingui()
   const addParticipant = useMutation(api.groups.addParticipant)
   const [newName, setNewName] = useState('')
 
@@ -42,16 +44,18 @@ export function WhoAreYou({
       </ul>
 
       <form onSubmit={joinAsNew} className="mt-6 space-y-2">
-        <span className="label">Pas dans la liste ?</span>
+        <span className="label">
+          <Trans>Not in the list?</Trans>
+        </span>
         <div className="flex gap-2">
-          <input className="field" placeholder="Ton prénom" value={newName} onChange={(e) => setNewName(e.target.value)} />
+          <input className="field" placeholder={t`Your first name`} value={newName} onChange={(e) => setNewName(e.target.value)} />
           <button className="btn-primary shrink-0" disabled={!newName.trim()}>
-            Rejoindre
+            <Trans>Join</Trans>
           </button>
         </div>
       </form>
       <button className="btn-ghost mt-3 w-full" onClick={() => onPick(undefined)}>
-        Juste consulter, sans rejoindre
+        <Trans>Just view, without joining</Trans>
       </button>
     </div>
   )

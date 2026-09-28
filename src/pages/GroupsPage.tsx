@@ -1,16 +1,20 @@
 import { convexQuery } from '@convex-dev/react-query'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { ChevronRight, Cloud, Plus, Users } from 'lucide-react'
 import { api } from '../../convex/_generated/api'
-import { formatCents } from '../lib/money'
 import { summaryItems, useMyGroups } from '../lib/myGroups'
+import { useFormatters } from '../lib/prefs'
 import { AccountMenu } from '../ui/AccountMenu'
 import { AvatarStack } from '../ui/Avatar'
 import { BalanceBadge } from '../ui/BalanceBadge'
+import { LanguageSwitcher } from '../ui/LanguageSwitcher'
 import { Wordmark } from '../ui/Wordmark'
 
 export function GroupsPage() {
+  const { t } = useLingui()
+  const format = useFormatters()
   const { state, forget } = useMyGroups()
   const saved = state.status === 'ready' ? state.groups : undefined
   const { data: summaries } = useQuery(
@@ -23,19 +27,21 @@ export function GroupsPage() {
         <Wordmark />
         <div className="flex items-center gap-2">
           <AccountMenu />
-          <Link to="/groups/new" className="btn-primary size-10 rounded-full p-0" aria-label="Nouveau groupe" title="Nouveau groupe">
+          <Link to="/groups/new" className="btn-primary size-10 rounded-full p-0" aria-label={t`New group`} title={t`New group`}>
             <Plus className="size-5" />
           </Link>
         </div>
       </header>
 
-      <h1 className="font-display text-3xl font-semibold tracking-tight">Mes groupes</h1>
+      <h1 className="font-display text-3xl font-semibold tracking-tight">
+        <Trans>My groups</Trans>
+      </h1>
 
       {state.status === 'ready' && state.mode === 'expired' && (
-        <Banner text="Ta session a expiré. Reconnecte-toi pour synchroniser tes groupes." cta="Se reconnecter" />
+        <Banner text={t`Your session has expired. Log in again to sync your groups.`} cta={t`Log in again`} />
       )}
       {state.status === 'ready' && state.mode === 'anonymous' && state.groups.length > 0 && (
-        <Banner text="Connecte-toi pour retrouver tes groupes sur tous tes appareils." cta="Se connecter" />
+        <Banner text={t`Log in to get your groups on all your devices.`} cta={t`Log in`} />
       )}
 
       {saved === undefined ? (
@@ -47,12 +53,14 @@ export function GroupsPage() {
           <span className="mb-4 flex size-14 items-center justify-center rounded-2xl bg-accent-soft text-accent">
             <Users className="size-7" />
           </span>
-          <p className="font-medium">Aucun groupe pour l'instant</p>
+          <p className="font-medium">
+            <Trans>No groups yet</Trans>
+          </p>
           <p className="mt-1 max-w-xs text-sm text-muted">
-            Crée un groupe pour ton prochain voyage ou ta coloc, ou ouvre un lien de partage envoyé par un ami.
+            <Trans>Create a group for your next trip or your flatshare, or open a link a friend sent you.</Trans>
           </p>
           <Link to="/groups/new" className="btn-primary mt-6">
-            <Plus className="size-4" /> Créer un groupe
+            <Plus className="size-4" /> <Trans>Create a group</Trans>
           </Link>
         </div>
       ) : (
@@ -71,7 +79,7 @@ export function GroupsPage() {
                         <p className="truncate font-display text-lg font-semibold">{s.name}</p>
                         <div className="mt-1.5 flex items-center gap-2 text-sm text-muted">
                           <AvatarStack names={s.participants.map((p) => p.name)} />
-                          <span className="truncate whitespace-nowrap tabular-nums">{formatCents(s.totalCents, s.currency)}</span>
+                          <span className="truncate whitespace-nowrap tabular-nums">{format.money(s.totalCents, s.currency)}</span>
                         </div>
                       </div>
                       {s.myBalanceCents !== null && <BalanceBadge cents={s.myBalanceCents} currency={s.currency} />}
@@ -80,15 +88,19 @@ export function GroupsPage() {
                   </li>
                 ) : (
                   <li key={s.groupId} className="card flex items-center justify-between border-dashed p-4 text-sm text-muted">
-                    Groupe introuvable
+                    <Trans>Group not found</Trans>
                     <button className="btn-ghost" onClick={() => forget(s.groupId)}>
-                      Retirer
+                      <Trans>Remove</Trans>
                     </button>
                   </li>
                 ),
               )}
         </ul>
       )}
+
+      <footer className="mt-12 flex justify-center">
+        <LanguageSwitcher />
+      </footer>
     </>
   )
 }

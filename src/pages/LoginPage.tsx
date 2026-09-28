@@ -1,3 +1,6 @@
+import type { MessageDescriptor } from '@lingui/core'
+import { msg } from '@lingui/core/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { useConvexAuth } from 'convex/react'
 import { ArrowLeft, Mail } from 'lucide-react'
@@ -6,26 +9,28 @@ import { authClient } from '../lib/auth-client'
 
 const RESEND_DELAY_S = 30
 
-const ERRORS: Record<string, string> = {
-  INVALID_OTP: 'Code incorrect. Vérifie le dernier email reçu.',
-  OTP_EXPIRED: 'Ce code a expiré. Demande un nouveau code.',
-  TOO_MANY_ATTEMPTS: 'Trop de tentatives. Demande un nouveau code.',
-  INVALID_EMAIL: 'Adresse email invalide.',
-  OTP_RATE_LIMITED: 'Trop de demandes de code. Réessaie dans quelques minutes.',
+const ERRORS: Record<string, MessageDescriptor> = {
+  INVALID_OTP: msg`Wrong code. Check the latest email you received.`,
+  OTP_EXPIRED: msg`This code has expired. Request a new one.`,
+  TOO_MANY_ATTEMPTS: msg`Too many attempts. Request a new code.`,
+  INVALID_EMAIL: msg`Invalid email address.`,
+  OTP_RATE_LIMITED: msg`Too many code requests. Try again in a few minutes.`,
 }
+const UNKNOWN_ERROR = msg`Something went wrong, please try again.`
 
-function errorMessage(error: { code?: string; message?: string } | null) {
+function errorMessage(error: { code?: string } | null) {
   if (!error) return null
-  return (error.code && ERRORS[error.code]) || error.message || 'Une erreur est survenue, réessaie.'
+  return (error.code && ERRORS[error.code]) || UNKNOWN_ERROR
 }
 
 export function LoginPage() {
+  const { t, i18n } = useLingui()
   const navigate = useNavigate()
   const { isAuthenticated } = useConvexAuth()
   const [step, setStep] = useState<'email' | 'code'>('email')
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<MessageDescriptor | null>(null)
   const [pending, setPending] = useState(false)
   const [cooldown, setCooldown] = useState(0)
 
@@ -66,7 +71,7 @@ export function LoginPage() {
     <>
       <header className="mb-10">
         <Link to="/groups" className="btn-ghost -ml-3">
-          <ArrowLeft className="size-4" /> Retour
+          <ArrowLeft className="size-4" /> <Trans>Back</Trans>
         </Link>
       </header>
 
@@ -77,28 +82,32 @@ export function LoginPage() {
             if (email.trim()) void sendCode()
           }}
         >
-          <h1 className="font-display text-3xl font-semibold tracking-tight">Connexion</h1>
+          <h1 className="font-display text-3xl font-semibold tracking-tight">
+            <Trans>Log in</Trans>
+          </h1>
           <p className="mt-2 text-muted">
-            Retrouve tes groupes sur tous tes appareils. Pas de mot de passe : on t'envoie un code par email.
+            <Trans>Get your groups on all your devices. No password: we email you a code.</Trans>
           </p>
           <label className="mt-8 block space-y-2">
-            <span className="label">Email</span>
+            <span className="label">
+              <Trans>Email</Trans>
+            </span>
             <input
               autoFocus
               type="email"
               autoComplete="email"
               className="field"
-              placeholder="toi@exemple.fr"
+              placeholder={t`you@example.com`}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </label>
-          {error && <p className="mt-3 text-sm text-owe">{error}</p>}
+          {error && <p className="mt-3 text-sm text-owe">{i18n._(error)}</p>}
           <button className="btn-primary mt-6 w-full" disabled={!email.trim() || pending}>
-            {pending ? 'Envoi…' : 'Recevoir un code'}
+            {pending ? <Trans>Sending…</Trans> : <Trans>Get a code</Trans>}
           </button>
           <p className="mt-4 text-center text-xs text-muted">
-            Pas encore de compte ? Il sera créé automatiquement. Tes groupes actuels y seront rattachés.
+            <Trans>No account yet? It will be created automatically, with your current groups.</Trans>
           </p>
         </form>
       ) : (
@@ -111,15 +120,19 @@ export function LoginPage() {
           <span className="flex size-12 items-center justify-center rounded-2xl bg-accent-soft text-accent">
             <Mail className="size-6" />
           </span>
-          <h1 className="mt-5 font-display text-3xl font-semibold tracking-tight">Vérifie tes emails</h1>
+          <h1 className="mt-5 font-display text-3xl font-semibold tracking-tight">
+            <Trans>Check your email</Trans>
+          </h1>
           <p className="mt-2 text-muted">
-            Code envoyé à <span className="font-medium text-ink">{email.trim()}</span>. Il expire dans 10 minutes.
+            <Trans>
+              Code sent to <span className="font-medium text-ink">{email.trim()}</span>. It expires in 10 minutes.
+            </Trans>
           </p>
           <input
             autoFocus
             inputMode="numeric"
             autoComplete="one-time-code"
-            aria-label="Code à 6 chiffres"
+            aria-label={t`6-digit code`}
             placeholder="••••••"
             maxLength={6}
             className="field mt-8 text-center font-display text-3xl tracking-[0.5em] tabular-nums"
@@ -130,16 +143,16 @@ export function LoginPage() {
               if (digits.length === 6 && !pending) void verify(digits)
             }}
           />
-          {error && <p className="mt-3 text-sm text-owe">{error}</p>}
+          {error && <p className="mt-3 text-sm text-owe">{i18n._(error)}</p>}
           <button className="btn-primary mt-6 w-full" disabled={code.length !== 6 || pending}>
-            {pending ? 'Vérification…' : 'Se connecter'}
+            {pending ? <Trans>Checking…</Trans> : <Trans>Log in</Trans>}
           </button>
           <div className="mt-4 flex justify-between text-sm">
             <button type="button" className="btn-ghost -ml-3" onClick={() => setStep('email')}>
-              Changer d'email
+              <Trans>Change email</Trans>
             </button>
             <button type="button" className="btn-ghost -mr-3" disabled={cooldown > 0 || pending} onClick={sendCode}>
-              {cooldown > 0 ? `Renvoyer (${cooldown}s)` : 'Renvoyer le code'}
+              {cooldown > 0 ? <Trans>Resend ({cooldown}s)</Trans> : <Trans>Resend code</Trans>}
             </button>
           </div>
         </form>

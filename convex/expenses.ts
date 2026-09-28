@@ -60,9 +60,9 @@ export const add = mutation({
   },
   handler: async (ctx, { splitBetween, ...expense }) => {
     if (!Number.isInteger(expense.amountCents) || expense.amountCents <= 0)
-      throw new Error("Le montant doit être un nombre positif de centimes");
+      throw new Error("The amount must be a positive number of cents");
     if (splitBetween.length === 0)
-      throw new Error("Au moins un participant doit partager la dépense");
+      throw new Error("At least one participant must share the expense");
     const shares = splitEqually(expense.amountCents, splitBetween.length);
     return await ctx.db.insert("expenses", {
       ...expense,

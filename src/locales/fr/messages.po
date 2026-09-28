@@ -1,0 +1,632 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-09-28 15:09+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: fr\n"
+
+#. placeholder {0}: expenses.length
+#: src/group/ExpenseList.tsx:87
+msgid "{0, plural, one {# expense} other {# expenses}}"
+msgstr "{0, plural, one {# dépense} other {# dépenses}}"
+
+#. placeholder {0}: names.get(s.participantId)
+#: src/group/ExpenseDetailSheet.tsx:49
+msgid "{0}'s share"
+msgstr "Part de {0}"
+
+#: src/routes/_app.g.$groupId.tsx:33
+msgid "{count, plural, one {# participant} other {# participants}} · Join the group to share expenses on Kwittly."
+msgstr "{count, plural, one {# participant} other {# participants}} · Rejoins le groupe pour partager les dépenses sur Kwittly."
+
+#. placeholder {0}: names.get(expense.paidBy)
+#: src/group/ExpenseDetailSheet.tsx:40
+msgid "<0>{0}</0> paid"
+msgstr "<0>{0}</0> a payé"
+
+#: src/pages/LoginPage.tsx:135
+msgid "6-digit code"
+msgstr "Code à 6 chiffres"
+
+#: src/lib/categories.ts:11
+msgid "Activities"
+msgstr "Activités"
+
+#: src/pages/NewGroupPage.tsx:103
+msgid "Add"
+msgstr "Ajouter"
+
+#: src/pages/NewGroupPage.tsx:93
+msgid "Add a first name"
+msgstr "Ajouter un prénom"
+
+#: src/group/AddExpenseSheet.tsx:131
+msgid "Add expense"
+msgstr "Ajouter la dépense"
+
+#: src/pages/LandingPage.tsx:35
+msgid "Add your expenses"
+msgstr "Ajoutez vos dépenses"
+
+#: src/group/AddExpenseSheet.tsx:69
+msgid "Amount"
+msgstr "Montant"
+
+#: src/pages/LandingPage.tsx:18
+msgid "An expense added by anyone shows up instantly for the whole group. No more refreshing."
+msgstr "Une dépense ajoutée par quelqu'un apparaît instantanément chez tout le groupe. Plus besoin de rafraîchir."
+
+#: src/pages/LoginPage.tsx:74
+#: src/pages/NewGroupPage.tsx:58
+msgid "Back"
+msgstr "Retour"
+
+#: src/ui/NotFound.tsx:11
+msgid "Back to home"
+msgstr "Retour à l'accueil"
+
+#: src/group/Balances.tsx:20
+#: src/pages/GroupPage.tsx:113
+msgid "Balances"
+msgstr "Soldes"
+
+#: src/pages/LandingPage.tsx:35
+msgid "Balances update on their own."
+msgstr "Les soldes se mettent à jour tout seuls."
+
+#: src/pages/LandingPage.tsx:13
+msgid "By who paid, by who is involved, by category, by text. Combine them, no subscription."
+msgstr "Par personne qui a payé, par participant concerné, par catégorie, par texte. Combinables, sans abonnement."
+
+#: src/group/AddExpenseSheet.tsx:110
+#: src/group/ExpenseList.tsx:65
+#: src/pages/LandingPage.tsx:195
+msgid "Category"
+msgstr "Catégorie"
+
+#: src/pages/LoginPage.tsx:152
+msgid "Change email"
+msgstr "Changer d'email"
+
+#: src/pages/LoginPage.tsx:124
+msgid "Check your email"
+msgstr "Vérifie tes emails"
+
+#: src/pages/LoginPage.tsx:148
+msgid "Checking…"
+msgstr "Vérification…"
+
+#: src/group/ExpenseList.tsx:72
+msgid "Clear"
+msgstr "Effacer"
+
+#: src/ui/Sheet.tsx:30
+msgid "Close"
+msgstr "Fermer"
+
+#. placeholder {0}: email.trim()
+#: src/pages/LoginPage.tsx:127
+msgid "Code sent to <0>{0}</0>. It expires in 10 minutes."
+msgstr "Code envoyé à <0>{0}</0>. Il expire dans 10 minutes."
+
+#: src/group/ExpenseDetailSheet.tsx:64
+msgid "Confirm deletion"
+msgstr "Confirmer la suppression"
+
+#: src/group/ShareSheet.tsx:28
+msgid "Copied"
+msgstr "Copié"
+
+#: src/group/ShareSheet.tsx:28
+msgid "Copy"
+msgstr "Copier"
+
+#: src/pages/GroupsPage.tsx:63
+#: src/pages/LandingPage.tsx:33
+#: src/pages/LandingPage.tsx:50
+#: src/pages/LandingPage.tsx:73
+#: src/pages/LandingPage.tsx:132
+msgid "Create a group"
+msgstr "Créer un groupe"
+
+#: src/pages/GroupsPage.tsx:60
+msgid "Create a group for your next trip or your flatshare, or open a link a friend sent you."
+msgstr "Crée un groupe pour ton prochain voyage ou ta coloc, ou ouvre un lien de partage envoyé par un ami."
+
+#: src/pages/LandingPage.tsx:23
+msgid "Create a group, send the link, that's it. No account to create, no app to install."
+msgstr "Crée un groupe, envoie le lien, c'est tout. Ni compte à créer, ni application à installer."
+
+#: src/pages/NewGroupPage.tsx:150
+msgid "Create group"
+msgstr "Créer le groupe"
+
+#: src/pages/LandingPage.tsx:125
+msgid "Create the group now, add expenses as you go."
+msgstr "Crée le groupe maintenant, ajoute les dépenses au fil de l'eau."
+
+#: src/pages/NewGroupPage.tsx:132
+msgid "Currency"
+msgstr "Devise"
+
+#: src/group/AddExpenseSheet.tsx:125
+msgid "Date"
+msgstr "Date"
+
+#: src/group/ExpenseDetailSheet.tsx:64
+msgid "Delete expense"
+msgstr "Supprimer la dépense"
+
+#: src/pages/LoginPage.tsx:93
+msgid "Email"
+msgstr "Email"
+
+#: src/pages/LandingPage.tsx:12
+msgid "Every filter, for free"
+msgstr "Tous les filtres, gratuitement"
+
+#: src/group/AddExpenseSheet.tsx:93
+msgid "Everyone"
+msgstr "Tout le monde"
+
+#: src/group/Balances.tsx:58
+msgid "Everyone is even."
+msgstr "Tout le monde est à l'équilibre."
+
+#: src/pages/LandingPage.tsx:34
+msgid "Everyone joins in one tap, from their phone."
+msgstr "Chacun rejoint en un clic, depuis son téléphone."
+
+#: src/pages/LandingPage.tsx:87
+msgid "Everything you need, nothing to pay."
+msgstr "Tout ce qu'il faut, rien de payant."
+
+#: src/pages/GroupPage.tsx:142
+msgid "Expense"
+msgstr "Dépense"
+
+#: src/pages/GroupPage.tsx:113
+msgid "Expenses"
+msgstr "Dépenses"
+
+#: src/group/AddExpenseSheet.tsx:86
+msgid "For whom"
+msgstr "Pour qui"
+
+#: src/pages/LandingPage.tsx:58
+msgid "Free · No sign-up"
+msgstr "Gratuit · Sans inscription"
+
+#: src/pages/LoginPage.tsx:107
+msgid "Get a code"
+msgstr "Recevoir un code"
+
+#: src/pages/LoginPage.tsx:89
+msgid "Get your groups on all your devices. No password: we email you a code."
+msgstr "Retrouve tes groupes sur tous tes appareils. Pas de mot de passe : on t'envoie un code par email."
+
+#: src/pages/LandingPage.tsx:33
+msgid "Give it a name and add the participants."
+msgstr "Donne-lui un nom et ajoute les participants."
+
+#: src/lib/categories.ts:7
+msgid "Groceries"
+msgstr "Courses"
+
+#: src/pages/NewGroupPage.tsx:68
+msgid "Group name"
+msgstr "Nom du groupe"
+
+#: src/pages/GroupPage.tsx:39
+#: src/pages/GroupsPage.tsx:91
+msgid "Group not found"
+msgstr "Groupe introuvable"
+
+#: src/routes/_app.g.$groupId.tsx:25
+msgid "Group not found · Kwittly"
+msgstr "Groupe introuvable · Kwittly"
+
+#: src/pages/LandingPage.tsx:105
+msgid "How it works"
+msgstr "Comment ça marche"
+
+#: src/pages/LoginPage.tsx:16
+msgid "Invalid email address."
+msgstr "Adresse email invalide."
+
+#: src/group/ShareSheet.tsx:20
+msgid "Invite to the group"
+msgstr "Inviter dans le groupe"
+
+#: src/group/ExpenseList.tsx:59
+msgid "Involves"
+msgstr "Concerne"
+
+#. placeholder {0}: p.label
+#: src/group/ExpenseList.tsx:62
+msgid "Involves {0}"
+msgstr "Concerne {0}"
+
+#: src/group/ExpenseList.tsx:49
+#: src/pages/LandingPage.tsx:189
+msgid "Involves me"
+msgstr "Me concerne"
+
+#: src/group/WhoAreYou.tsx:53
+msgid "Join"
+msgstr "Rejoindre"
+
+#. placeholder {0}: group.name
+#: src/pages/GroupPage.tsx:148
+msgid "Join “{0}”"
+msgstr "Rejoindre « {0} »"
+
+#. placeholder {0}: group.name
+#: src/group/ShareSheet.tsx:34
+msgid "Join “{0}” on Kwittly"
+msgstr "Rejoins « {0} » sur Kwittly"
+
+#: src/group/WhoAreYou.tsx:58
+msgid "Just view, without joining"
+msgstr "Juste consulter, sans rejoindre"
+
+#: src/routes/index.tsx:25
+msgid "Kwittly · Shared expenses without the headache"
+msgstr "Kwittly · Les comptes entre amis, sans prise de tête"
+
+#: src/pages/LandingPage.tsx:28
+msgid "Kwittly works out who owes how much to whom, with the minimum number of repayments."
+msgstr "Kwittly calcule qui doit combien à qui, avec le nombre minimal de remboursements."
+
+#: src/ui/LanguageSwitcher.tsx:21
+msgid "Language"
+msgstr "Langue"
+
+#: src/lib/categories.ts:10
+msgid "Lodging"
+msgstr "Logement"
+
+#: src/pages/GroupsPage.tsx:44
+#: src/pages/LandingPage.tsx:47
+#: src/pages/LoginPage.tsx:86
+#: src/pages/LoginPage.tsx:148
+#: src/ui/AccountMenu.tsx:29
+msgid "Log in"
+msgstr "Se connecter"
+
+#: src/routes/_app.login.tsx:8
+msgid "Log in · Kwittly"
+msgstr "Connexion · Kwittly"
+
+#: src/pages/GroupsPage.tsx:41
+msgid "Log in again"
+msgstr "Se reconnecter"
+
+#: src/pages/GroupsPage.tsx:44
+msgid "Log in to get your groups on all your devices."
+msgstr "Connecte-toi pour retrouver tes groupes sur tous tes appareils."
+
+#: src/ui/AccountMenu.tsx:50
+msgid "Log out"
+msgstr "Se déconnecter"
+
+#: src/pages/LandingPage.tsx:141
+msgid "Made for groups who like to keep things even."
+msgstr "Fait pour les groupes qui aiment les bons comptes."
+
+#: src/group/AddExpenseSheet.tsx:80
+#: src/group/AddExpenseSheet.tsx:105
+msgid "Me"
+msgstr "Moi"
+
+#: src/ui/AccountMenu.tsx:43
+msgid "My account"
+msgstr "Mon compte"
+
+#: src/pages/GroupPage.tsx:46
+#: src/pages/GroupPage.tsx:174
+#: src/pages/GroupsPage.tsx:37
+msgid "My groups"
+msgstr "Mes groupes"
+
+#: src/routes/_app.groups.index.tsx:17
+msgid "My groups · Kwittly"
+msgstr "Mes groupes · Kwittly"
+
+#: src/group/AddExpenseSheet.tsx:59
+msgid "New expense"
+msgstr "Nouvelle dépense"
+
+#: src/pages/GroupsPage.tsx:30
+#: src/pages/GroupsPage.tsx:30
+#: src/pages/NewGroupPage.tsx:62
+msgid "New group"
+msgstr "Nouveau groupe"
+
+#: src/routes/_app.groups.new.tsx:8
+msgid "New group · Kwittly"
+msgstr "Nouveau groupe · Kwittly"
+
+#: src/pages/LoginPage.tsx:110
+msgid "No account yet? It will be created automatically, with your current groups."
+msgstr "Pas encore de compte ? Il sera créé automatiquement, avec tes groupes actuels."
+
+#: src/group/ExpenseDetailSheet.tsx:30
+msgid "No category"
+msgstr "Sans catégorie"
+
+#: src/group/ExpenseList.tsx:81
+msgid "No expenses match these filters."
+msgstr "Aucune dépense ne correspond à ces filtres."
+
+#: src/group/ExpenseList.tsx:81
+msgid "No expenses yet. Add the first one!"
+msgstr "Aucune dépense. Ajoute la première !"
+
+#: src/pages/GroupsPage.tsx:57
+msgid "No groups yet"
+msgstr "Aucun groupe pour l'instant"
+
+#: src/pages/LandingPage.tsx:22
+msgid "No sign-up"
+msgstr "Sans inscription"
+
+#: src/group/AddExpenseSheet.tsx:93
+msgid "None"
+msgstr "Aucun"
+
+#: src/group/WhoAreYou.tsx:48
+msgid "Not in the list?"
+msgstr "Pas dans la liste ?"
+
+#: src/group/ExpenseList.tsx:163
+msgid "not involved"
+msgstr "non concerné"
+
+#: src/lib/categories.ts:12
+msgid "Other"
+msgstr "Autre"
+
+#: src/pages/NewGroupPage.tsx:88
+msgid "Other participants"
+msgstr "Autres participants"
+
+#: src/ui/NotFound.tsx:8
+msgid "Page not found"
+msgstr "Page introuvable"
+
+#: src/group/AddExpenseSheet.tsx:76
+#: src/group/ExpenseList.tsx:53
+#: src/pages/LandingPage.tsx:192
+msgid "Paid by"
+msgstr "Payé par"
+
+#. placeholder {0}: p.label
+#: src/group/ExpenseList.tsx:56
+msgid "Paid by {0}"
+msgstr "Payé par {0}"
+
+#: src/group/ExpenseList.tsx:147
+msgid "Paid by {payer}"
+msgstr "Payé par {payer}"
+
+#: src/pages/LandingPage.tsx:207
+msgid "Paid by {who}"
+msgstr "Payé par {who}"
+
+#: src/group/ExpenseList.tsx:147
+msgid "Paid by you"
+msgstr "Payé par toi"
+
+#: src/pages/LandingPage.tsx:76
+msgid "Ready in 30 seconds."
+msgstr "Prêt en 30 secondes."
+
+#: src/pages/LandingPage.tsx:17
+msgid "Real time"
+msgstr "En temps réel"
+
+#: src/pages/GroupsPage.tsx:93
+msgid "Remove"
+msgstr "Retirer"
+
+#: src/pages/NewGroupPage.tsx:117
+msgid "Remove {other}"
+msgstr "Retirer {other}"
+
+#: src/pages/GroupPage.tsx:50
+msgid "Remove from my list"
+msgstr "Retirer de ma liste"
+
+#: src/pages/GroupPage.tsx:134
+msgid "Remove this group from my account"
+msgstr "Retirer ce groupe de mon compte"
+
+#: src/pages/GroupPage.tsx:134
+msgid "Remove this group from this device"
+msgstr "Retirer ce groupe de cet appareil"
+
+#: src/pages/LoginPage.tsx:155
+msgid "Resend ({cooldown}s)"
+msgstr "Renvoyer ({cooldown}s)"
+
+#: src/pages/LoginPage.tsx:155
+msgid "Resend code"
+msgstr "Renvoyer le code"
+
+#: src/lib/categories.ts:8
+msgid "Restaurant"
+msgstr "Restaurant"
+
+#: src/group/ExpenseList.tsx:38
+msgid "Search expenses"
+msgstr "Rechercher une dépense"
+
+#: src/group/ShareSheet.tsx:22
+msgid "Send this link to the group members. Anyone with the link can view and add expenses."
+msgstr "Envoie ce lien aux membres du groupe. Toute personne qui a le lien peut voir et ajouter des dépenses."
+
+#: src/pages/LoginPage.tsx:107
+msgid "Sending…"
+msgstr "Envoi…"
+
+#: src/ui/BalanceBadge.tsx:9
+msgid "Settled up"
+msgstr "À l'équilibre"
+
+#: src/pages/GroupPage.tsx:67
+msgid "Share"
+msgstr "Partager"
+
+#: src/routes/index.tsx:21
+msgid "Share the expenses of a trip, a flatshare or a night out. Free, no sign-up, with every filter."
+msgstr "Partagez les dépenses d'un voyage, d'une coloc ou d'une soirée. Gratuit, sans inscription, avec tous les filtres."
+
+#: src/pages/LandingPage.tsx:34
+msgid "Share the link"
+msgstr "Partage le lien"
+
+#: src/group/ShareSheet.tsx:36
+msgid "Share via…"
+msgstr "Partager via…"
+
+#: src/pages/LandingPage.tsx:61
+msgid "Shared expenses, <0>without the headache.</0>"
+msgstr "Les comptes entre amis, <0>sans prise de tête.</0>"
+
+#: src/pages/LoginPage.tsx:19
+msgid "Something went wrong, please try again."
+msgstr "Une erreur est survenue, réessaie."
+
+#: src/group/Balances.tsx:78
+msgid "The fewest transfers needed for everyone to be even."
+msgstr "Nombre minimal de virements pour que tout le monde soit quitte."
+
+#: src/pages/LandingPage.tsx:27
+msgid "The fewest transfers possible"
+msgstr "Le moins de virements possible"
+
+#: src/pages/GroupPage.tsx:42
+msgid "The link may be wrong, or the group was deleted."
+msgstr "Le lien est peut-être incorrect, ou le groupe a été supprimé."
+
+#: src/pages/LoginPage.tsx:14
+msgid "This code has expired. Request a new one."
+msgstr "Ce code a expiré. Demande un nouveau code."
+
+#: src/group/Balances.tsx:54
+msgid "To settle up"
+msgstr "Pour équilibrer"
+
+#: src/group/ExpenseList.tsx:183
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#: src/pages/LoginPage.tsx:15
+msgid "Too many attempts. Request a new code."
+msgstr "Trop de tentatives. Demande un nouveau code."
+
+#: src/pages/LoginPage.tsx:17
+msgid "Too many code requests. Try again in a few minutes."
+msgstr "Trop de demandes de code. Réessaie dans quelques minutes."
+
+#: src/pages/LandingPage.tsx:182
+msgid "Total"
+msgstr "Total"
+
+#: src/pages/GroupPage.tsx:96
+msgid "Total spent"
+msgstr "Total dépensé"
+
+#: src/lib/categories.ts:9
+msgid "Transport"
+msgstr "Transport"
+
+#: src/pages/LandingPage.tsx:122
+msgid "Trip coming up?"
+msgstr "Prochain voyage prévu ?"
+
+#: src/pages/LandingPage.tsx:66
+msgid "Trips, flatshares, nights out: note who paid for what, Kwittly handles the rest. And find any expense in two clicks."
+msgstr "Voyages, coloc, soirées : note qui a payé quoi, Kwittly s'occupe du reste. Et tu retrouves n'importe quelle dépense en deux clics."
+
+#: src/pages/NewGroupPage.tsx:73
+msgid "Weekend in Lisbon"
+msgstr "Week-end à Lisbonne"
+
+#: src/group/AddExpenseSheet.tsx:74
+msgid "What for? (e.g. Supermarket)"
+msgstr "Pour quoi ? (ex : Courses Carrefour)"
+
+#: src/pages/GroupPage.tsx:150
+msgid "Who are you in this group? It lets us show what you owe or are owed."
+msgstr "Qui es-tu dans ce groupe ? Ça permet d'afficher ce que tu dois ou ce qu'on te doit."
+
+#: src/pages/GroupPage.tsx:76
+#: src/pages/GroupPage.tsx:156
+msgid "Who are you?"
+msgstr "Qui es-tu ?"
+
+#: src/pages/LoginPage.tsx:13
+msgid "Wrong code. Check the latest email you received."
+msgstr "Code incorrect. Vérifie le dernier email reçu."
+
+#: src/group/ExpenseList.tsx:184
+msgid "Yesterday"
+msgstr "Hier"
+
+#: src/group/Balances.tsx:13
+msgid "You"
+msgstr "Toi"
+
+#. placeholder {0}: me.name
+#: src/pages/GroupPage.tsx:76
+msgid "You are {0}"
+msgstr "Tu es {0}"
+
+#: src/pages/LandingPage.tsx:168
+msgid "You are Bob"
+msgstr "Tu es Bob"
+
+#: src/ui/BalanceBadge.tsx:15
+msgid "You are owed"
+msgstr "On te doit"
+
+#: src/pages/NewGroupPage.tsx:126
+msgid "You can also share a link so everyone can join the group."
+msgstr "Tu pourras aussi partager un lien pour que chacun rejoigne le groupe."
+
+#. placeholder {0}: format.money(lent, currency)
+#: src/group/ExpenseList.tsx:155
+msgid "you lent {0}"
+msgstr "tu prêtes {0}"
+
+#: src/pages/LandingPage.tsx:176
+#: src/ui/BalanceBadge.tsx:15
+msgid "You owe"
+msgstr "Tu dois"
+
+#: src/pages/LoginPage.tsx:100
+msgid "you@example.com"
+msgstr "toi@exemple.fr"
+
+#: src/pages/GroupPage.tsx:84
+#: src/pages/LandingPage.tsx:173
+msgid "Your balance"
+msgstr "Ton solde"
+
+#: src/group/WhoAreYou.tsx:51
+#: src/pages/NewGroupPage.tsx:81
+msgid "Your first name"
+msgstr "Ton prénom"
+
+#: src/pages/GroupsPage.tsx:41
+msgid "Your session has expired. Log in again to sync your groups."
+msgstr "Ta session a expiré. Reconnecte-toi pour synchroniser tes groupes."
+
+#. placeholder {0}: format.money(myShare, currency)
+#: src/group/ExpenseList.tsx:159
+msgid "your share {0}"
+msgstr "ta part {0}"

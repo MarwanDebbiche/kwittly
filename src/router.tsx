@@ -2,6 +2,7 @@ import { ConvexQueryClient } from '@convex-dev/react-query'
 import { QueryClient } from '@tanstack/react-query'
 import { createRouter } from '@tanstack/react-router'
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
+import { createI18n } from './lib/i18n'
 import { NotFound } from './ui/NotFound'
 import { routeTree } from './routeTree.gen'
 
@@ -22,7 +23,8 @@ export function getRouter() {
 
   const router = createRouter({
     routeTree,
-    context: { queryClient, convexQueryClient },
+    // i18n is per router, so per request on the server (see createI18n).
+    context: { queryClient, convexQueryClient, i18n: createI18n() },
     scrollRestoration: true,
     defaultPreload: 'intent',
     defaultNotFoundComponent: NotFound,

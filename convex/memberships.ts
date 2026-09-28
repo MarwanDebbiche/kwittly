@@ -4,7 +4,7 @@ import { mutation, query, type MutationCtx } from "./_generated/server";
 
 async function requireUserId(ctx: { auth: MutationCtx["auth"] }) {
   const identity = await ctx.auth.getUserIdentity();
-  if (!identity) throw new Error("Connexion requise");
+  if (!identity) throw new Error("Login required");
   return identity.subject;
 }
 

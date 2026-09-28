@@ -1,14 +1,18 @@
+import { Trans, useLingui } from '@lingui/react/macro'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { useMutation } from 'convex/react'
 import { ArrowLeft, Plus, X } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { useMyGroups } from '../lib/myGroups'
+import { usePrefs } from '../lib/prefs'
 import { Avatar } from '../ui/Avatar'
 
 const CURRENCIES = ['EUR', 'USD', 'GBP', 'CHF', 'CAD', 'JPY']
 
 export function NewGroupPage() {
+  const { t } = useLingui()
+  const { locale } = usePrefs()
   const navigate = useNavigate()
   const createGroup = useMutation(api.groups.create)
   const { save } = useMyGroups()
@@ -37,6 +41,8 @@ export function NewGroupPage() {
         name: name.trim(),
         currency,
         participants: [me.trim(), ...pending],
+        // Link previews of the group are shown in its creator's language.
+        locale,
       })
       await save(groupId, participantIds[0])
       navigate({ to: '/g/$groupId', params: { groupId } })
@@ -49,34 +55,42 @@ export function NewGroupPage() {
     <form onSubmit={onSubmit}>
       <header className="mb-6">
         <Link to="/" className="btn-ghost -ml-3">
-          <ArrowLeft className="size-4" /> Retour
+          <ArrowLeft className="size-4" /> <Trans>Back</Trans>
         </Link>
       </header>
-      <h1 className="font-display text-3xl font-semibold tracking-tight">Nouveau groupe</h1>
+      <h1 className="font-display text-3xl font-semibold tracking-tight">
+        <Trans>New group</Trans>
+      </h1>
 
       <div className="mt-8 space-y-6">
         <label className="block space-y-2">
-          <span className="label">Nom du groupe</span>
+          <span className="label">
+            <Trans>Group name</Trans>
+          </span>
           <input
             autoFocus
             className="field text-lg"
-            placeholder="Week-end à Lisbonne"
+            placeholder={t`Weekend in Lisbon`}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </label>
 
         <label className="block space-y-2">
-          <span className="label">Ton prénom</span>
+          <span className="label">
+            <Trans>Your first name</Trans>
+          </span>
           <input className="field" placeholder="Alex" value={me} onChange={(e) => setMe(e.target.value)} />
         </label>
 
         <div className="space-y-2">
-          <span className="label">Autres participants</span>
+          <span className="label">
+            <Trans>Other participants</Trans>
+          </span>
           <div className="flex gap-2">
             <input
               className="field"
-              placeholder="Ajouter un prénom"
+              placeholder={t`Add a first name`}
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => {
@@ -86,7 +100,7 @@ export function NewGroupPage() {
                 }
               }}
             />
-            <button type="button" onClick={addOther} className="chip rounded-xl px-3.5" aria-label="Ajouter">
+            <button type="button" onClick={addOther} className="chip rounded-xl px-3.5" aria-label={t`Add`}>
               <Plus className="size-4" />
             </button>
           </div>
@@ -100,7 +114,7 @@ export function NewGroupPage() {
                     type="button"
                     className="text-muted hover:text-ink"
                     onClick={() => setOthers(others.filter((o) => o !== other))}
-                    aria-label={`Retirer ${other}`}
+                    aria-label={t`Remove ${other}`}
                   >
                     <X className="size-3.5" />
                   </button>
@@ -108,11 +122,15 @@ export function NewGroupPage() {
               ))}
             </ul>
           )}
-          <p className="text-xs text-muted">Tu pourras aussi partager un lien pour que chacun rejoigne le groupe.</p>
+          <p className="text-xs text-muted">
+            <Trans>You can also share a link so everyone can join the group.</Trans>
+          </p>
         </div>
 
         <div className="space-y-2">
-          <span className="label">Devise</span>
+          <span className="label">
+            <Trans>Currency</Trans>
+          </span>
           <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4">
             {CURRENCIES.map((c) => (
               <button
@@ -129,7 +147,7 @@ export function NewGroupPage() {
       </div>
 
       <button className="btn-primary mt-10 w-full" disabled={!canSubmit}>
-        Créer le groupe
+        <Trans>Create group</Trans>
       </button>
     </form>
   )

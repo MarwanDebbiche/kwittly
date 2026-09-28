@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { isLocale } from "./lib/locale";
 import { computeBalances } from "./lib/money";
 
 export const create = mutation({
@@ -7,12 +8,17 @@ export const create = mutation({
     name: v.string(),
     currency: v.string(),
     participants: v.array(v.string()),
+    locale: v.optional(v.string()),
   },
-  handler: async (ctx, { name, currency, participants }) => {
-    if (!name.trim()) throw new Error("Le groupe doit avoir un nom");
+  handler: async (ctx, { name, currency, participants, locale }) => {
+    if (!name.trim()) throw new Error("A group needs a name");
     if (participants.length === 0)
-      throw new Error("Le groupe doit avoir au moins un participant");
-    const groupId = await ctx.db.insert("groups", { name, currency });
+      throw new Error("A group needs at least one participant");
+    const groupId = await ctx.db.insert("groups", {
+      name,
+      currency,
+      locale: isLocale(locale) ? locale : undefined,
+    });
     const participantIds = [];
     for (const participant of participants) {
       participantIds.push(

@@ -41,6 +41,16 @@ Other scripts: `npm run typecheck`, `npm run lint`, `npm run build`, `npm run pr
 
 Repository secrets: `CONVEX_DEPLOY_KEY` (development deploy key of the cloud dev deployment), `CLOUDFLARE_API_TOKEN` (account token, "Edit Cloudflare Workers"), `CLOUDFLARE_ACCOUNT_ID`.
 
+## Languages
+
+English (source) and French, with [Lingui](https://lingui.dev) v6. Strings live in the code in English (`t`...``, `<Trans>`, `msg`...``); French is in `src/locales/fr/messages.po`.
+
+- After adding or changing strings: `npm run i18n:extract`, then fill the new `msgstr` entries in the French catalog. `npm run i18n:check` (run in CI) and the build fail if a translation is missing.
+- Language of a request: `locale` cookie (set by the language switcher), else the browser's `Accept-Language`, else English. Resolved on the server and passed to the browser through `<html lang>`, so both render the same text. One Lingui instance per router, so per request on the server.
+- Dates are rendered in the browser's time zone, remembered in a `tz` cookie so the server can use it too (UTC on a first visit).
+- Link previews of a group use the group's language (its creator's language at creation), since they are fetched by the messaging app's servers.
+- Login emails use the language of the request, forwarded by the auth proxy to Convex (`convex/lib/email.ts`).
+
 ## Routes
 
 - `/`: landing page, server-rendered for SEO. Visitors who already have groups in localStorage are redirected to `/groups` (inline script in `__root.tsx` for full page loads, `beforeLoad` for client navigations).

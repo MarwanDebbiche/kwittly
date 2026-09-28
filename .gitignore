@@ -26,3 +26,7 @@ dist-ssr
 # Cloudflare
 .wrangler
 .dev.vars*
+
+# Lingui compiled catalogs (the Vite plugin compiles .po files at build time)
+src/locales/*/messages.js
+src/locales/*/messages.mjs

@@ -1,38 +1,42 @@
+import { msg } from '@lingui/core/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
 import { ArrowLeftRight, ArrowRight, Link2, SlidersHorizontal, UtensilsCrossed, Car, ShoppingBasket, Zap } from 'lucide-react'
 import { Avatar } from '../ui/Avatar'
+import { LanguageSwitcher } from '../ui/LanguageSwitcher'
 import { Wordmark } from '../ui/Wordmark'
 
 const FEATURES = [
   {
     icon: SlidersHorizontal,
-    title: 'Tous les filtres, gratuitement',
-    text: 'Par personne qui a payé, par participant concerné, par catégorie, par texte. Combinables, sans abonnement.',
+    title: msg`Every filter, for free`,
+    text: msg`By who paid, by who is involved, by category, by text. Combine them, no subscription.`,
   },
   {
     icon: Zap,
-    title: 'En temps réel',
-    text: "Une dépense ajoutée par quelqu'un apparaît instantanément chez tout le groupe. Plus besoin de rafraîchir.",
+    title: msg`Real time`,
+    text: msg`An expense added by anyone shows up instantly for the whole group. No more refreshing.`,
   },
   {
     icon: Link2,
-    title: 'Sans inscription',
-    text: "Crée un groupe, envoie le lien, c'est tout. Ni compte à créer, ni application à installer.",
+    title: msg`No sign-up`,
+    text: msg`Create a group, send the link, that's it. No account to create, no app to install.`,
   },
   {
     icon: ArrowLeftRight,
-    title: 'Le moins de virements possible',
-    text: 'Kwittly calcule qui doit combien à qui, avec le nombre minimal de remboursements.',
+    title: msg`The fewest transfers possible`,
+    text: msg`Kwittly works out who owes how much to whom, with the minimum number of repayments.`,
   },
 ]
 
 const STEPS = [
-  { title: 'Crée un groupe', text: 'Donne-lui un nom et ajoute les participants.' },
-  { title: 'Partage le lien', text: 'Chacun rejoint en un clic, depuis son téléphone.' },
-  { title: 'Ajoutez vos dépenses', text: 'Les soldes se mettent à jour tout seuls.' },
+  { title: msg`Create a group`, text: msg`Give it a name and add the participants.` },
+  { title: msg`Share the link`, text: msg`Everyone joins in one tap, from their phone.` },
+  { title: msg`Add your expenses`, text: msg`Balances update on their own.` },
 ]
 
 export function LandingPage() {
+  const { i18n } = useLingui()
   return (
     <div className="overflow-x-hidden">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -40,10 +44,10 @@ export function LandingPage() {
           <Wordmark />
           <div className="flex items-center gap-1">
             <Link to="/login" className="btn-ghost">
-              Se connecter
+              <Trans>Log in</Trans>
             </Link>
             <Link to="/groups/new" className="btn-primary px-4 py-2 text-sm">
-              Créer un groupe
+              <Trans>Create a group</Trans>
             </Link>
           </div>
         </nav>
@@ -51,20 +55,26 @@ export function LandingPage() {
         <section className="grid items-center gap-12 pt-10 pb-20 lg:grid-cols-[1.1fr_1fr] lg:pt-20">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-sm text-muted">
-              <span className="size-1.5 rounded-full bg-accent" /> Gratuit · Sans inscription
+              <span className="size-1.5 rounded-full bg-accent" /> <Trans>Free · No sign-up</Trans>
             </span>
             <h1 className="mt-6 font-display text-5xl leading-[1.02] font-bold tracking-tight sm:text-6xl lg:text-7xl">
-              Les comptes entre amis, <span className="text-accent">sans prise de tête.</span>
+              <Trans>
+                Shared expenses, <span className="text-accent">without the headache.</span>
+              </Trans>
             </h1>
             <p className="mt-6 max-w-lg text-lg text-muted">
-              Voyages, coloc, soirées : note qui a payé quoi, Kwittly s'occupe du reste. Et tu retrouves n'importe quelle
-              dépense en deux clics.
+              <Trans>
+                Trips, flatshares, nights out: note who paid for what, Kwittly handles the rest. And find any expense in
+                two clicks.
+              </Trans>
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link to="/groups/new" className="btn-primary px-6 py-3.5 text-base">
-                Créer un groupe <ArrowRight className="size-4" />
+                <Trans>Create a group</Trans> <ArrowRight className="size-4" />
               </Link>
-              <span className="text-sm text-muted">Prêt en 30 secondes.</span>
+              <span className="text-sm text-muted">
+                <Trans>Ready in 30 seconds.</Trans>
+              </span>
             </div>
           </div>
           <AppPreview />
@@ -74,16 +84,16 @@ export function LandingPage() {
       <section className="border-y border-line bg-surface">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
           <h2 className="max-w-xl font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-            Tout ce qu'il faut, rien de payant.
+            <Trans>Everything you need, nothing to pay.</Trans>
           </h2>
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {FEATURES.map(({ icon: Icon, title, text }) => (
-              <div key={title}>
+              <div key={title.id}>
                 <span className="flex size-11 items-center justify-center rounded-xl bg-accent-soft text-accent">
                   <Icon className="size-5" />
                 </span>
-                <h3 className="mt-4 font-semibold">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{text}</p>
+                <h3 className="mt-4 font-semibold">{i18n._(title)}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{i18n._(text)}</p>
               </div>
             ))}
           </div>
@@ -91,13 +101,15 @@ export function LandingPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">Comment ça marche</h2>
+        <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+          <Trans>How it works</Trans>
+        </h2>
         <ol className="mt-10 grid gap-4 sm:grid-cols-3">
           {STEPS.map((step, i) => (
-            <li key={step.title} className="card p-6">
+            <li key={step.title.id} className="card p-6">
               <span className="font-display text-4xl font-bold text-accent/30">{i + 1}</span>
-              <h3 className="mt-3 font-semibold">{step.title}</h3>
-              <p className="mt-1 text-sm text-muted">{step.text}</p>
+              <h3 className="mt-3 font-semibold">{i18n._(step.title)}</h3>
+              <p className="mt-1 text-sm text-muted">{i18n._(step.text)}</p>
             </li>
           ))}
         </ol>
@@ -106,14 +118,18 @@ export function LandingPage() {
       <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
         <div className="flex flex-col items-start justify-between gap-6 rounded-3xl bg-ink px-8 py-12 text-white sm:flex-row sm:items-center sm:px-12">
           <div>
-            <h2 className="font-display text-3xl font-semibold tracking-tight">Prochain voyage prévu ?</h2>
-            <p className="mt-2 text-white/60">Crée le groupe maintenant, ajoute les dépenses au fil de l'eau.</p>
+            <h2 className="font-display text-3xl font-semibold tracking-tight">
+              <Trans>Trip coming up?</Trans>
+            </h2>
+            <p className="mt-2 text-white/60">
+              <Trans>Create the group now, add expenses as you go.</Trans>
+            </p>
           </div>
           <Link
             to="/groups/new"
             className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-white px-6 py-3.5 font-medium text-ink transition hover:bg-white/90 active:scale-[0.98]"
           >
-            Créer un groupe <ArrowRight className="size-4" />
+            <Trans>Create a group</Trans> <ArrowRight className="size-4" />
           </Link>
         </div>
       </section>
@@ -121,7 +137,10 @@ export function LandingPage() {
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-8 text-sm text-muted sm:px-6">
           <Wordmark className="text-lg" />
-          <span>Fait pour les groupes qui aiment les bons comptes.</span>
+          <span className="hidden sm:inline">
+            <Trans>Made for groups who like to keep things even.</Trans>
+          </span>
+          <LanguageSwitcher />
         </div>
       </footer>
     </div>
@@ -146,23 +165,35 @@ function AppPreview() {
               <Avatar key={n} name={n} size="sm" ring />
             ))}
           </span>
-          Tu es Bob
+          <Trans>You are Bob</Trans>
         </div>
         <div className="card mt-4 grid grid-cols-2 divide-x divide-line">
           <div className="p-3">
-            <p className="label">Ton solde</p>
-            <p className="mt-1 text-xs text-owe">Tu dois</p>
+            <p className="label">
+              <Trans>Your balance</Trans>
+            </p>
+            <p className="mt-1 text-xs text-owe">
+              <Trans>You owe</Trans>
+            </p>
             <p className="font-display text-xl font-semibold text-owe">17,75 €</p>
           </div>
           <div className="flex flex-col justify-between p-3 text-right">
-            <p className="label">Total</p>
+            <p className="label">
+              <Trans>Total</Trans>
+            </p>
             <p className="font-display text-xl font-semibold">155,70 €</p>
           </div>
         </div>
         <div className="mt-4 flex gap-2 text-xs">
-          <span className="chip chip-on py-1">Me concerne</span>
-          <span className="chip py-1">Payé par</span>
-          <span className="chip py-1">Catégorie</span>
+          <span className="chip chip-on py-1">
+            <Trans>Involves me</Trans>
+          </span>
+          <span className="chip py-1">
+            <Trans>Paid by</Trans>
+          </span>
+          <span className="chip py-1">
+            <Trans>Category</Trans>
+          </span>
         </div>
         <ul className="card mt-3 divide-y divide-line">
           {expenses.map(({ icon: Icon, tint, title, who, amount }) => (
@@ -172,7 +203,9 @@ function AppPreview() {
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-sm font-medium">{title}</span>
-                <span className="block text-xs text-muted">Payé par {who}</span>
+                <span className="block text-xs text-muted">
+                  <Trans>Paid by {who}</Trans>
+                </span>
               </span>
               <span className="text-sm font-semibold tabular-nums">{amount}</span>
             </li>
