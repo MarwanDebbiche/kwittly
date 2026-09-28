@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowLeftRight, ArrowRight, Link2, SlidersHorizontal, UtensilsCrossed, Car, ShoppingBasket, Zap } from 'lucide-react'
 import { useFormatters } from '../lib/prefs'
 import { Avatar } from '../ui/Avatar'
-import { LanguageSwitcher } from '../ui/LanguageSwitcher'
+import { SiteFooter } from '../ui/SiteFooter'
 import { Wordmark } from '../ui/Wordmark'
 
 const FEATURES = [
@@ -135,15 +135,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-line">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-8 text-sm text-muted sm:px-6">
-          <Wordmark className="text-lg" />
-          <span className="hidden sm:inline">
-            <Trans>Made for groups who like to keep things even.</Trans>
-          </span>
-          <LanguageSwitcher />
-        </div>
-      </footer>
+      <SiteFooter wide />
     </div>
   )
 }

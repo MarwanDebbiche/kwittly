@@ -50,7 +50,7 @@ msgstr "Add expense"
 msgid "Add your expenses"
 msgstr "Add your expenses"
 
-#: src/pages/LandingPage.tsx:157
+#: src/pages/LandingPage.tsx:149
 msgid "Airport taxi"
 msgstr "Airport taxi"
 
@@ -86,7 +86,7 @@ msgstr "By who paid, by who is involved, by category, by text. Combine them, no 
 
 #: src/group/AddExpenseSheet.tsx:110
 #: src/group/ExpenseList.tsx:65
-#: src/pages/LandingPage.tsx:200
+#: src/pages/LandingPage.tsx:192
 msgid "Category"
 msgstr "Category"
 
@@ -127,7 +127,7 @@ msgstr "Copied"
 msgid "Copy"
 msgstr "Copy"
 
-#: src/pages/GroupsPage.tsx:63
+#: src/pages/GroupsPage.tsx:62
 #: src/pages/LandingPage.tsx:34
 #: src/pages/LandingPage.tsx:51
 #: src/pages/LandingPage.tsx:74
@@ -135,7 +135,7 @@ msgstr "Copy"
 msgid "Create a group"
 msgstr "Create a group"
 
-#: src/pages/GroupsPage.tsx:60
+#: src/pages/GroupsPage.tsx:59
 msgid "Create a group for your next trip or your flatshare, or open a link a friend sent you."
 msgstr "Create a group for your next trip or your flatshare, or open a link a friend sent you."
 
@@ -163,7 +163,7 @@ msgstr "Date"
 msgid "Delete expense"
 msgstr "Delete expense"
 
-#: src/pages/LandingPage.tsx:156
+#: src/pages/LandingPage.tsx:148
 msgid "Dinner at Time Out"
 msgstr "Dinner at Time Out"
 
@@ -228,7 +228,7 @@ msgid "Group name"
 msgstr "Group name"
 
 #: src/pages/GroupPage.tsx:39
-#: src/pages/GroupsPage.tsx:91
+#: src/pages/GroupsPage.tsx:90
 msgid "Group not found"
 msgstr "Group not found"
 
@@ -258,7 +258,7 @@ msgid "Involves {0}"
 msgstr "Involves {0}"
 
 #: src/group/ExpenseList.tsx:49
-#: src/pages/LandingPage.tsx:194
+#: src/pages/LandingPage.tsx:186
 msgid "Involves me"
 msgstr "Involves me"
 
@@ -292,7 +292,7 @@ msgstr "Kwittly works out who owes how much to whom, with the minimum number of 
 msgid "Language"
 msgstr "Language"
 
-#: src/pages/LandingPage.tsx:165
+#: src/pages/LandingPage.tsx:157
 msgid "Lisbon weekend"
 msgstr "Lisbon weekend"
 
@@ -300,7 +300,7 @@ msgstr "Lisbon weekend"
 msgid "Lodging"
 msgstr "Lodging"
 
-#: src/pages/GroupsPage.tsx:44
+#: src/pages/GroupsPage.tsx:43
 #: src/pages/LandingPage.tsx:48
 #: src/pages/LoginPage.tsx:86
 #: src/pages/LoginPage.tsx:148
@@ -312,11 +312,11 @@ msgstr "Log in"
 msgid "Log in · Kwittly"
 msgstr "Log in · Kwittly"
 
-#: src/pages/GroupsPage.tsx:41
+#: src/pages/GroupsPage.tsx:40
 msgid "Log in again"
 msgstr "Log in again"
 
-#: src/pages/GroupsPage.tsx:44
+#: src/pages/GroupsPage.tsx:43
 msgid "Log in to get your groups on all your devices."
 msgstr "Log in to get your groups on all your devices."
 
@@ -324,7 +324,7 @@ msgstr "Log in to get your groups on all your devices."
 msgid "Log out"
 msgstr "Log out"
 
-#: src/pages/LandingPage.tsx:142
+#: src/ui/SiteFooter.tsx:18
 msgid "Made for groups who like to keep things even."
 msgstr "Made for groups who like to keep things even."
 
@@ -339,7 +339,7 @@ msgstr "My account"
 
 #: src/pages/GroupPage.tsx:46
 #: src/pages/GroupPage.tsx:174
-#: src/pages/GroupsPage.tsx:37
+#: src/pages/GroupsPage.tsx:36
 msgid "My groups"
 msgstr "My groups"
 
@@ -351,8 +351,8 @@ msgstr "My groups · Kwittly"
 msgid "New expense"
 msgstr "New expense"
 
-#: src/pages/GroupsPage.tsx:30
-#: src/pages/GroupsPage.tsx:30
+#: src/pages/GroupsPage.tsx:29
+#: src/pages/GroupsPage.tsx:29
 #: src/pages/NewGroupPage.tsx:62
 msgid "New group"
 msgstr "New group"
@@ -377,7 +377,7 @@ msgstr "No expenses match these filters."
 msgid "No expenses yet. Add the first one!"
 msgstr "No expenses yet. Add the first one!"
 
-#: src/pages/GroupsPage.tsx:57
+#: src/pages/GroupsPage.tsx:56
 msgid "No groups yet"
 msgstr "No groups yet"
 
@@ -411,7 +411,7 @@ msgstr "Page not found"
 
 #: src/group/AddExpenseSheet.tsx:76
 #: src/group/ExpenseList.tsx:53
-#: src/pages/LandingPage.tsx:197
+#: src/pages/LandingPage.tsx:189
 msgid "Paid by"
 msgstr "Paid by"
 
@@ -424,7 +424,7 @@ msgstr "Paid by {0}"
 msgid "Paid by {payer}"
 msgstr "Paid by {payer}"
 
-#: src/pages/LandingPage.tsx:212
+#: src/pages/LandingPage.tsx:204
 msgid "Paid by {who}"
 msgstr "Paid by {who}"
 
@@ -432,7 +432,7 @@ msgstr "Paid by {who}"
 msgid "Paid by you"
 msgstr "Paid by you"
 
-#: src/pages/LandingPage.tsx:158
+#: src/pages/LandingPage.tsx:150
 msgid "Pingo Doce groceries"
 msgstr "Pingo Doce groceries"
 
@@ -444,7 +444,7 @@ msgstr "Ready in 30 seconds."
 msgid "Real time"
 msgstr "Real time"
 
-#: src/pages/GroupsPage.tsx:93
+#: src/pages/GroupsPage.tsx:92
 msgid "Remove"
 msgstr "Remove"
 
@@ -548,7 +548,7 @@ msgstr "Too many attempts. Request a new code."
 msgid "Too many code requests. Try again in a few minutes."
 msgstr "Too many code requests. Try again in a few minutes."
 
-#: src/pages/LandingPage.tsx:187
+#: src/pages/LandingPage.tsx:179
 msgid "Total"
 msgstr "Total"
 
@@ -602,7 +602,7 @@ msgstr "You"
 msgid "You are {0}"
 msgstr "You are {0}"
 
-#: src/pages/LandingPage.tsx:173
+#: src/pages/LandingPage.tsx:165
 msgid "You are Bob"
 msgstr "You are Bob"
 
@@ -619,7 +619,7 @@ msgstr "You can also share a link so everyone can join the group."
 msgid "you lent {0}"
 msgstr "you lent {0}"
 
-#: src/pages/LandingPage.tsx:181
+#: src/pages/LandingPage.tsx:173
 #: src/ui/BalanceBadge.tsx:15
 msgid "You owe"
 msgstr "You owe"
@@ -629,7 +629,7 @@ msgid "you@example.com"
 msgstr "you@example.com"
 
 #: src/pages/GroupPage.tsx:84
-#: src/pages/LandingPage.tsx:178
+#: src/pages/LandingPage.tsx:170
 msgid "Your balance"
 msgstr "Your balance"
 
@@ -638,7 +638,7 @@ msgstr "Your balance"
 msgid "Your first name"
 msgstr "Your first name"
 
-#: src/pages/GroupsPage.tsx:41
+#: src/pages/GroupsPage.tsx:40
 msgid "Your session has expired. Log in again to sync your groups."
 msgstr "Your session has expired. Log in again to sync your groups."
 

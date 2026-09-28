@@ -9,7 +9,6 @@ import { useFormatters } from '../lib/prefs'
 import { AccountMenu } from '../ui/AccountMenu'
 import { AvatarStack } from '../ui/Avatar'
 import { BalanceBadge } from '../ui/BalanceBadge'
-import { LanguageSwitcher } from '../ui/LanguageSwitcher'
 import { Wordmark } from '../ui/Wordmark'
 
 export function GroupsPage() {
@@ -97,10 +96,6 @@ export function GroupsPage() {
               )}
         </ul>
       )}
-
-      <footer className="mt-12 flex justify-center">
-        <LanguageSwitcher />
-      </footer>
     </>
   )
 }

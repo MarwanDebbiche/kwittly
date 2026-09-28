@@ -1,11 +1,12 @@
 import { ConvexBetterAuthProvider, type AuthClient } from '@convex-dev/better-auth/react'
 import { convexQuery } from '@convex-dev/react-query'
-import { Outlet, createFileRoute } from '@tanstack/react-router'
+import { Outlet, createFileRoute, useMatch } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { api } from '../../convex/_generated/api'
 import { authClient } from '../lib/auth-client'
 import { getToken } from '../lib/auth-server'
 import { useAccountSync } from '../lib/myGroups'
+import { SiteFooter } from '../ui/SiteFooter'
 
 // @convex-dev/better-auth's AuthClient type resolves the session to `never` with our
 // TypeScript version; the runtime client is the one it expects.
@@ -38,6 +39,8 @@ export const Route = createFileRoute('/_app')({
 
 function AppLayout() {
   const { convexQueryClient, initialToken } = Route.useRouteContext()
+  // The group page has a floating "+ Expense" button: keep it off the footer.
+  const hasFloatingButton = Boolean(useMatch({ from: '/_app/g/$groupId', shouldThrow: false }))
   return (
     <ConvexBetterAuthProvider
       client={convexQueryClient.convexClient}
@@ -45,8 +48,11 @@ function AppLayout() {
       initialToken={initialToken}
     >
       <AccountSync />
-      <div className="mx-auto min-h-dvh max-w-xl px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-28">
-        <Outlet />
+      <div className={`flex min-h-dvh flex-col ${hasFloatingButton ? 'pb-24' : ''}`}>
+        <main className="mx-auto w-full max-w-xl flex-1 px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-12">
+          <Outlet />
+        </main>
+        <SiteFooter />
       </div>
     </ConvexBetterAuthProvider>
   )
