@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Production worker (deployed later from a manual workflow).
+  "name": "kwittly",
+  "main": "@tanstack/react-start/server-entry",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "env": {
+    // Deployed on every push to main, served at kwittly-dev.<subdomain>.workers.dev.
+    "dev": { "name": "kwittly-dev" }
+  }
+}

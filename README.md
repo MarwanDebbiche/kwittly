@@ -4,24 +4,42 @@ Shared expense tracker, like Tricount but with free filtering (by payer, by part
 
 Stack: [TanStack Start](https://tanstack.com/start) (React 19, Vite, file-based routing, SSR) + Tailwind 4, backend on [Convex](https://convex.dev) (realtime by default).
 
+## Environments
+
+| Environment | Frontend | Convex deployment | Deployed by |
+|---|---|---|---|
+| local | `npm run dev` (server runs in workerd) | local deployment on your machine | `npx convex dev` |
+| dev | `kwittly-dev.<subdomain>.workers.dev` | cloud dev deployment | GitHub Actions, on every push to `main` |
+| prod | later | production deployment | later, manual workflow |
+
 ## Getting started
 
 ```bash
 npm install
-npm run dev:backend   # Convex: run `npx convex login` first to link a cloud project
-npm run dev           # app on http://localhost:5173
+npx convex login
+npx convex dev --configure existing --dev-deployment local   # first time only: pick the kwittly project
+npm run dev                                                   # app on http://localhost:5173
 ```
 
-Without a Convex account, `CONVEX_AGENT_MODE=anonymous npx convex dev` runs a local backend on port 3210.
+Afterwards `npx convex dev` (or `npm run dev:backend`) is enough. The local deployment keeps local work separate from the deployed dev environment.
 
-Auth needs these Convex environment variables (`npx convex env set NAME value`):
+Auth needs these Convex environment variables (`npx convex env set NAME value`, add `--deployment <name>` to target another deployment):
 
-- `BETTER_AUTH_SECRET`: random secret (`openssl rand -base64 32`)
-- `SITE_URL`: app URL, e.g. `http://localhost:5173`
-- `RESEND_API_KEY` (optional in dev): without it, login codes are printed in the Convex logs instead of being emailed
+- `BETTER_AUTH_SECRET`: random secret (`openssl rand -base64 32`), different per deployment
+- `SITE_URL`: app URL, e.g. `http://localhost:5173` locally, the `workers.dev` URL for dev
+- `RESEND_API_KEY` (optional locally): without it, login codes are printed in the Convex logs instead of being emailed
 - `EMAIL_FROM` (optional): sender, defaults to `Kwittly <onboarding@resend.dev>`
 
 Other scripts: `npm run typecheck`, `npm run lint`, `npm run build`, `npm run preview`.
+
+## Deployment
+
+`.github/workflows/deploy.yml` runs typecheck and lint, then on every push to `main`:
+
+1. `npx convex deploy --cmd 'npm run build'` pushes the Convex functions to the cloud dev deployment and builds the app against it (`CLOUDFLARE_ENV=dev` selects the `dev` environment of `wrangler.jsonc`).
+2. `npx wrangler deploy` deploys the `kwittly-dev` worker.
+
+Repository secrets: `CONVEX_DEPLOY_KEY` (development deploy key of the cloud dev deployment), `CLOUDFLARE_API_TOKEN` (account token, "Edit Cloudflare Workers"), `CLOUDFLARE_ACCOUNT_ID`.
 
 ## Routes
 
