@@ -60,87 +60,94 @@ export function GroupPage({ groupId }: { groupId: string }) {
   const myBalance = balances?.balances.find((b) => b.participantId === me?._id)?.balanceCents
 
   return (
-    <>
-      <header className="mb-5 flex items-center justify-between">
-        <BackLink />
-        <button className="btn-ghost -mr-2" onClick={() => setSheet('share')}>
-          <Share2 className="size-4" /> <Trans>Share</Trans>
-        </button>
-      </header>
-
-      <h1 className="font-display text-3xl font-semibold tracking-tight">{group.name}</h1>
-      <div className="mt-2 flex items-center gap-2 text-sm text-muted">
-        <AvatarStack names={group.participants.map((p) => p.name)} max={6} />
-        {state.status === 'ready' && (
-          <button className="underline-offset-2 hover:text-ink hover:underline" onClick={() => setSheet('identity')}>
-            {me ? t`You are ${me.name}` : t`Who are you?`}
+    // Fills the page so the floating button can rest at the bottom (mt-auto).
+    <div className="flex flex-1 flex-col">
+      <div>
+        <header className="mb-5 flex items-center justify-between">
+          <BackLink />
+          <button className="btn-ghost -mr-2" onClick={() => setSheet('share')}>
+            <Share2 className="size-4" /> <Trans>Share</Trans>
           </button>
-        )}
-      </div>
+        </header>
 
-      <div className="card mt-5 grid grid-cols-2 divide-x divide-line">
-        <div className="flex flex-col justify-between p-4">
-          <p className="label">
-            <Trans>Your balance</Trans>
-          </p>
-          <div className="mt-1">
-            {me && myBalance !== undefined ? (
-              <BalanceBadge cents={myBalance} currency={group.currency} large />
-            ) : (
-              <span className="text-sm text-muted">—</span>
-            )}
+        <h1 className="font-display text-3xl font-semibold tracking-tight">{group.name}</h1>
+        <div className="mt-2 flex items-center gap-2 text-sm text-muted">
+          <AvatarStack names={group.participants.map((p) => p.name)} max={6} />
+          {state.status === 'ready' && (
+            <button className="underline-offset-2 hover:text-ink hover:underline" onClick={() => setSheet('identity')}>
+              {me ? t`You are ${me.name}` : t`Who are you?`}
+            </button>
+          )}
+        </div>
+
+        <div className="card mt-5 grid grid-cols-2 divide-x divide-line">
+          <div className="flex flex-col justify-between p-4">
+            <p className="label">
+              <Trans>Your balance</Trans>
+            </p>
+            <div className="mt-1">
+              {me && myBalance !== undefined ? (
+                <BalanceBadge cents={myBalance} currency={group.currency} large />
+              ) : (
+                <span className="text-sm text-muted">—</span>
+              )}
+            </div>
+          </div>
+          <div className="flex flex-col justify-between p-4 text-right">
+            <p className="label">
+              <Trans>Total spent</Trans>
+            </p>
+            <p className="mt-1 font-display text-2xl font-semibold tabular-nums">
+              {balances ? format.money(balances.totalCents, group.currency) : '…'}
+            </p>
           </div>
         </div>
-        <div className="flex flex-col justify-between p-4 text-right">
-          <p className="label">
-            <Trans>Total spent</Trans>
-          </p>
-          <p className="mt-1 font-display text-2xl font-semibold tabular-nums">
-            {balances ? format.money(balances.totalCents, group.currency) : '…'}
-          </p>
+
+        <div className="mt-6 grid grid-cols-2 rounded-xl bg-ink/5 p-1">
+          {(['expenses', 'balances'] as const).map((name) => (
+            <button
+              key={name}
+              onClick={() => setTab(name)}
+              className={`rounded-lg py-2 text-sm font-medium transition ${
+                tab === name ? 'bg-surface text-ink shadow-sm' : 'text-muted hover:text-ink'
+              }`}
+            >
+              {name === 'expenses' ? <Trans>Expenses</Trans> : <Trans>Balances</Trans>}
+            </button>
+          ))}
         </div>
-      </div>
 
-      <div className="mt-6 grid grid-cols-2 rounded-xl bg-ink/5 p-1">
-        {(['expenses', 'balances'] as const).map((name) => (
+        <div className="mt-5">
+          {tab === 'expenses' ? (
+            <ExpenseList group={group} me={me?._id} />
+          ) : (
+            <Balances group={group} data={balances} me={me?._id} />
+          )}
+        </div>
+
+        {state.status === 'ready' && saved && (
           <button
-            key={name}
-            onClick={() => setTab(name)}
-            className={`rounded-lg py-2 text-sm font-medium transition ${
-              tab === name ? 'bg-surface text-ink shadow-sm' : 'text-muted hover:text-ink'
-            }`}
+            className="mt-12 block w-full text-center text-xs text-muted hover:text-owe"
+            onClick={async () => {
+              await forget(groupId)
+              navigate({ to: '/' })
+            }}
           >
-            {name === 'expenses' ? <Trans>Expenses</Trans> : <Trans>Balances</Trans>}
+            {state.mode === 'account' ? <Trans>Remove this group from my account</Trans> : <Trans>Remove this group from this device</Trans>}
           </button>
-        ))}
-      </div>
-
-      <div className="mt-5">
-        {tab === 'expenses' ? (
-          <ExpenseList group={group} me={me?._id} />
-        ) : (
-          <Balances group={group} data={balances} me={me?._id} />
         )}
       </div>
 
-      {state.status === 'ready' && saved && (
+      {/* Sticky: follows the bottom of the screen while scrolling, then rests
+          just above the footer at the end of the page. */}
+      <div className="sticky bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-40 mt-auto flex justify-end pt-8">
         <button
-          className="mt-12 block w-full text-center text-xs text-muted hover:text-owe"
-          onClick={async () => {
-            await forget(groupId)
-            navigate({ to: '/' })
-          }}
+          onClick={() => setSheet('add')}
+          className="btn-primary rounded-full px-5 py-3.5 shadow-lg shadow-ink/20"
         >
-          {state.mode === 'account' ? <Trans>Remove this group from my account</Trans> : <Trans>Remove this group from this device</Trans>}
+          <Plus className="size-5" /> <Trans>Expense</Trans>
         </button>
-      )}
-
-      <button
-        onClick={() => setSheet('add')}
-        className="btn-primary fixed right-[max(1rem,calc(50vw-17rem))] bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-40 rounded-full px-5 py-3.5 shadow-lg shadow-ink/20"
-      >
-        <Plus className="size-5" /> <Trans>Expense</Trans>
-      </button>
+      </div>
 
       {sheet === 'add' && <AddExpenseSheet group={group} me={me?._id} onClose={() => setSheet(null)} />}
       {sheet === 'share' && <ShareSheet group={group} onClose={() => setSheet(null)} />}
@@ -164,7 +171,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
           />
         </Sheet>
       )}
-    </>
+    </div>
   )
 }
 

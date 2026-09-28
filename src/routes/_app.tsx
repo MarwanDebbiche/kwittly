@@ -1,6 +1,6 @@
 import { ConvexBetterAuthProvider, type AuthClient } from '@convex-dev/better-auth/react'
 import { convexQuery } from '@convex-dev/react-query'
-import { Outlet, createFileRoute, useMatch } from '@tanstack/react-router'
+import { Outlet, createFileRoute } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { api } from '../../convex/_generated/api'
 import { authClient } from '../lib/auth-client'
@@ -39,8 +39,6 @@ export const Route = createFileRoute('/_app')({
 
 function AppLayout() {
   const { convexQueryClient, initialToken } = Route.useRouteContext()
-  // The group page has a floating "+ Expense" button: keep it off the footer.
-  const hasFloatingButton = Boolean(useMatch({ from: '/_app/g/$groupId', shouldThrow: false }))
   return (
     <ConvexBetterAuthProvider
       client={convexQueryClient.convexClient}
@@ -48,8 +46,9 @@ function AppLayout() {
       initialToken={initialToken}
     >
       <AccountSync />
-      <div className={`flex min-h-dvh flex-col ${hasFloatingButton ? 'pb-24' : ''}`}>
-        <main className="mx-auto w-full max-w-xl flex-1 px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-12">
+      <div className="flex min-h-dvh flex-col">
+        {/* Flex column so a page can fill the height above the footer. */}
+        <main className="mx-auto flex w-full max-w-xl flex-1 flex-col px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-6">
           <Outlet />
         </main>
         <SiteFooter />
