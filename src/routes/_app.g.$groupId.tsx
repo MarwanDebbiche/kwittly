@@ -21,8 +21,13 @@ export const Route = createFileRoute('/_app/g/$groupId')({
   },
   head: ({ loaderData, match }) => {
     const group = loaderData?.group
-    // The tab title follows the viewer's language...
-    const title = group ? `${group.name} · Kwittly` : match.context.i18n._(msg`Group not found · Kwittly`)
+    // The tab title follows the viewer's language... (no loader data: it failed,
+    // so whether the group exists is unknown)
+    const title = group
+      ? `${group.name} · Kwittly`
+      : loaderData
+        ? match.context.i18n._(msg`Group not found · Kwittly`)
+        : 'Kwittly'
     // ...but link previews (WhatsApp, iMessage, Slack) are fetched by the app's
     // servers, not by the person who will read them: use the group's language.
     // Name and size only, no amounts.

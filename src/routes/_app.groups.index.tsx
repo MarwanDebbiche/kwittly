@@ -12,7 +12,13 @@ export const Route = createFileRoute('/_app/groups/')({
   loader: async ({ context: { queryClient } }) => {
     if (typeof window !== 'undefined') return
     const mine = queryClient.getQueryData<SavedGroup[] | null>(convexQuery(api.memberships.mine, {}).queryKey)
-    if (mine?.length) await queryClient.ensureQueryData(convexQuery(api.groups.summaries, { items: summaryItems(mine) }))
+    if (!mine?.length) return
+    try {
+      await queryClient.ensureQueryData(convexQuery(api.groups.summaries, { items: summaryItems(mine) }))
+    } catch (error) {
+      // Only a head start: the list loads in the browser once Convex is reachable.
+      console.warn('Group summaries prefetch failed:', error)
+    }
   },
   head: ({ match }) => ({ meta: [{ title: match.context.i18n._(msg`My groups · Kwittly`) }] }),
   component: GroupsPage,

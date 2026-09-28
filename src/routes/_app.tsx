@@ -25,10 +25,15 @@ export const Route = createFileRoute('/_app')({
     if (token) {
       // The router (and so this HTTP client) is created per request.
       convexQueryClient.serverHttpClient?.setAuth(token)
-      await Promise.all([
-        queryClient.ensureQueryData(convexQuery(api.memberships.mine, {})),
-        queryClient.ensureQueryData(convexQuery(api.users.current, {})),
-      ])
+      try {
+        await Promise.all([
+          queryClient.ensureQueryData(convexQuery(api.memberships.mine, {})),
+          queryClient.ensureQueryData(convexQuery(api.users.current, {})),
+        ])
+      } catch (error) {
+        // Only a head start: the browser fetches the account itself once connected.
+        console.warn('Account prefetch failed:', error)
+      }
     }
     return { initialToken: token ?? undefined }
   },

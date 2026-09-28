@@ -37,7 +37,7 @@ msgstr "{0} en trop"
 msgid "{0}'s share"
 msgstr "Part de {0}"
 
-#: src/routes/_app.g.$groupId.tsx:33
+#: src/routes/_app.g.$groupId.tsx:38
 msgid "{count, plural, one {# participant} other {# participants}} · Join the group to share expenses on Kwittly."
 msgstr "{count, plural, one {# participant} other {# participants}} · Rejoins le groupe pour partager les dépenses sur Kwittly."
 
@@ -92,6 +92,7 @@ msgstr "Une dépense ajoutée par quelqu'un apparaît instantanément chez tout 
 msgid "Back"
 msgstr "Retour"
 
+#: src/ui/ErrorPage.tsx:21
 #: src/ui/NotFound.tsx:11
 msgid "Back to home"
 msgstr "Retour à l'accueil"
@@ -164,7 +165,7 @@ msgstr "Copié"
 msgid "Copy"
 msgstr "Copier"
 
-#: src/pages/GroupsPage.tsx:62
+#: src/pages/GroupsPage.tsx:70
 #: src/pages/LandingPage.tsx:34
 #: src/pages/LandingPage.tsx:51
 #: src/pages/LandingPage.tsx:74
@@ -172,7 +173,7 @@ msgstr "Copier"
 msgid "Create a group"
 msgstr "Créer un groupe"
 
-#: src/pages/GroupsPage.tsx:59
+#: src/pages/GroupsPage.tsx:67
 msgid "Create a group for your next trip or your flatshare, or open a link a friend sent you."
 msgstr "Crée un groupe pour ton prochain voyage ou ta coloc, ou ouvre un lien de partage envoyé par un ami."
 
@@ -278,11 +279,11 @@ msgid "Group name"
 msgstr "Nom du groupe"
 
 #: src/pages/GroupPage.tsx:41
-#: src/pages/GroupsPage.tsx:90
+#: src/pages/GroupsPage.tsx:98
 msgid "Group not found"
 msgstr "Groupe introuvable"
 
-#: src/routes/_app.g.$groupId.tsx:25
+#: src/routes/_app.g.$groupId.tsx:29
 msgid "Group not found · Kwittly"
 msgstr "Groupe introuvable · Kwittly"
 
@@ -363,7 +364,7 @@ msgstr "Week-end Lisbonne"
 msgid "Lodging"
 msgstr "Logement"
 
-#: src/pages/GroupsPage.tsx:43
+#: src/pages/GroupsPage.tsx:49
 #: src/pages/LandingPage.tsx:48
 #: src/pages/LoginPage.tsx:86
 #: src/pages/LoginPage.tsx:148
@@ -375,11 +376,11 @@ msgstr "Se connecter"
 msgid "Log in · Kwittly"
 msgstr "Connexion · Kwittly"
 
-#: src/pages/GroupsPage.tsx:40
+#: src/pages/GroupsPage.tsx:46
 msgid "Log in again"
 msgstr "Se reconnecter"
 
-#: src/pages/GroupsPage.tsx:43
+#: src/pages/GroupsPage.tsx:49
 msgid "Log in to get your groups on all your devices."
 msgstr "Connecte-toi pour retrouver tes groupes sur tous tes appareils."
 
@@ -405,11 +406,11 @@ msgstr "Mon compte"
 
 #: src/pages/GroupPage.tsx:48
 #: src/pages/GroupPage.tsx:188
-#: src/pages/GroupsPage.tsx:36
+#: src/pages/GroupsPage.tsx:42
 msgid "My groups"
 msgstr "Mes groupes"
 
-#: src/routes/_app.groups.index.tsx:17
+#: src/routes/_app.groups.index.tsx:23
 msgid "My groups · Kwittly"
 msgstr "Mes groupes · Kwittly"
 
@@ -417,8 +418,8 @@ msgstr "Mes groupes · Kwittly"
 msgid "New expense"
 msgstr "Nouvelle dépense"
 
-#: src/pages/GroupsPage.tsx:29
-#: src/pages/GroupsPage.tsx:29
+#: src/pages/GroupsPage.tsx:35
+#: src/pages/GroupsPage.tsx:35
 #: src/pages/NewGroupPage.tsx:62
 msgid "New group"
 msgstr "Nouveau groupe"
@@ -443,7 +444,7 @@ msgstr "Aucune dépense ne correspond à ces filtres."
 msgid "No expenses yet. Add the first one!"
 msgstr "Aucune dépense. Ajoute la première !"
 
-#: src/pages/GroupsPage.tsx:56
+#: src/pages/GroupsPage.tsx:64
 msgid "No groups yet"
 msgstr "Aucun groupe pour l'instant"
 
@@ -518,7 +519,7 @@ msgstr "Prêt en 30 secondes."
 msgid "Real time"
 msgstr "En temps réel"
 
-#: src/pages/GroupsPage.tsx:92
+#: src/pages/GroupsPage.tsx:100
 msgid "Remove"
 msgstr "Retirer"
 
@@ -582,6 +583,10 @@ msgstr "Partager via…"
 msgid "Shared expenses, <0>without the headache.</0>"
 msgstr "Les comptes entre amis, <0>sans prise de tête.</0>"
 
+#: src/ui/ErrorPage.tsx:11
+msgid "Something went wrong"
+msgstr "Oups, quelque chose s'est mal passé"
+
 #: src/pages/LoginPage.tsx:19
 msgid "Something went wrong, please try again."
 msgstr "Une erreur est survenue, réessaie."
@@ -622,6 +627,10 @@ msgstr "Le groupe sera retiré de ton compte, sur tous tes appareils."
 msgid "The link may be wrong, or the group was deleted."
 msgstr "Le lien est peut-être incorrect, ou le groupe a été supprimé."
 
+#: src/ui/ErrorPage.tsx:14
+msgid "The page could not be loaded. Check your connection and try again."
+msgstr "La page n'a pas pu être chargée. Vérifie ta connexion et réessaie."
+
 #: src/pages/LoginPage.tsx:14
 msgid "This code has expired. Request a new one."
 msgstr "Ce code a expiré. Demande un nouveau code."
@@ -661,6 +670,10 @@ msgstr "Prochain voyage prévu ?"
 #: src/pages/LandingPage.tsx:67
 msgid "Trips, flatshares, nights out: note who paid for what, Kwittly handles the rest. And find any expense in two clicks."
 msgstr "Voyages, coloc, soirées : note qui a payé quoi, Kwittly s'occupe du reste. Et tu retrouves n'importe quelle dépense en deux clics."
+
+#: src/ui/ErrorPage.tsx:18
+msgid "Try again"
+msgstr "Réessayer"
 
 #: src/pages/NewGroupPage.tsx:73
 msgid "Weekend in Lisbon"
@@ -732,7 +745,7 @@ msgstr "Ton solde"
 msgid "Your first name"
 msgstr "Ton prénom"
 
-#: src/pages/GroupsPage.tsx:40
+#: src/pages/GroupsPage.tsx:46
 msgid "Your session has expired. Log in again to sync your groups."
 msgstr "Ta session a expiré. Reconnecte-toi pour synchroniser tes groupes."
 

@@ -4,11 +4,13 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { ChevronRight, Cloud, Plus, Users } from 'lucide-react'
 import { api } from '../../convex/_generated/api'
+import { useConvexUnreachable } from '../lib/connection'
 import { summaryItems, useMyGroups } from '../lib/myGroups'
 import { useFormatters } from '../lib/prefs'
 import { AccountMenu } from '../ui/AccountMenu'
 import { AvatarStack } from '../ui/Avatar'
 import { BalanceBadge } from '../ui/BalanceBadge'
+import { ErrorState } from '../ui/ErrorPage'
 import { Wordmark } from '../ui/Wordmark'
 
 export function GroupsPage() {
@@ -19,6 +21,10 @@ export function GroupsPage() {
   const { data: summaries } = useQuery(
     convexQuery(api.groups.summaries, saved ? { items: summaryItems(saved) } : 'skip'),
   )
+  // Groups load over the Convex WebSocket, which retries forever: show an
+  // error instead of an endless skeleton when it cannot connect.
+  const unreachable = useConvexUnreachable()
+  const loading = saved === undefined || (saved.length > 0 && summaries === undefined)
 
   return (
     <>
@@ -43,7 +49,9 @@ export function GroupsPage() {
         <Banner text={t`Log in to get your groups on all your devices.`} cta={t`Log in`} />
       )}
 
-      {saved === undefined ? (
+      {loading && unreachable ? (
+        <ErrorState onRetry={() => window.location.reload()} />
+      ) : saved === undefined ? (
         <ul className="mt-6 space-y-3">
           <li className="card h-[92px] animate-pulse" />
         </ul>
