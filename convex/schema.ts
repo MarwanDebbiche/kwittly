@@ -22,10 +22,15 @@ export default defineSchema({
     paidBy: v.id("participants"),
     date: v.number(),
     category: v.optional(v.string()),
+    // How the expense was split, kept to show it again when editing.
+    // Missing on older expenses: they were split equally.
+    splitMode: v.optional(v.union(v.literal("equal"), v.literal("shares"), v.literal("amounts"))),
     splits: v.array(
       v.object({
         participantId: v.id("participants"),
         shareCents: v.number(),
+        // Number of shares, in "shares" mode.
+        shares: v.optional(v.number()),
       }),
     ),
   })

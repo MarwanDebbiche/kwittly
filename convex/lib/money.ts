@@ -1,8 +1,28 @@
 /** Split `totalCents` into `n` integer shares; leftover cents go to the first shares. */
 export function splitEqually(totalCents: number, n: number): number[] {
-  const base = Math.floor(totalCents / n);
-  const remainder = totalCents - base * n;
-  return Array.from({ length: n }, (_, i) => base + (i < remainder ? 1 : 0));
+  return splitByShares(totalCents, Array.from({ length: n }, () => 1));
+}
+
+/**
+ * Split `totalCents` proportionally to `shares` (positive integers), in whole
+ * cents that add up exactly to the total: each part is rounded down, then the
+ * leftover cents go to the largest fractional parts (first ones on ties).
+ */
+export function splitByShares(totalCents: number, shares: number[]): number[] {
+  const totalShares = shares.reduce((sum, s) => sum + s, 0);
+  if (totalShares <= 0) return shares.map(() => 0);
+  const exact = shares.map((s) => (totalCents * s) / totalShares);
+  const parts = exact.map(Math.floor);
+  let leftover = totalCents - parts.reduce((sum, p) => sum + p, 0);
+  const byFraction = exact
+    .map((value, i) => ({ i, fraction: value - parts[i] }))
+    .sort((a, b) => b.fraction - a.fraction || a.i - b.i);
+  for (const { i } of byFraction) {
+    if (leftover <= 0) break;
+    parts[i]++;
+    leftover--;
+  }
+  return parts;
 }
 
 type ExpenseLike = {

@@ -1,4 +1,4 @@
-import { Trans, useLingui } from '@lingui/react/macro'
+import { Plural, Trans, useLingui } from '@lingui/react/macro'
 import { useMutation } from 'convex/react'
 import { Pencil, Trash2 } from 'lucide-react'
 import { useState } from 'react'
@@ -43,7 +43,16 @@ export function ExpenseDetailSheet({
         </div>
       </div>
 
-      <div className="card mt-5 divide-y divide-line">
+      <p className="label mt-5 mb-2 px-1">
+        {expense.splitMode === 'shares' ? (
+          <Trans>Split by shares</Trans>
+        ) : expense.splitMode === 'amounts' ? (
+          <Trans>Split by amounts</Trans>
+        ) : (
+          <Trans>Split equally</Trans>
+        )}
+      </p>
+      <div className="card divide-y divide-line">
         <div className="flex items-center gap-3 p-3">
           <Avatar name={names.get(expense.paidBy) ?? '?'} size="sm" />
           <span className="flex-1">
@@ -57,6 +66,12 @@ export function ExpenseDetailSheet({
           <div key={s.participantId} className="flex items-center gap-3 p-3 pl-12 text-sm">
             <span className="flex-1 text-muted">
               <Trans>{names.get(s.participantId)}'s share</Trans>
+              {s.shares !== undefined && (
+                <>
+                  {' · '}
+                  <Plural value={s.shares} one="# share" other="# shares" />
+                </>
+              )}
             </span>
             <span className="tabular-nums">{format.money(s.shareCents, group.currency)}</span>
           </div>
