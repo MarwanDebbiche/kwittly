@@ -2,12 +2,13 @@ import { convexQuery } from '@convex-dev/react-query'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { ArrowLeft, Plus, Share2 } from 'lucide-react'
+import { ArrowLeft, LogOut, Plus, Share2 } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { AddExpenseSheet } from '../group/AddExpenseSheet'
 import { Balances } from '../group/Balances'
 import { ExpenseList } from '../group/ExpenseList'
+import { LeaveGroupSheet } from '../group/LeaveGroupSheet'
 import { ShareSheet } from '../group/ShareSheet'
 import { WhoAreYou } from '../group/WhoAreYou'
 import { useMyGroups } from '../lib/myGroups'
@@ -28,7 +29,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
   const { state, save, forget } = useMyGroups()
   const saved = state.status === 'ready' ? state.groups.find((g) => g.id === groupId) : undefined
   const [tab, setTab] = useState<'expenses' | 'balances'>('expenses')
-  const [sheet, setSheet] = useState<'add' | 'share' | 'identity' | null>(null)
+  const [sheet, setSheet] = useState<'add' | 'share' | 'identity' | 'leave' | null>(null)
   const [joinDismissed, setJoinDismissed] = useState(false)
 
   if (group === undefined) return <GroupSkeleton />
@@ -65,9 +66,17 @@ export function GroupPage({ groupId }: { groupId: string }) {
       <div>
         <header className="mb-5 flex items-center justify-between">
           <BackLink />
-          <button className="btn-ghost -mr-2" onClick={() => setSheet('share')}>
-            <Share2 className="size-4" /> <Trans>Share</Trans>
-          </button>
+          <div className="-mr-2 flex items-center">
+            <button className="btn-ghost" onClick={() => setSheet('share')}>
+              <Share2 className="size-4" /> <Trans>Share</Trans>
+            </button>
+            {/* Only groups in the user's list can be left. */}
+            {state.status === 'ready' && saved && (
+              <button className="btn-ghost hover:text-owe" onClick={() => setSheet('leave')}>
+                <LogOut className="size-4" /> <Trans>Leave group</Trans>
+              </button>
+            )}
+          </div>
         </header>
 
         <h1 className="font-display text-3xl font-semibold tracking-tight">{group.name}</h1>
@@ -124,18 +133,6 @@ export function GroupPage({ groupId }: { groupId: string }) {
             <Balances group={group} data={balances} me={me?._id} />
           )}
         </div>
-
-        {state.status === 'ready' && saved && (
-          <button
-            className="mt-12 block w-full text-center text-xs text-muted hover:text-owe"
-            onClick={async () => {
-              await forget(groupId)
-              navigate({ to: '/' })
-            }}
-          >
-            {state.mode === 'account' ? <Trans>Remove this group from my account</Trans> : <Trans>Remove this group from this device</Trans>}
-          </button>
-        )}
       </div>
 
       {/* Sticky: follows the bottom of the screen while scrolling, then rests
@@ -151,6 +148,17 @@ export function GroupPage({ groupId }: { groupId: string }) {
 
       {sheet === 'add' && <AddExpenseSheet group={group} me={me?._id} onClose={() => setSheet(null)} />}
       {sheet === 'share' && <ShareSheet group={group} onClose={() => setSheet(null)} />}
+      {sheet === 'leave' && state.status === 'ready' && (
+        <LeaveGroupSheet
+          groupName={group.name}
+          fromAccount={state.mode === 'account'}
+          onClose={() => setSheet(null)}
+          onConfirm={async () => {
+            await forget(groupId)
+            navigate({ to: '/' })
+          }}
+        />
+      )}
       {showJoin && (
         <Sheet title={t`Join “${group.name}”`} onClose={() => setJoinDismissed(true)}>
           <p className="mb-5 text-muted">

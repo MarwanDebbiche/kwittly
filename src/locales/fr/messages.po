@@ -72,7 +72,7 @@ msgid "Back to home"
 msgstr "Retour à l'accueil"
 
 #: src/group/Balances.tsx:20
-#: src/pages/GroupPage.tsx:113
+#: src/pages/GroupPage.tsx:124
 msgid "Balances"
 msgstr "Soldes"
 
@@ -83,6 +83,10 @@ msgstr "Les soldes se mettent à jour tout seuls."
 #: src/pages/LandingPage.tsx:14
 msgid "By who paid, by who is involved, by category, by text. Combine them, no subscription."
 msgstr "Par personne qui a payé, par participant concerné, par catégorie, par texte. Combinables, sans abonnement."
+
+#: src/group/LeaveGroupSheet.tsx:44
+msgid "Cancel"
+msgstr "Annuler"
 
 #: src/group/AddExpenseSheet.tsx:110
 #: src/group/ExpenseList.tsx:65
@@ -191,11 +195,11 @@ msgstr "Chacun rejoint en un clic, depuis son téléphone."
 msgid "Everything you need, nothing to pay."
 msgstr "Tout ce qu'il faut, rien de payant."
 
-#: src/pages/GroupPage.tsx:142
+#: src/pages/GroupPage.tsx:145
 msgid "Expense"
 msgstr "Dépense"
 
-#: src/pages/GroupPage.tsx:113
+#: src/pages/GroupPage.tsx:124
 msgid "Expenses"
 msgstr "Dépenses"
 
@@ -227,7 +231,7 @@ msgstr "Courses"
 msgid "Group name"
 msgstr "Nom du groupe"
 
-#: src/pages/GroupPage.tsx:39
+#: src/pages/GroupPage.tsx:40
 #: src/pages/GroupsPage.tsx:90
 msgid "Group not found"
 msgstr "Groupe introuvable"
@@ -262,12 +266,16 @@ msgstr "Concerne {0}"
 msgid "Involves me"
 msgstr "Me concerne"
 
+#: src/group/LeaveGroupSheet.tsx:36
+msgid "It stays available to the other members, and your name stays in its expenses. You can come back anytime with the share link."
+msgstr "Il reste accessible aux autres membres, et ton nom reste dans ses dépenses. Tu pourras revenir quand tu veux avec le lien de partage."
+
 #: src/group/WhoAreYou.tsx:53
 msgid "Join"
 msgstr "Rejoindre"
 
 #. placeholder {0}: group.name
-#: src/pages/GroupPage.tsx:148
+#: src/pages/GroupPage.tsx:163
 msgid "Join “{0}”"
 msgstr "Rejoindre « {0} »"
 
@@ -291,6 +299,15 @@ msgstr "Kwittly calcule qui doit combien à qui, avec le nombre minimal de rembo
 #: src/ui/LanguageSwitcher.tsx:21
 msgid "Language"
 msgstr "Langue"
+
+#: src/group/LeaveGroupSheet.tsx:26
+msgid "Leave “{groupName}”?"
+msgstr "Quitter « {groupName} » ?"
+
+#: src/group/LeaveGroupSheet.tsx:58
+#: src/pages/GroupPage.tsx:76
+msgid "Leave group"
+msgstr "Quitter le groupe"
 
 #: src/pages/LandingPage.tsx:157
 msgid "Lisbon weekend"
@@ -337,8 +354,8 @@ msgstr "Moi"
 msgid "My account"
 msgstr "Mon compte"
 
-#: src/pages/GroupPage.tsx:46
-#: src/pages/GroupPage.tsx:174
+#: src/pages/GroupPage.tsx:47
+#: src/pages/GroupPage.tsx:189
 #: src/pages/GroupsPage.tsx:36
 msgid "My groups"
 msgstr "Mes groupes"
@@ -452,17 +469,9 @@ msgstr "Retirer"
 msgid "Remove {other}"
 msgstr "Retirer {other}"
 
-#: src/pages/GroupPage.tsx:50
+#: src/pages/GroupPage.tsx:51
 msgid "Remove from my list"
 msgstr "Retirer de ma liste"
-
-#: src/pages/GroupPage.tsx:134
-msgid "Remove this group from my account"
-msgstr "Retirer ce groupe de mon compte"
-
-#: src/pages/GroupPage.tsx:134
-msgid "Remove this group from this device"
-msgstr "Retirer ce groupe de cet appareil"
 
 #: src/pages/LoginPage.tsx:155
 msgid "Resend ({cooldown}s)"
@@ -492,7 +501,7 @@ msgstr "Envoi…"
 msgid "Settled up"
 msgstr "À l'équilibre"
 
-#: src/pages/GroupPage.tsx:67
+#: src/pages/GroupPage.tsx:71
 msgid "Share"
 msgstr "Partager"
 
@@ -524,7 +533,15 @@ msgstr "Nombre minimal de virements pour que tout le monde soit quitte."
 msgid "The fewest transfers possible"
 msgstr "Le moins de virements possible"
 
-#: src/pages/GroupPage.tsx:42
+#: src/group/LeaveGroupSheet.tsx:32
+msgid "The group will be removed from this device only."
+msgstr "Le groupe sera retiré de cet appareil uniquement."
+
+#: src/group/LeaveGroupSheet.tsx:30
+msgid "The group will be removed from your account, on all your devices."
+msgstr "Le groupe sera retiré de ton compte, sur tous tes appareils."
+
+#: src/pages/GroupPage.tsx:43
 msgid "The link may be wrong, or the group was deleted."
 msgstr "Le lien est peut-être incorrect, ou le groupe a été supprimé."
 
@@ -552,7 +569,7 @@ msgstr "Trop de demandes de code. Réessaie dans quelques minutes."
 msgid "Total"
 msgstr "Total"
 
-#: src/pages/GroupPage.tsx:96
+#: src/pages/GroupPage.tsx:107
 msgid "Total spent"
 msgstr "Total dépensé"
 
@@ -576,12 +593,12 @@ msgstr "Week-end à Lisbonne"
 msgid "What for? (e.g. Supermarket)"
 msgstr "Pour quoi ? (ex : Courses Carrefour)"
 
-#: src/pages/GroupPage.tsx:150
+#: src/pages/GroupPage.tsx:165
 msgid "Who are you in this group? It lets us show what you owe or are owed."
 msgstr "Qui es-tu dans ce groupe ? Ça permet d'afficher ce que tu dois ou ce qu'on te doit."
 
-#: src/pages/GroupPage.tsx:76
-#: src/pages/GroupPage.tsx:156
+#: src/pages/GroupPage.tsx:87
+#: src/pages/GroupPage.tsx:171
 msgid "Who are you?"
 msgstr "Qui es-tu ?"
 
@@ -598,7 +615,7 @@ msgid "You"
 msgstr "Toi"
 
 #. placeholder {0}: me.name
-#: src/pages/GroupPage.tsx:76
+#: src/pages/GroupPage.tsx:87
 msgid "You are {0}"
 msgstr "Tu es {0}"
 
@@ -628,7 +645,7 @@ msgstr "Tu dois"
 msgid "you@example.com"
 msgstr "toi@exemple.fr"
 
-#: src/pages/GroupPage.tsx:84
+#: src/pages/GroupPage.tsx:95
 #: src/pages/LandingPage.tsx:170
 msgid "Your balance"
 msgstr "Ton solde"
