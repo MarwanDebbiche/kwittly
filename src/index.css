@@ -1,10 +1,56 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Inter", ui-sans-serif, sans-serif;
+
+  --color-canvas: #f6f4ef;
+  --color-surface: #ffffff;
+  --color-ink: #1b1a17;
+  --color-muted: #75716a;
+  --color-line: #e8e4dc;
+  --color-accent: #2f6b4f;
+  --color-accent-soft: #e3efe7;
+  --color-owed: #1f7a4d;
+  --color-owe: #c2412d;
+}
+
+@layer base {
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+  }
+  button {
+    @apply cursor-pointer;
+  }
+}
+
 @layer components {
-  .input {
-    @apply rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-emerald-500;
+  .field {
+    @apply w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-[15px] outline-none transition placeholder:text-muted/70 focus:border-ink/40 focus:ring-4 focus:ring-ink/5;
   }
-  .btn {
-    @apply rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700;
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-ink px-4 py-3 text-[15px] font-medium text-white transition hover:bg-ink/85 active:scale-[0.98] disabled:opacity-40;
   }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-muted transition hover:bg-ink/5 hover:text-ink;
+  }
+  .chip {
+    @apply inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-sm transition hover:border-ink/30;
+  }
+  .chip-on {
+    @apply border-ink bg-ink text-white hover:border-ink;
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-surface;
+  }
+  .label {
+    @apply text-xs font-medium uppercase tracking-wide text-muted;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
 }

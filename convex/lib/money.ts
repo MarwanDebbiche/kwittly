@@ -5,6 +5,30 @@ export function splitEqually(totalCents: number, n: number): number[] {
   return Array.from({ length: n }, (_, i) => base + (i < remainder ? 1 : 0));
 }
 
+type ExpenseLike = {
+  paidBy: string;
+  amountCents: number;
+  splits: { participantId: string; shareCents: number }[];
+};
+
+/** Net balance per participant: positive = is owed money, negative = owes money. */
+export function computeBalances(
+  participantIds: string[],
+  expenses: ExpenseLike[],
+): Map<string, number> {
+  const balances = new Map(participantIds.map((id) => [id, 0]));
+  for (const e of expenses) {
+    balances.set(e.paidBy, (balances.get(e.paidBy) ?? 0) + e.amountCents);
+    for (const s of e.splits) {
+      balances.set(
+        s.participantId,
+        (balances.get(s.participantId) ?? 0) - s.shareCents,
+      );
+    }
+  }
+  return balances;
+}
+
 export type Settlement = { from: string; to: string; amountCents: number };
 
 /**

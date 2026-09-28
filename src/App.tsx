@@ -1,30 +1,15 @@
-import { useEffect, useState } from 'react'
-import type { Id } from '../convex/_generated/dataModel'
-import { CreateGroup } from './components/CreateGroup'
-import { GroupPage } from './components/GroupPage'
-
-function useHashRoute() {
-  const [hash, setHash] = useState(window.location.hash)
-  useEffect(() => {
-    const onChange = () => setHash(window.location.hash)
-    window.addEventListener('hashchange', onChange)
-    return () => window.removeEventListener('hashchange', onChange)
-  }, [])
-  return hash
-}
+import { useRoute } from './lib/router'
+import { GroupPage } from './pages/GroupPage'
+import { GroupsPage } from './pages/GroupsPage'
+import { NewGroupPage } from './pages/NewGroupPage'
 
 export default function App() {
-  const hash = useHashRoute()
-  const groupId = hash.match(/^#\/g\/(.+)$/)?.[1] as Id<'groups'> | undefined
-
+  const route = useRoute()
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <div className="mx-auto max-w-2xl px-4 py-6">
-        <a href="#/" className="text-xl font-bold text-emerald-600">
-          splitmate
-        </a>
-        <main className="mt-6">{groupId ? <GroupPage groupId={groupId} /> : <CreateGroup />}</main>
-      </div>
+    <div className="mx-auto min-h-dvh max-w-xl px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-28">
+      {route.name === 'home' && <GroupsPage />}
+      {route.name === 'new' && <NewGroupPage />}
+      {route.name === 'group' && <GroupPage key={route.id} groupId={route.id} />}
     </div>
   )
 }
