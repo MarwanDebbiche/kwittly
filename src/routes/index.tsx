@@ -19,9 +19,9 @@ export const Route = createFileRoute('/')({
   },
   head: () => ({
     meta: [
-      { title: 'splitmate · Les comptes entre amis, sans prise de tête' },
+      { title: 'Kwittly · Les comptes entre amis, sans prise de tête' },
       { name: 'description', content: description },
-      { property: 'og:title', content: 'splitmate' },
+      { property: 'og:title', content: 'Kwittly' },
       { property: 'og:description', content: description },
       { property: 'og:type', content: 'website' },
     ],

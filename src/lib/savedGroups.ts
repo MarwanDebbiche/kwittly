@@ -9,7 +9,7 @@ export type SavedGroup = { id: string; me?: string; addedAt: number }
 const NO_GROUPS: SavedGroup[] = []
 
 /** Groups saved in this browser while logged out. Imported into the account at login. */
-export const anonymousGroups = createLocalStore<SavedGroup[]>('splitmate:groups', NO_GROUPS)
+export const anonymousGroups = createLocalStore<SavedGroup[]>('kwittly:groups', NO_GROUPS)
 
 /**
  * Last known copy of the account's groups, so the list stays visible if the
@@ -17,7 +17,7 @@ export const anonymousGroups = createLocalStore<SavedGroup[]>('splitmate:groups'
  * user logs in, cleared on explicit logout.
  */
 export const accountCache = createLocalStore<{ userId: string; groups: SavedGroup[] } | null>(
-  'splitmate:account-cache',
+  'kwittly:account-cache',
   null,
 )
 

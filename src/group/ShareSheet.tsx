@@ -29,7 +29,7 @@ export function ShareSheet({ group, onClose }: { group: Group; onClose: () => vo
       {canNativeShare && (
         <button
           className="btn-ghost mt-3 w-full border border-line"
-          onClick={() => navigator.share({ title: group.name, text: `Rejoins « ${group.name} » sur splitmate`, url })}
+          onClick={() => navigator.share({ title: group.name, text: `Rejoins « ${group.name} » sur Kwittly`, url })}
         >
           <Share className="size-4" /> Partager via…
         </button>

@@ -1,4 +1,4 @@
-# splitmate
+# Kwittly
 
 Shared expense tracker, like Tricount but with free filtering (by payer, by participant, by category, by text).
 
@@ -19,7 +19,7 @@ Auth needs these Convex environment variables (`npx convex env set NAME value`):
 - `BETTER_AUTH_SECRET`: random secret (`openssl rand -base64 32`)
 - `SITE_URL`: app URL, e.g. `http://localhost:5173`
 - `RESEND_API_KEY` (optional in dev): without it, login codes are printed in the Convex logs instead of being emailed
-- `EMAIL_FROM` (optional): sender, defaults to `splitmate <onboarding@resend.dev>`
+- `EMAIL_FROM` (optional): sender, defaults to `Kwittly <onboarding@resend.dev>`
 
 Other scripts: `npm run typecheck`, `npm run lint`, `npm run build`, `npm run preview`.
 

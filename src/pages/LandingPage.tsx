@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowLeftRight, ArrowRight, Link2, SlidersHorizontal, UtensilsCrossed, Car, ShoppingBasket, Zap } from 'lucide-react'
 import { Avatar } from '../ui/Avatar'
+import { Wordmark } from '../ui/Wordmark'
 
 const FEATURES = [
   {
@@ -21,7 +22,7 @@ const FEATURES = [
   {
     icon: ArrowLeftRight,
     title: 'Le moins de virements possible',
-    text: 'splitmate calcule qui doit combien à qui, avec le nombre minimal de remboursements.',
+    text: 'Kwittly calcule qui doit combien à qui, avec le nombre minimal de remboursements.',
   },
 ]
 
@@ -56,7 +57,7 @@ export function LandingPage() {
               Les comptes entre amis, <span className="text-accent">sans prise de tête.</span>
             </h1>
             <p className="mt-6 max-w-lg text-lg text-muted">
-              Voyages, coloc, soirées : note qui a payé quoi, splitmate s'occupe du reste. Et tu retrouves n'importe quelle
+              Voyages, coloc, soirées : note qui a payé quoi, Kwittly s'occupe du reste. Et tu retrouves n'importe quelle
               dépense en deux clics.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -119,19 +120,11 @@ export function LandingPage() {
 
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-8 text-sm text-muted sm:px-6">
-          <Wordmark small />
+          <Wordmark className="text-lg" />
           <span>Fait pour les groupes qui aiment les bons comptes.</span>
         </div>
       </footer>
     </div>
-  )
-}
-
-function Wordmark({ small }: { small?: boolean }) {
-  return (
-    <span className={`font-display font-bold tracking-tight text-ink ${small ? 'text-lg' : 'text-2xl'}`}>
-      split<span className="text-accent">mate</span>
-    </span>
   )
 }
 

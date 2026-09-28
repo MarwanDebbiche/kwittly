@@ -7,6 +7,7 @@ import { useMyGroups } from '../lib/myGroups'
 import { AccountMenu } from '../ui/AccountMenu'
 import { AvatarStack } from '../ui/Avatar'
 import { BalanceBadge } from '../ui/BalanceBadge'
+import { Wordmark } from '../ui/Wordmark'
 
 export function GroupsPage() {
   const { state, forget } = useMyGroups()
@@ -19,9 +20,7 @@ export function GroupsPage() {
   return (
     <>
       <header className="mb-8 flex items-center justify-between">
-        <span className="font-display text-2xl font-bold tracking-tight">
-          split<span className="text-accent">mate</span>
-        </span>
+        <Wordmark />
         <div className="flex items-center gap-2">
           <AccountMenu />
           <Link to="/groups/new" className="btn-primary size-10 rounded-full p-0" aria-label="Nouveau groupe" title="Nouveau groupe">
