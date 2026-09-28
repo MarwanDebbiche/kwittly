@@ -5,4 +5,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [tanstackStart(), react(), tailwindcss()],
+  ssr: {
+    noExternal: ['@convex-dev/better-auth'],
+  },
 })

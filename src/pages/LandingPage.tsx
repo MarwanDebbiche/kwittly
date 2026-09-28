@@ -37,9 +37,14 @@ export function LandingPage() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <nav className="flex items-center justify-between py-5">
           <Wordmark />
-          <Link to="/groups/new" className="btn-primary px-4 py-2 text-sm">
-            Créer un groupe
-          </Link>
+          <div className="flex items-center gap-1">
+            <Link to="/login" className="btn-ghost">
+              Se connecter
+            </Link>
+            <Link to="/groups/new" className="btn-primary px-4 py-2 text-sm">
+              Créer un groupe
+            </Link>
+          </div>
         </nav>
 
         <section className="grid items-center gap-12 pt-10 pb-20 lg:grid-cols-[1.1fr_1fr] lg:pt-20">

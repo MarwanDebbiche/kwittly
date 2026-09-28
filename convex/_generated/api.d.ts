@@ -8,10 +8,14 @@
  * @module
  */
 
+import type * as auth from "../auth.js";
 import type * as balances from "../balances.js";
 import type * as expenses from "../expenses.js";
 import type * as groups from "../groups.js";
+import type * as http from "../http.js";
+import type * as lib_email from "../lib/email.js";
 import type * as lib_money from "../lib/money.js";
+import type * as memberships from "../memberships.js";
 
 import type {
   ApiFromModules,
@@ -20,10 +24,14 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  auth: typeof auth;
   balances: typeof balances;
   expenses: typeof expenses;
   groups: typeof groups;
+  http: typeof http;
+  "lib/email": typeof lib_email;
   "lib/money": typeof lib_money;
+  memberships: typeof memberships;
 }>;
 
 /**
@@ -52,4 +60,7 @@ export declare const internal: FilterApi<
   FunctionReference<any, "internal">
 >;
 
-export declare const components: {};
+export declare const components: {
+  betterAuth: import("@convex-dev/better-auth/_generated/component.js").ComponentApi<"betterAuth">;
+  resend: import("@convex-dev/resend/_generated/component.js").ComponentApi<"resend">;
+};

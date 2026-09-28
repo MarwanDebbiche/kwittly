@@ -11,9 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
+import { Route as AppLoginRouteImport } from './routes/_app.login'
 import { Route as AppGGroupIdRouteImport } from './routes/_app.g.$groupId'
 import { Route as AppGroupsIndexRouteImport } from './routes/_app.groups.index'
 import { Route as AppGroupsNewRouteImport } from './routes/_app.groups.new'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const AppRoute = AppRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppLoginRoute = AppLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppGGroupIdRoute = AppGGroupIdRouteImport.update({
   id: '/g/$groupId',
@@ -39,44 +46,59 @@ const AppGroupsNewRoute = AppGroupsNewRouteImport.update({
   path: '/groups/new',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof AppLoginRoute
   '/g/$groupId': typeof AppGGroupIdRoute
   '/groups/new': typeof AppGroupsNewRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/groups/': typeof AppGroupsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof AppLoginRoute
   '/g/$groupId': typeof AppGGroupIdRoute
   '/groups/new': typeof AppGroupsNewRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/groups': typeof AppGroupsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/_app/login': typeof AppLoginRoute
   '/_app/g/$groupId': typeof AppGGroupIdRoute
   '/_app/groups/new': typeof AppGroupsNewRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/_app/groups/': typeof AppGroupsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/g/$groupId' | '/groups/new' | '/groups/'
+  fullPaths:
+    '/' | '/login' | '/g/$groupId' | '/groups/new' | '/api/auth/$' | '/groups/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/g/$groupId' | '/groups/new' | '/groups'
+  to: '/' | '/login' | '/g/$groupId' | '/groups/new' | '/api/auth/$' | '/groups'
   id:
     | '__root__'
     | '/'
     | '/_app'
+    | '/_app/login'
     | '/_app/g/$groupId'
     | '/_app/groups/new'
+    | '/api/auth/$'
     | '/_app/groups/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -94,6 +116,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/login': {
+      id: '/_app/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AppLoginRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_app/g/$groupId': {
       id: '/_app/g/$groupId'
@@ -116,16 +145,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppGroupsNewRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppLoginRoute: typeof AppLoginRoute
   AppGGroupIdRoute: typeof AppGGroupIdRoute
   AppGroupsNewRoute: typeof AppGroupsNewRoute
   AppGroupsIndexRoute: typeof AppGroupsIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppLoginRoute: AppLoginRoute,
   AppGGroupIdRoute: AppGGroupIdRoute,
   AppGroupsNewRoute: AppGroupsNewRoute,
   AppGroupsIndexRoute: AppGroupsIndexRoute,
@@ -136,6 +174,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

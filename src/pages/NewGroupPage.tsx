@@ -3,7 +3,7 @@ import { useMutation } from 'convex/react'
 import { ArrowLeft, Plus, X } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
-import { saveGroup } from '../lib/savedGroups'
+import { useMyGroups } from '../lib/myGroups'
 import { Avatar } from '../ui/Avatar'
 
 const CURRENCIES = ['EUR', 'USD', 'GBP', 'CHF', 'CAD', 'JPY']
@@ -11,6 +11,7 @@ const CURRENCIES = ['EUR', 'USD', 'GBP', 'CHF', 'CAD', 'JPY']
 export function NewGroupPage() {
   const navigate = useNavigate()
   const createGroup = useMutation(api.groups.create)
+  const { save } = useMyGroups()
   const [name, setName] = useState('')
   const [me, setMe] = useState('')
   const [others, setOthers] = useState<string[]>([])
@@ -37,7 +38,7 @@ export function NewGroupPage() {
         currency,
         participants: [me.trim(), ...pending],
       })
-      saveGroup(groupId, participantIds[0])
+      await save(groupId, participantIds[0])
       navigate({ to: '/g/$groupId', params: { groupId } })
     } finally {
       setSubmitting(false)

@@ -9,7 +9,7 @@ import { ExpenseList } from '../group/ExpenseList'
 import { ShareSheet } from '../group/ShareSheet'
 import { WhoAreYou } from '../group/WhoAreYou'
 import { formatCents } from '../lib/money'
-import { forgetGroup, saveGroup, useSavedGroup } from '../lib/savedGroups'
+import { useMyGroups } from '../lib/myGroups'
 import { AvatarStack } from '../ui/Avatar'
 import { BalanceBadge } from '../ui/BalanceBadge'
 import { Sheet } from '../ui/Sheet'
@@ -17,12 +17,13 @@ import { Sheet } from '../ui/Sheet'
 export function GroupPage({ groupId }: { groupId: string }) {
   const navigate = useNavigate()
   const group = useQuery(api.groups.get, { groupId })
-  const saved = useSavedGroup(groupId)
+  const { state, save, forget } = useMyGroups()
+  const saved = state.status === 'ready' ? state.groups.find((g) => g.id === groupId) : undefined
   const [tab, setTab] = useState<'expenses' | 'balances'>('expenses')
   const [sheet, setSheet] = useState<'add' | 'share' | 'identity' | null>(null)
   const balances = useQuery(api.balances.get, group ? { groupId: group._id } : 'skip')
 
-  if (group === undefined) return <GroupSkeleton />
+  if (group === undefined || state.status === 'loading') return <GroupSkeleton />
   if (group === null)
     return (
       <div className="pt-16 text-center">
@@ -33,7 +34,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
             Mes groupes
           </Link>
           {saved && (
-            <button className="btn-ghost" onClick={() => forgetGroup(groupId)}>
+            <button className="btn-ghost" onClick={() => forget(groupId)}>
               Retirer de ma liste
             </button>
           )}
@@ -46,7 +47,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
     return (
       <>
         <BackLink />
-        <WhoAreYou group={group} onPick={(me) => saveGroup(groupId, me)} variant="join" />
+        <WhoAreYou group={group} onPick={(me) => save(groupId, me)} variant="join" />
       </>
     )
 
@@ -113,12 +114,12 @@ export function GroupPage({ groupId }: { groupId: string }) {
 
       <button
         className="mt-12 block w-full text-center text-xs text-muted hover:text-owe"
-        onClick={() => {
-          forgetGroup(groupId)
+        onClick={async () => {
+          await forget(groupId)
           navigate({ to: '/' })
         }}
       >
-        Retirer ce groupe de cet appareil
+        {state.mode === 'account' ? 'Retirer ce groupe de mon compte' : 'Retirer ce groupe de cet appareil'}
       </button>
 
       <button
@@ -135,8 +136,8 @@ export function GroupPage({ groupId }: { groupId: string }) {
           <WhoAreYou
             group={group}
             current={saved.me}
-            onPick={(picked) => {
-              saveGroup(groupId, picked)
+            onPick={async (picked) => {
+              await save(groupId, picked)
               setSheet(null)
             }}
           />

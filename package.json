@@ -12,9 +12,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@convex-dev/better-auth": "^0.12.5",
+    "@convex-dev/resend": "^0.2.8",
     "@tanstack/react-router": "^1.170.40",
     "@tanstack/react-start": "^1.168.59",
+    "better-auth": "~1.6.15",
     "convex": "^1.46.0",
+    "convex-helpers": "^0.1.124",
     "lucide-react": "^1.48.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"

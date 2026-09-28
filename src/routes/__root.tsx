@@ -1,11 +1,11 @@
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import appCss from '../index.css?url'
-import { SAVED_GROUPS_KEY } from '../lib/savedGroups'
+import { accountCache, anonymousGroups } from '../lib/savedGroups'
 
 // The server cannot read localStorage, so "/" always renders the landing page.
 // Returning users (with saved groups) are sent to their groups before first paint.
-const redirectReturningUsers = `try{if(location.pathname==='/'){var g=JSON.parse(localStorage.getItem('${SAVED_GROUPS_KEY}')||'[]');if(Array.isArray(g)&&g.length)location.replace('/groups')}}catch(e){}`
+const redirectReturningUsers = `try{if(location.pathname==='/'){var a=JSON.parse(localStorage.getItem('${anonymousGroups.key}')||'[]'),c=JSON.parse(localStorage.getItem('${accountCache.key}')||'null');if((Array.isArray(a)&&a.length)||(c&&c.groups&&c.groups.length))location.replace('/groups')}}catch(e){}`
 
 export const Route = createRootRoute({
   head: () => ({

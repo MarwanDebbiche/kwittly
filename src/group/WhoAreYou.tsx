@@ -13,7 +13,7 @@ export function WhoAreYou({
 }: {
   group: Group
   current?: string
-  onPick: (me: Id<'participants'> | undefined) => void
+  onPick: (me: Id<'participants'> | undefined) => void | Promise<void>
   variant?: 'join'
 }) {
   const addParticipant = useMutation(api.groups.addParticipant)
