@@ -46,15 +46,19 @@ msgstr "Ajouter un prénom"
 msgid "Add expense"
 msgstr "Ajouter la dépense"
 
-#: src/pages/LandingPage.tsx:35
+#: src/pages/LandingPage.tsx:36
 msgid "Add your expenses"
 msgstr "Ajoutez vos dépenses"
+
+#: src/pages/LandingPage.tsx:157
+msgid "Airport taxi"
+msgstr "Taxi aéroport"
 
 #: src/group/AddExpenseSheet.tsx:69
 msgid "Amount"
 msgstr "Montant"
 
-#: src/pages/LandingPage.tsx:18
+#: src/pages/LandingPage.tsx:19
 msgid "An expense added by anyone shows up instantly for the whole group. No more refreshing."
 msgstr "Une dépense ajoutée par quelqu'un apparaît instantanément chez tout le groupe. Plus besoin de rafraîchir."
 
@@ -72,17 +76,17 @@ msgstr "Retour à l'accueil"
 msgid "Balances"
 msgstr "Soldes"
 
-#: src/pages/LandingPage.tsx:35
+#: src/pages/LandingPage.tsx:36
 msgid "Balances update on their own."
 msgstr "Les soldes se mettent à jour tout seuls."
 
-#: src/pages/LandingPage.tsx:13
+#: src/pages/LandingPage.tsx:14
 msgid "By who paid, by who is involved, by category, by text. Combine them, no subscription."
 msgstr "Par personne qui a payé, par participant concerné, par catégorie, par texte. Combinables, sans abonnement."
 
 #: src/group/AddExpenseSheet.tsx:110
 #: src/group/ExpenseList.tsx:65
-#: src/pages/LandingPage.tsx:195
+#: src/pages/LandingPage.tsx:200
 msgid "Category"
 msgstr "Catégorie"
 
@@ -124,10 +128,10 @@ msgid "Copy"
 msgstr "Copier"
 
 #: src/pages/GroupsPage.tsx:63
-#: src/pages/LandingPage.tsx:33
-#: src/pages/LandingPage.tsx:50
-#: src/pages/LandingPage.tsx:73
-#: src/pages/LandingPage.tsx:132
+#: src/pages/LandingPage.tsx:34
+#: src/pages/LandingPage.tsx:51
+#: src/pages/LandingPage.tsx:74
+#: src/pages/LandingPage.tsx:133
 msgid "Create a group"
 msgstr "Créer un groupe"
 
@@ -135,7 +139,7 @@ msgstr "Créer un groupe"
 msgid "Create a group for your next trip or your flatshare, or open a link a friend sent you."
 msgstr "Crée un groupe pour ton prochain voyage ou ta coloc, ou ouvre un lien de partage envoyé par un ami."
 
-#: src/pages/LandingPage.tsx:23
+#: src/pages/LandingPage.tsx:24
 msgid "Create a group, send the link, that's it. No account to create, no app to install."
 msgstr "Crée un groupe, envoie le lien, c'est tout. Ni compte à créer, ni application à installer."
 
@@ -143,7 +147,7 @@ msgstr "Crée un groupe, envoie le lien, c'est tout. Ni compte à créer, ni app
 msgid "Create group"
 msgstr "Créer le groupe"
 
-#: src/pages/LandingPage.tsx:125
+#: src/pages/LandingPage.tsx:126
 msgid "Create the group now, add expenses as you go."
 msgstr "Crée le groupe maintenant, ajoute les dépenses au fil de l'eau."
 
@@ -159,11 +163,15 @@ msgstr "Date"
 msgid "Delete expense"
 msgstr "Supprimer la dépense"
 
+#: src/pages/LandingPage.tsx:156
+msgid "Dinner at Time Out"
+msgstr "Dîner Time Out"
+
 #: src/pages/LoginPage.tsx:93
 msgid "Email"
 msgstr "Email"
 
-#: src/pages/LandingPage.tsx:12
+#: src/pages/LandingPage.tsx:13
 msgid "Every filter, for free"
 msgstr "Tous les filtres, gratuitement"
 
@@ -175,11 +183,11 @@ msgstr "Tout le monde"
 msgid "Everyone is even."
 msgstr "Tout le monde est à l'équilibre."
 
-#: src/pages/LandingPage.tsx:34
+#: src/pages/LandingPage.tsx:35
 msgid "Everyone joins in one tap, from their phone."
 msgstr "Chacun rejoint en un clic, depuis son téléphone."
 
-#: src/pages/LandingPage.tsx:87
+#: src/pages/LandingPage.tsx:88
 msgid "Everything you need, nothing to pay."
 msgstr "Tout ce qu'il faut, rien de payant."
 
@@ -195,7 +203,7 @@ msgstr "Dépenses"
 msgid "For whom"
 msgstr "Pour qui"
 
-#: src/pages/LandingPage.tsx:58
+#: src/pages/LandingPage.tsx:59
 msgid "Free · No sign-up"
 msgstr "Gratuit · Sans inscription"
 
@@ -207,7 +215,7 @@ msgstr "Recevoir un code"
 msgid "Get your groups on all your devices. No password: we email you a code."
 msgstr "Retrouve tes groupes sur tous tes appareils. Pas de mot de passe : on t'envoie un code par email."
 
-#: src/pages/LandingPage.tsx:33
+#: src/pages/LandingPage.tsx:34
 msgid "Give it a name and add the participants."
 msgstr "Donne-lui un nom et ajoute les participants."
 
@@ -228,7 +236,7 @@ msgstr "Groupe introuvable"
 msgid "Group not found · Kwittly"
 msgstr "Groupe introuvable · Kwittly"
 
-#: src/pages/LandingPage.tsx:105
+#: src/pages/LandingPage.tsx:106
 msgid "How it works"
 msgstr "Comment ça marche"
 
@@ -250,7 +258,7 @@ msgid "Involves {0}"
 msgstr "Concerne {0}"
 
 #: src/group/ExpenseList.tsx:49
-#: src/pages/LandingPage.tsx:189
+#: src/pages/LandingPage.tsx:194
 msgid "Involves me"
 msgstr "Me concerne"
 
@@ -276,7 +284,7 @@ msgstr "Juste consulter, sans rejoindre"
 msgid "Kwittly · Shared expenses without the headache"
 msgstr "Kwittly · Les comptes entre amis, sans prise de tête"
 
-#: src/pages/LandingPage.tsx:28
+#: src/pages/LandingPage.tsx:29
 msgid "Kwittly works out who owes how much to whom, with the minimum number of repayments."
 msgstr "Kwittly calcule qui doit combien à qui, avec le nombre minimal de remboursements."
 
@@ -284,12 +292,16 @@ msgstr "Kwittly calcule qui doit combien à qui, avec le nombre minimal de rembo
 msgid "Language"
 msgstr "Langue"
 
+#: src/pages/LandingPage.tsx:165
+msgid "Lisbon weekend"
+msgstr "Week-end Lisbonne"
+
 #: src/lib/categories.ts:10
 msgid "Lodging"
 msgstr "Logement"
 
 #: src/pages/GroupsPage.tsx:44
-#: src/pages/LandingPage.tsx:47
+#: src/pages/LandingPage.tsx:48
 #: src/pages/LoginPage.tsx:86
 #: src/pages/LoginPage.tsx:148
 #: src/ui/AccountMenu.tsx:29
@@ -312,7 +324,7 @@ msgstr "Connecte-toi pour retrouver tes groupes sur tous tes appareils."
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: src/pages/LandingPage.tsx:141
+#: src/pages/LandingPage.tsx:142
 msgid "Made for groups who like to keep things even."
 msgstr "Fait pour les groupes qui aiment les bons comptes."
 
@@ -369,7 +381,7 @@ msgstr "Aucune dépense. Ajoute la première !"
 msgid "No groups yet"
 msgstr "Aucun groupe pour l'instant"
 
-#: src/pages/LandingPage.tsx:22
+#: src/pages/LandingPage.tsx:23
 msgid "No sign-up"
 msgstr "Sans inscription"
 
@@ -399,7 +411,7 @@ msgstr "Page introuvable"
 
 #: src/group/AddExpenseSheet.tsx:76
 #: src/group/ExpenseList.tsx:53
-#: src/pages/LandingPage.tsx:192
+#: src/pages/LandingPage.tsx:197
 msgid "Paid by"
 msgstr "Payé par"
 
@@ -412,7 +424,7 @@ msgstr "Payé par {0}"
 msgid "Paid by {payer}"
 msgstr "Payé par {payer}"
 
-#: src/pages/LandingPage.tsx:207
+#: src/pages/LandingPage.tsx:212
 msgid "Paid by {who}"
 msgstr "Payé par {who}"
 
@@ -420,11 +432,15 @@ msgstr "Payé par {who}"
 msgid "Paid by you"
 msgstr "Payé par toi"
 
-#: src/pages/LandingPage.tsx:76
+#: src/pages/LandingPage.tsx:158
+msgid "Pingo Doce groceries"
+msgstr "Courses Pingo Doce"
+
+#: src/pages/LandingPage.tsx:77
 msgid "Ready in 30 seconds."
 msgstr "Prêt en 30 secondes."
 
-#: src/pages/LandingPage.tsx:17
+#: src/pages/LandingPage.tsx:18
 msgid "Real time"
 msgstr "En temps réel"
 
@@ -484,7 +500,7 @@ msgstr "Partager"
 msgid "Share the expenses of a trip, a flatshare or a night out. Free, no sign-up, with every filter."
 msgstr "Partagez les dépenses d'un voyage, d'une coloc ou d'une soirée. Gratuit, sans inscription, avec tous les filtres."
 
-#: src/pages/LandingPage.tsx:34
+#: src/pages/LandingPage.tsx:35
 msgid "Share the link"
 msgstr "Partage le lien"
 
@@ -492,7 +508,7 @@ msgstr "Partage le lien"
 msgid "Share via…"
 msgstr "Partager via…"
 
-#: src/pages/LandingPage.tsx:61
+#: src/pages/LandingPage.tsx:62
 msgid "Shared expenses, <0>without the headache.</0>"
 msgstr "Les comptes entre amis, <0>sans prise de tête.</0>"
 
@@ -504,7 +520,7 @@ msgstr "Une erreur est survenue, réessaie."
 msgid "The fewest transfers needed for everyone to be even."
 msgstr "Nombre minimal de virements pour que tout le monde soit quitte."
 
-#: src/pages/LandingPage.tsx:27
+#: src/pages/LandingPage.tsx:28
 msgid "The fewest transfers possible"
 msgstr "Le moins de virements possible"
 
@@ -532,7 +548,7 @@ msgstr "Trop de tentatives. Demande un nouveau code."
 msgid "Too many code requests. Try again in a few minutes."
 msgstr "Trop de demandes de code. Réessaie dans quelques minutes."
 
-#: src/pages/LandingPage.tsx:182
+#: src/pages/LandingPage.tsx:187
 msgid "Total"
 msgstr "Total"
 
@@ -544,11 +560,11 @@ msgstr "Total dépensé"
 msgid "Transport"
 msgstr "Transport"
 
-#: src/pages/LandingPage.tsx:122
+#: src/pages/LandingPage.tsx:123
 msgid "Trip coming up?"
 msgstr "Prochain voyage prévu ?"
 
-#: src/pages/LandingPage.tsx:66
+#: src/pages/LandingPage.tsx:67
 msgid "Trips, flatshares, nights out: note who paid for what, Kwittly handles the rest. And find any expense in two clicks."
 msgstr "Voyages, coloc, soirées : note qui a payé quoi, Kwittly s'occupe du reste. Et tu retrouves n'importe quelle dépense en deux clics."
 
@@ -586,7 +602,7 @@ msgstr "Toi"
 msgid "You are {0}"
 msgstr "Tu es {0}"
 
-#: src/pages/LandingPage.tsx:168
+#: src/pages/LandingPage.tsx:173
 msgid "You are Bob"
 msgstr "Tu es Bob"
 
@@ -603,7 +619,7 @@ msgstr "Tu pourras aussi partager un lien pour que chacun rejoigne le groupe."
 msgid "you lent {0}"
 msgstr "tu prêtes {0}"
 
-#: src/pages/LandingPage.tsx:176
+#: src/pages/LandingPage.tsx:181
 #: src/ui/BalanceBadge.tsx:15
 msgid "You owe"
 msgstr "Tu dois"
@@ -613,7 +629,7 @@ msgid "you@example.com"
 msgstr "toi@exemple.fr"
 
 #: src/pages/GroupPage.tsx:84
-#: src/pages/LandingPage.tsx:173
+#: src/pages/LandingPage.tsx:178
 msgid "Your balance"
 msgstr "Ton solde"
 

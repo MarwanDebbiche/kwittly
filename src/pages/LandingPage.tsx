@@ -2,6 +2,7 @@ import { msg } from '@lingui/core/macro'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
 import { ArrowLeftRight, ArrowRight, Link2, SlidersHorizontal, UtensilsCrossed, Car, ShoppingBasket, Zap } from 'lucide-react'
+import { useFormatters } from '../lib/prefs'
 import { Avatar } from '../ui/Avatar'
 import { LanguageSwitcher } from '../ui/LanguageSwitcher'
 import { Wordmark } from '../ui/Wordmark'
@@ -149,16 +150,20 @@ export function LandingPage() {
 
 /** Static mock of the group screen, for illustration only. */
 function AppPreview() {
+  const { i18n } = useLingui()
+  const format = useFormatters()
   const expenses = [
-    { icon: UtensilsCrossed, tint: 'bg-rose-100 text-rose-800', title: 'Dîner Time Out', who: 'Alice', amount: '90,00 €' },
-    { icon: Car, tint: 'bg-sky-100 text-sky-800', title: 'Taxi aéroport', who: 'Bob', amount: '24,50 €' },
-    { icon: ShoppingBasket, tint: 'bg-amber-100 text-amber-800', title: 'Courses Pingo Doce', who: 'Chloé', amount: '41,20 €' },
+    { icon: UtensilsCrossed, tint: 'bg-rose-100 text-rose-800', title: msg`Dinner at Time Out`, who: 'Alice', cents: 9000 },
+    { icon: Car, tint: 'bg-sky-100 text-sky-800', title: msg`Airport taxi`, who: 'Bob', cents: 2450 },
+    { icon: ShoppingBasket, tint: 'bg-amber-100 text-amber-800', title: msg`Pingo Doce groceries`, who: 'Chloé', cents: 4120 },
   ]
   return (
     <div className="relative mx-auto w-full max-w-sm" aria-hidden>
       <div className="absolute -inset-6 -z-10 rounded-[3rem] bg-accent-soft blur-2xl" />
       <div className="rotate-1 rounded-[2rem] border border-line bg-canvas p-5 shadow-2xl shadow-ink/10">
-        <p className="font-display text-2xl font-semibold">Week-end Lisbonne</p>
+        <p className="font-display text-2xl font-semibold">
+          <Trans>Lisbon weekend</Trans>
+        </p>
         <div className="mt-2 flex items-center gap-2 text-sm text-muted">
           <span className="flex -space-x-1.5">
             {['Alice', 'Bob', 'Chloé'].map((n) => (
@@ -175,13 +180,13 @@ function AppPreview() {
             <p className="mt-1 text-xs text-owe">
               <Trans>You owe</Trans>
             </p>
-            <p className="font-display text-xl font-semibold text-owe">17,75 €</p>
+            <p className="font-display text-xl font-semibold text-owe">{format.money(1775, 'EUR')}</p>
           </div>
           <div className="flex flex-col justify-between p-3 text-right">
             <p className="label">
               <Trans>Total</Trans>
             </p>
-            <p className="font-display text-xl font-semibold">155,70 €</p>
+            <p className="font-display text-xl font-semibold">{format.money(15570, 'EUR')}</p>
           </div>
         </div>
         <div className="mt-4 flex gap-2 text-xs">
@@ -196,18 +201,18 @@ function AppPreview() {
           </span>
         </div>
         <ul className="card mt-3 divide-y divide-line">
-          {expenses.map(({ icon: Icon, tint, title, who, amount }) => (
-            <li key={title} className="flex items-center gap-3 px-3 py-2.5">
+          {expenses.map(({ icon: Icon, tint, title, who, cents }) => (
+            <li key={title.id} className="flex items-center gap-3 px-3 py-2.5">
               <span className={`flex size-9 items-center justify-center rounded-xl ${tint}`}>
                 <Icon className="size-4" />
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-medium">{title}</span>
+                <span className="block truncate text-sm font-medium">{i18n._(title)}</span>
                 <span className="block text-xs text-muted">
                   <Trans>Paid by {who}</Trans>
                 </span>
               </span>
-              <span className="text-sm font-semibold tabular-nums">{amount}</span>
+              <span className="text-sm font-semibold tabular-nums">{format.money(cents, 'EUR')}</span>
             </li>
           ))}
         </ul>
