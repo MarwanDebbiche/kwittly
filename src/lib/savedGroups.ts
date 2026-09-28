@@ -6,7 +6,8 @@ import { useSyncExternalStore } from 'react'
  */
 export type SavedGroup = { id: string; me?: string; addedAt: number }
 
-const KEY = 'splitmate:groups'
+export const SAVED_GROUPS_KEY = 'splitmate:groups'
+const KEY = SAVED_GROUPS_KEY
 const EMPTY: SavedGroup[] = []
 const listeners = new Set<() => void>()
 let cache: SavedGroup[] | null = null
@@ -47,7 +48,11 @@ function subscribe(listener: () => void) {
 }
 
 export function useSavedGroups() {
-  return useSyncExternalStore(subscribe, read)
+  return useSyncExternalStore(subscribe, read, () => EMPTY)
+}
+
+export function hasSavedGroups() {
+  return read().length > 0
 }
 
 export function useSavedGroup(id: string) {

@@ -1,11 +1,10 @@
 import { Check, Copy, Share } from 'lucide-react'
 import { useState } from 'react'
-import { groupShareUrl } from '../lib/router'
 import { Sheet } from '../ui/Sheet'
 import type { Group } from './types'
 
 export function ShareSheet({ group, onClose }: { group: Group; onClose: () => void }) {
-  const url = groupShareUrl(group._id)
+  const url = `${window.location.origin}/g/${group._id}`
   const [copied, setCopied] = useState(false)
   const canNativeShare = typeof navigator.share === 'function'
 

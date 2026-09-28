@@ -1,3 +1,4 @@
+import { Link, useNavigate } from '@tanstack/react-router'
 import { useQuery } from 'convex/react'
 import { ArrowLeft, Plus, Share2 } from 'lucide-react'
 import { useState } from 'react'
@@ -8,13 +9,13 @@ import { ExpenseList } from '../group/ExpenseList'
 import { ShareSheet } from '../group/ShareSheet'
 import { WhoAreYou } from '../group/WhoAreYou'
 import { formatCents } from '../lib/money'
-import { navigate } from '../lib/router'
 import { forgetGroup, saveGroup, useSavedGroup } from '../lib/savedGroups'
 import { AvatarStack } from '../ui/Avatar'
 import { BalanceBadge } from '../ui/BalanceBadge'
 import { Sheet } from '../ui/Sheet'
 
 export function GroupPage({ groupId }: { groupId: string }) {
+  const navigate = useNavigate()
   const group = useQuery(api.groups.get, { groupId })
   const saved = useSavedGroup(groupId)
   const [tab, setTab] = useState<'expenses' | 'balances'>('expenses')
@@ -28,9 +29,9 @@ export function GroupPage({ groupId }: { groupId: string }) {
         <p className="font-display text-2xl font-semibold">Groupe introuvable</p>
         <p className="mt-2 text-sm text-muted">Le lien est peut-être incorrect, ou le groupe a été supprimé.</p>
         <div className="mt-6 flex justify-center gap-2">
-          <a href="#/" className="btn-primary">
+          <Link to="/groups" className="btn-primary">
             Mes groupes
-          </a>
+          </Link>
           {saved && (
             <button className="btn-ghost" onClick={() => forgetGroup(groupId)}>
               Retirer de ma liste
@@ -114,7 +115,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
         className="mt-12 block w-full text-center text-xs text-muted hover:text-owe"
         onClick={() => {
           forgetGroup(groupId)
-          navigate('/')
+          navigate({ to: '/' })
         }}
       >
         Retirer ce groupe de cet appareil
@@ -147,9 +148,9 @@ export function GroupPage({ groupId }: { groupId: string }) {
 
 function BackLink() {
   return (
-    <a href="#/" className="btn-ghost -ml-3">
+    <Link to="/groups" className="btn-ghost -ml-3">
       <ArrowLeft className="size-4" /> Mes groupes
-    </a>
+    </Link>
   )
 }
 

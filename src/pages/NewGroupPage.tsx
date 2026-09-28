@@ -1,14 +1,15 @@
+import { Link, useNavigate } from '@tanstack/react-router'
 import { useMutation } from 'convex/react'
 import { ArrowLeft, Plus, X } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
-import { navigate } from '../lib/router'
 import { saveGroup } from '../lib/savedGroups'
 import { Avatar } from '../ui/Avatar'
 
 const CURRENCIES = ['EUR', 'USD', 'GBP', 'CHF', 'CAD', 'JPY']
 
 export function NewGroupPage() {
+  const navigate = useNavigate()
   const createGroup = useMutation(api.groups.create)
   const [name, setName] = useState('')
   const [me, setMe] = useState('')
@@ -37,7 +38,7 @@ export function NewGroupPage() {
         participants: [me.trim(), ...pending],
       })
       saveGroup(groupId, participantIds[0])
-      navigate(`/g/${groupId}`)
+      navigate({ to: '/g/$groupId', params: { groupId } })
     } finally {
       setSubmitting(false)
     }
@@ -46,9 +47,9 @@ export function NewGroupPage() {
   return (
     <form onSubmit={onSubmit}>
       <header className="mb-6">
-        <a href="#/" className="btn-ghost -ml-3">
-          <ArrowLeft className="size-4" /> Mes groupes
-        </a>
+        <Link to="/" className="btn-ghost -ml-3">
+          <ArrowLeft className="size-4" /> Retour
+        </Link>
       </header>
       <h1 className="font-display text-3xl font-semibold tracking-tight">Nouveau groupe</h1>
 

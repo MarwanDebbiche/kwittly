@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import { useQuery } from 'convex/react'
 import { ChevronRight, Plus, Users } from 'lucide-react'
 import { api } from '../../convex/_generated/api'
@@ -18,9 +19,9 @@ export function GroupsPage() {
         <span className="font-display text-2xl font-bold tracking-tight">
           split<span className="text-accent">mate</span>
         </span>
-        <a href="#/new" className="btn-primary size-10 rounded-full p-0" aria-label="Nouveau groupe" title="Nouveau groupe">
+        <Link to="/groups/new" className="btn-primary size-10 rounded-full p-0" aria-label="Nouveau groupe" title="Nouveau groupe">
           <Plus className="size-5" />
-        </a>
+        </Link>
       </header>
 
       <h1 className="font-display text-3xl font-semibold tracking-tight">Mes groupes</h1>
@@ -34,9 +35,9 @@ export function GroupsPage() {
           <p className="mt-1 max-w-xs text-sm text-muted">
             Crée un groupe pour ton prochain voyage ou ta coloc, ou ouvre un lien de partage envoyé par un ami.
           </p>
-          <a href="#/new" className="btn-primary mt-6">
+          <Link to="/groups/new" className="btn-primary mt-6">
             <Plus className="size-4" /> Créer un groupe
-          </a>
+          </Link>
         </div>
       ) : (
         <ul className="mt-6 space-y-3">
@@ -45,8 +46,9 @@ export function GroupsPage() {
             : summaries.map((s) =>
                 s.found ? (
                   <li key={s.groupId}>
-                    <a
-                      href={`#/g/${s.groupId}`}
+                    <Link
+                      to="/g/$groupId"
+                      params={{ groupId: s.groupId }}
                       className="card flex items-center gap-4 p-4 transition hover:border-ink/25 hover:shadow-sm"
                     >
                       <div className="min-w-0 flex-1">
@@ -58,7 +60,7 @@ export function GroupsPage() {
                       </div>
                       {s.myBalanceCents !== null && <BalanceBadge cents={s.myBalanceCents} currency={s.currency} />}
                       <ChevronRight className="size-5 shrink-0 text-muted" />
-                    </a>
+                    </Link>
                   </li>
                 ) : (
                   <li key={s.groupId} className="card flex items-center justify-between border-dashed p-4 text-sm text-muted">

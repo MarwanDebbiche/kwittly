@@ -4,13 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "vite dev",
+    "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview",
-    "dev:backend": "convex dev"
+    "dev:backend": "convex dev",
+    "typecheck": "tsc -b",
+    "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-router": "^1.170.40",
+    "@tanstack/react-start": "^1.168.59",
     "convex": "^1.46.0",
     "lucide-react": "^1.48.0",
     "react": "^19.2.8",
