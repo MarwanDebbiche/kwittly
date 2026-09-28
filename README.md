@@ -32,9 +32,16 @@ Auth needs these Convex environment variables (`npx convex env set NAME value`, 
 
 Other scripts: `npm run typecheck`, `npm run lint`, `npm run build`, `npm run preview`.
 
+## Tests
+
+`npm test` (or `npm run test:watch`), with [Vitest](https://vitest.dev). Run in CI before every deploy.
+
+- `unit` project: pure logic (`convex/lib/*.test.ts`, `src/**/*.test.ts`): splits and rounding, balances and settlements, language resolution, amount parsing.
+- `convex` project: Convex queries and mutations (`convex/*.test.ts`) against an in-memory backend with [convex-test](https://docs.convex.dev/testing/convex-test), including logged-in users (`t.withIdentity`). No deployment needed.
+
 ## Deployment
 
-`.github/workflows/deploy.yml` runs typecheck and lint, then on every push to `main`:
+`.github/workflows/deploy.yml` runs typecheck, lint, tests and the translation check, then on every push to `main`:
 
 1. `npx convex deploy --cmd 'npm run build'` pushes the Convex functions to the cloud dev deployment and builds the app against it (`CLOUDFLARE_ENV=dev` selects the `dev` environment of `wrangler.jsonc`).
 2. `npx wrangler deploy` deploys the `kwittly-dev` worker.

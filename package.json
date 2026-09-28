@@ -8,11 +8,13 @@
     "build": "vite build",
     "lint": "oxlint",
     "dev:backend": "convex dev",
-    "typecheck": "tsc -b",
+    "typecheck": "tsc -b && tsc -p convex/tsconfig.json --noEmit",
     "deploy:dev": "CLOUDFLARE_ENV=dev npm run build && wrangler deploy",
     "preview": "vite preview",
     "i18n:extract": "lingui extract --clean",
-    "i18n:check": "lingui extract && lingui compile --strict"
+    "i18n:check": "lingui extract && lingui compile --strict",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@convex-dev/better-auth": "^0.12.5",
@@ -34,6 +36,7 @@
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.61.0",
+    "@edge-runtime/vm": "^5.0.0",
     "@lingui/babel-plugin-lingui-macro": "^6.8.0",
     "@lingui/cli": "^6.8.0",
     "@lingui/vite-plugin": "^6.8.0",
@@ -43,10 +46,12 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
+    "convex-test": "^0.0.60",
     "oxlint": "^1.81.0",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.2",
     "vite": "^8.3.0",
+    "vitest": "^4.1.11",
     "wrangler": "^4.142.0"
   }
 }
