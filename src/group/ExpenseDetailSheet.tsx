@@ -1,6 +1,6 @@
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useMutation } from 'convex/react'
-import { Trash2 } from 'lucide-react'
+import { Pencil, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { categoryFor } from '../lib/categories'
@@ -9,7 +9,17 @@ import { Avatar } from '../ui/Avatar'
 import { Sheet } from '../ui/Sheet'
 import type { Expense, Group } from './types'
 
-export function ExpenseDetailSheet({ expense, group, onClose }: { expense: Expense; group: Group; onClose: () => void }) {
+export function ExpenseDetailSheet({
+  expense,
+  group,
+  onEdit,
+  onClose,
+}: {
+  expense: Expense
+  group: Group
+  onEdit: () => void
+  onClose: () => void
+}) {
   const { i18n } = useLingui()
   const format = useFormatters()
   const removeExpense = useMutation(api.expenses.remove)
@@ -53,8 +63,11 @@ export function ExpenseDetailSheet({ expense, group, onClose }: { expense: Expen
         ))}
       </div>
 
+      <button className="btn-ghost mt-5 w-full border border-line text-ink" onClick={onEdit}>
+        <Pencil className="size-4" /> <Trans>Edit expense</Trans>
+      </button>
       <button
-        className={`mt-5 w-full ${confirming ? 'btn-primary bg-owe hover:bg-owe/90' : 'btn-ghost text-owe hover:bg-owe/10 hover:text-owe'}`}
+        className={`mt-2 w-full ${confirming ? 'btn-primary bg-owe hover:bg-owe/90' : 'btn-ghost text-owe hover:bg-owe/10 hover:text-owe'}`}
         onClick={async () => {
           if (!confirming) return setConfirming(true)
           await removeExpense({ expenseId: expense._id })

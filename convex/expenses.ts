@@ -1,5 +1,6 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import type { Id } from "./_generated/dataModel";
+import { mutation, query, type MutationCtx } from "./_generated/server";
 import { splitEqually } from "./lib/money";
 
 export const list = query({
@@ -48,29 +49,57 @@ export const list = query({
   },
 });
 
+const expenseFields = {
+  title: v.string(),
+  amountCents: v.number(),
+  paidBy: v.id("participants"),
+  date: v.number(),
+  category: v.optional(v.string()),
+  splitBetween: v.array(v.id("participants")),
+};
+
+/** Checks an expense against its group and computes each participant's share. */
+async function buildSplits(
+  ctx: MutationCtx,
+  groupId: Id<"groups">,
+  {
+    amountCents,
+    paidBy,
+    splitBetween,
+  }: { amountCents: number; paidBy: Id<"participants">; splitBetween: Id<"participants">[] },
+) {
+  if (!Number.isInteger(amountCents) || amountCents <= 0)
+    throw new Error("The amount must be a positive number of cents");
+  if (splitBetween.length === 0)
+    throw new Error("At least one participant must share the expense");
+  for (const participantId of [paidBy, ...splitBetween]) {
+    const participant = await ctx.db.get(participantId);
+    if (!participant || participant.groupId !== groupId)
+      throw new Error("Participant is not in this group");
+  }
+  const shares = splitEqually(amountCents, splitBetween.length);
+  return splitBetween.map((participantId, i) => ({
+    participantId,
+    shareCents: shares[i],
+  }));
+}
+
 export const add = mutation({
-  args: {
-    groupId: v.id("groups"),
-    title: v.string(),
-    amountCents: v.number(),
-    paidBy: v.id("participants"),
-    date: v.number(),
-    category: v.optional(v.string()),
-    splitBetween: v.array(v.id("participants")),
+  args: { groupId: v.id("groups"), ...expenseFields },
+  handler: async (ctx, { groupId, splitBetween, ...expense }) => {
+    const splits = await buildSplits(ctx, groupId, { ...expense, splitBetween });
+    return await ctx.db.insert("expenses", { groupId, ...expense, splits });
   },
-  handler: async (ctx, { splitBetween, ...expense }) => {
-    if (!Number.isInteger(expense.amountCents) || expense.amountCents <= 0)
-      throw new Error("The amount must be a positive number of cents");
-    if (splitBetween.length === 0)
-      throw new Error("At least one participant must share the expense");
-    const shares = splitEqually(expense.amountCents, splitBetween.length);
-    return await ctx.db.insert("expenses", {
-      ...expense,
-      splits: splitBetween.map((participantId, i) => ({
-        participantId,
-        shareCents: shares[i],
-      })),
-    });
+});
+
+export const update = mutation({
+  args: { expenseId: v.id("expenses"), ...expenseFields },
+  handler: async (ctx, { expenseId, splitBetween, ...expense }) => {
+    const existing = await ctx.db.get(expenseId);
+    if (!existing) throw new Error("Expense not found");
+    const splits = await buildSplits(ctx, existing.groupId, { ...expense, splitBetween });
+    // `category: undefined` clears the field when the category is removed.
+    await ctx.db.patch(expenseId, { ...expense, category: expense.category, splits });
   },
 });
 

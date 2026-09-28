@@ -5,8 +5,8 @@ import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, LogOut, Plus, Share2 } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
-import { AddExpenseSheet } from '../group/AddExpenseSheet'
 import { Balances } from '../group/Balances'
+import { ExpenseFormSheet } from '../group/ExpenseFormSheet'
 import { ExpenseList } from '../group/ExpenseList'
 import { LeaveGroupSheet } from '../group/LeaveGroupSheet'
 import { ShareSheet } from '../group/ShareSheet'
@@ -146,7 +146,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
         </button>
       </div>
 
-      {sheet === 'add' && <AddExpenseSheet group={group} me={me?._id} onClose={() => setSheet(null)} />}
+      {sheet === 'add' && <ExpenseFormSheet group={group} me={me?._id} onClose={() => setSheet(null)} />}
       {sheet === 'share' && <ShareSheet group={group} onClose={() => setSheet(null)} />}
       {sheet === 'leave' && state.status === 'ready' && (
         <LeaveGroupSheet

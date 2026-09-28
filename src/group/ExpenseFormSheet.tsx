@@ -8,20 +8,41 @@ import { parseCents } from '../lib/money'
 import { usePrefs } from '../lib/prefs'
 import { Avatar } from '../ui/Avatar'
 import { Sheet } from '../ui/Sheet'
-import type { Group } from './types'
+import type { Expense, Group } from './types'
 
-export function AddExpenseSheet({ group, me, onClose }: { group: Group; me?: Id<'participants'>; onClose: () => void }) {
+/** Calendar day of a timestamp in the browser's time zone, as YYYY-MM-DD (toISOString would give the UTC day). */
+function localDay(timestamp: number) {
+  return new Intl.DateTimeFormat('en-CA').format(new Date(timestamp))
+}
+
+/** Creates an expense, or edits `expense` when given. */
+export function ExpenseFormSheet({
+  group,
+  me,
+  expense,
+  onClose,
+}: {
+  group: Group
+  me?: Id<'participants'>
+  expense?: Expense
+  onClose: () => void
+}) {
   const { t, i18n } = useLingui()
   const { locale } = usePrefs()
   const addExpense = useMutation(api.expenses.add)
+  const updateExpense = useMutation(api.expenses.update)
   const everyone = group.participants.map((p) => p._id)
-  const [amount, setAmount] = useState('')
-  const [title, setTitle] = useState('')
-  const [paidBy, setPaidBy] = useState<Id<'participants'>>(me ?? everyone[0])
-  const [splitBetween, setSplitBetween] = useState(() => new Set(everyone))
-  const [category, setCategory] = useState<string>()
-  // Today in the browser's time zone (toISOString would give the UTC day).
-  const [date, setDate] = useState(() => new Intl.DateTimeFormat('en-CA').format(new Date()))
+  const decimalSeparator = locale === 'fr' ? ',' : '.'
+  const [amount, setAmount] = useState(() =>
+    expense ? (expense.amountCents / 100).toFixed(2).replace('.', decimalSeparator) : '',
+  )
+  const [title, setTitle] = useState(expense?.title ?? '')
+  const [paidBy, setPaidBy] = useState<Id<'participants'>>(expense?.paidBy ?? me ?? everyone[0])
+  const [splitBetween, setSplitBetween] = useState(
+    () => new Set(expense ? expense.splits.map((s) => s.participantId) : everyone),
+  )
+  const [category, setCategory] = useState<string | undefined>(expense?.category)
+  const [date, setDate] = useState(() => localDay(expense?.date ?? Date.now()))
   const [submitting, setSubmitting] = useState(false)
 
   const amountCents = parseCents(amount)
@@ -39,8 +60,7 @@ export function AddExpenseSheet({ group, me, onClose }: { group: Group; me?: Id<
     if (!canSubmit) return
     setSubmitting(true)
     try {
-      await addExpense({
-        groupId: group._id,
+      const fields = {
         title: title.trim(),
         amountCents,
         paidBy,
@@ -48,7 +68,9 @@ export function AddExpenseSheet({ group, me, onClose }: { group: Group; me?: Id<
         date: new Date(`${date}T12:00:00`).getTime(),
         category,
         splitBetween: everyone.filter((id) => splitBetween.has(id)),
-      })
+      }
+      if (expense) await updateExpense({ expenseId: expense._id, ...fields })
+      else await addExpense({ groupId: group._id, ...fields })
       onClose()
     } finally {
       setSubmitting(false)
@@ -56,11 +78,11 @@ export function AddExpenseSheet({ group, me, onClose }: { group: Group; me?: Id<
   }
 
   return (
-    <Sheet title={t`New expense`} onClose={onClose}>
+    <Sheet title={expense ? t`Edit expense` : t`New expense`} onClose={onClose}>
       <form onSubmit={onSubmit} className="space-y-5">
         <div className="card flex items-baseline justify-center gap-2 px-4 py-5">
           <input
-            autoFocus
+            autoFocus={!expense}
             inputMode="decimal"
             placeholder={locale === 'fr' ? '0,00' : '0.00'}
             value={amount}
@@ -128,7 +150,7 @@ export function AddExpenseSheet({ group, me, onClose }: { group: Group; me?: Id<
         </label>
 
         <button className="btn-primary w-full" disabled={!canSubmit}>
-          <Trans>Add expense</Trans>
+          {expense ? <Trans>Save changes</Trans> : <Trans>Add expense</Trans>}
         </button>
       </form>
     </Sheet>

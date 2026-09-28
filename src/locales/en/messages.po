@@ -8,12 +8,12 @@ msgstr ""
 "Language: en\n"
 
 #. placeholder {0}: expenses.length
-#: src/group/ExpenseList.tsx:87
+#: src/group/ExpenseList.tsx:91
 msgid "{0, plural, one {# expense} other {# expenses}}"
 msgstr "{0, plural, one {# expense} other {# expenses}}"
 
 #. placeholder {0}: names.get(s.participantId)
-#: src/group/ExpenseDetailSheet.tsx:49
+#: src/group/ExpenseDetailSheet.tsx:59
 msgid "{0}'s share"
 msgstr "{0}'s share"
 
@@ -22,7 +22,7 @@ msgid "{count, plural, one {# participant} other {# participants}} · Join the g
 msgstr "{count, plural, one {# participant} other {# participants}} · Join the group to share expenses on Kwittly."
 
 #. placeholder {0}: names.get(expense.paidBy)
-#: src/group/ExpenseDetailSheet.tsx:40
+#: src/group/ExpenseDetailSheet.tsx:50
 msgid "<0>{0}</0> paid"
 msgstr "<0>{0}</0> paid"
 
@@ -42,7 +42,7 @@ msgstr "Add"
 msgid "Add a first name"
 msgstr "Add a first name"
 
-#: src/group/AddExpenseSheet.tsx:131
+#: src/group/ExpenseFormSheet.tsx:153
 msgid "Add expense"
 msgstr "Add expense"
 
@@ -54,7 +54,7 @@ msgstr "Add your expenses"
 msgid "Airport taxi"
 msgstr "Airport taxi"
 
-#: src/group/AddExpenseSheet.tsx:69
+#: src/group/ExpenseFormSheet.tsx:91
 msgid "Amount"
 msgstr "Amount"
 
@@ -88,8 +88,8 @@ msgstr "By who paid, by who is involved, by category, by text. Combine them, no 
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/group/AddExpenseSheet.tsx:110
-#: src/group/ExpenseList.tsx:65
+#: src/group/ExpenseFormSheet.tsx:132
+#: src/group/ExpenseList.tsx:69
 #: src/pages/LandingPage.tsx:192
 msgid "Category"
 msgstr "Category"
@@ -106,7 +106,7 @@ msgstr "Check your email"
 msgid "Checking…"
 msgstr "Checking…"
 
-#: src/group/ExpenseList.tsx:72
+#: src/group/ExpenseList.tsx:76
 msgid "Clear"
 msgstr "Clear"
 
@@ -119,7 +119,7 @@ msgstr "Close"
 msgid "Code sent to <0>{0}</0>. It expires in 10 minutes."
 msgstr "Code sent to <0>{0}</0>. It expires in 10 minutes."
 
-#: src/group/ExpenseDetailSheet.tsx:64
+#: src/group/ExpenseDetailSheet.tsx:77
 msgid "Confirm deletion"
 msgstr "Confirm deletion"
 
@@ -159,17 +159,22 @@ msgstr "Create the group now, add expenses as you go."
 msgid "Currency"
 msgstr "Currency"
 
-#: src/group/AddExpenseSheet.tsx:125
+#: src/group/ExpenseFormSheet.tsx:147
 msgid "Date"
 msgstr "Date"
 
-#: src/group/ExpenseDetailSheet.tsx:64
+#: src/group/ExpenseDetailSheet.tsx:77
 msgid "Delete expense"
 msgstr "Delete expense"
 
 #: src/pages/LandingPage.tsx:148
 msgid "Dinner at Time Out"
 msgstr "Dinner at Time Out"
+
+#: src/group/ExpenseDetailSheet.tsx:67
+#: src/group/ExpenseFormSheet.tsx:81
+msgid "Edit expense"
+msgstr "Edit expense"
 
 #: src/pages/LoginPage.tsx:93
 msgid "Email"
@@ -179,7 +184,7 @@ msgstr "Email"
 msgid "Every filter, for free"
 msgstr "Every filter, for free"
 
-#: src/group/AddExpenseSheet.tsx:93
+#: src/group/ExpenseFormSheet.tsx:115
 msgid "Everyone"
 msgstr "Everyone"
 
@@ -203,7 +208,7 @@ msgstr "Expense"
 msgid "Expenses"
 msgstr "Expenses"
 
-#: src/group/AddExpenseSheet.tsx:86
+#: src/group/ExpenseFormSheet.tsx:108
 msgid "For whom"
 msgstr "For whom"
 
@@ -252,16 +257,16 @@ msgstr "Invalid email address."
 msgid "Invite to the group"
 msgstr "Invite to the group"
 
-#: src/group/ExpenseList.tsx:59
+#: src/group/ExpenseList.tsx:63
 msgid "Involves"
 msgstr "Involves"
 
 #. placeholder {0}: p.label
-#: src/group/ExpenseList.tsx:62
+#: src/group/ExpenseList.tsx:66
 msgid "Involves {0}"
 msgstr "Involves {0}"
 
-#: src/group/ExpenseList.tsx:49
+#: src/group/ExpenseList.tsx:53
 #: src/pages/LandingPage.tsx:186
 msgid "Involves me"
 msgstr "Involves me"
@@ -345,8 +350,8 @@ msgstr "Log out"
 msgid "Made for groups who like to keep things even."
 msgstr "Made for groups who like to keep things even."
 
-#: src/group/AddExpenseSheet.tsx:80
-#: src/group/AddExpenseSheet.tsx:105
+#: src/group/ExpenseFormSheet.tsx:102
+#: src/group/ExpenseFormSheet.tsx:127
 msgid "Me"
 msgstr "Me"
 
@@ -364,7 +369,7 @@ msgstr "My groups"
 msgid "My groups · Kwittly"
 msgstr "My groups · Kwittly"
 
-#: src/group/AddExpenseSheet.tsx:59
+#: src/group/ExpenseFormSheet.tsx:81
 msgid "New expense"
 msgstr "New expense"
 
@@ -382,15 +387,15 @@ msgstr "New group · Kwittly"
 msgid "No account yet? It will be created automatically, with your current groups."
 msgstr "No account yet? It will be created automatically, with your current groups."
 
-#: src/group/ExpenseDetailSheet.tsx:30
+#: src/group/ExpenseDetailSheet.tsx:40
 msgid "No category"
 msgstr "No category"
 
-#: src/group/ExpenseList.tsx:81
+#: src/group/ExpenseList.tsx:85
 msgid "No expenses match these filters."
 msgstr "No expenses match these filters."
 
-#: src/group/ExpenseList.tsx:81
+#: src/group/ExpenseList.tsx:85
 msgid "No expenses yet. Add the first one!"
 msgstr "No expenses yet. Add the first one!"
 
@@ -402,7 +407,7 @@ msgstr "No groups yet"
 msgid "No sign-up"
 msgstr "No sign-up"
 
-#: src/group/AddExpenseSheet.tsx:93
+#: src/group/ExpenseFormSheet.tsx:115
 msgid "None"
 msgstr "None"
 
@@ -410,7 +415,7 @@ msgstr "None"
 msgid "Not in the list?"
 msgstr "Not in the list?"
 
-#: src/group/ExpenseList.tsx:163
+#: src/group/ExpenseList.tsx:177
 msgid "not involved"
 msgstr "not involved"
 
@@ -426,18 +431,18 @@ msgstr "Other participants"
 msgid "Page not found"
 msgstr "Page not found"
 
-#: src/group/AddExpenseSheet.tsx:76
-#: src/group/ExpenseList.tsx:53
+#: src/group/ExpenseFormSheet.tsx:98
+#: src/group/ExpenseList.tsx:57
 #: src/pages/LandingPage.tsx:189
 msgid "Paid by"
 msgstr "Paid by"
 
 #. placeholder {0}: p.label
-#: src/group/ExpenseList.tsx:56
+#: src/group/ExpenseList.tsx:60
 msgid "Paid by {0}"
 msgstr "Paid by {0}"
 
-#: src/group/ExpenseList.tsx:147
+#: src/group/ExpenseList.tsx:161
 msgid "Paid by {payer}"
 msgstr "Paid by {payer}"
 
@@ -445,7 +450,7 @@ msgstr "Paid by {payer}"
 msgid "Paid by {who}"
 msgstr "Paid by {who}"
 
-#: src/group/ExpenseList.tsx:147
+#: src/group/ExpenseList.tsx:161
 msgid "Paid by you"
 msgstr "Paid by you"
 
@@ -485,7 +490,11 @@ msgstr "Resend code"
 msgid "Restaurant"
 msgstr "Restaurant"
 
-#: src/group/ExpenseList.tsx:38
+#: src/group/ExpenseFormSheet.tsx:153
+msgid "Save changes"
+msgstr "Save changes"
+
+#: src/group/ExpenseList.tsx:42
 msgid "Search expenses"
 msgstr "Search expenses"
 
@@ -553,7 +562,7 @@ msgstr "This code has expired. Request a new one."
 msgid "To settle up"
 msgstr "To settle up"
 
-#: src/group/ExpenseList.tsx:183
+#: src/group/ExpenseList.tsx:197
 msgid "Today"
 msgstr "Today"
 
@@ -589,7 +598,7 @@ msgstr "Trips, flatshares, nights out: note who paid for what, Kwittly handles t
 msgid "Weekend in Lisbon"
 msgstr "Weekend in Lisbon"
 
-#: src/group/AddExpenseSheet.tsx:74
+#: src/group/ExpenseFormSheet.tsx:96
 msgid "What for? (e.g. Supermarket)"
 msgstr "What for? (e.g. Supermarket)"
 
@@ -606,7 +615,7 @@ msgstr "Who are you?"
 msgid "Wrong code. Check the latest email you received."
 msgstr "Wrong code. Check the latest email you received."
 
-#: src/group/ExpenseList.tsx:184
+#: src/group/ExpenseList.tsx:198
 msgid "Yesterday"
 msgstr "Yesterday"
 
@@ -632,7 +641,7 @@ msgid "You can also share a link so everyone can join the group."
 msgstr "You can also share a link so everyone can join the group."
 
 #. placeholder {0}: format.money(lent, currency)
-#: src/group/ExpenseList.tsx:155
+#: src/group/ExpenseList.tsx:169
 msgid "you lent {0}"
 msgstr "you lent {0}"
 
@@ -660,6 +669,6 @@ msgid "Your session has expired. Log in again to sync your groups."
 msgstr "Your session has expired. Log in again to sync your groups."
 
 #. placeholder {0}: format.money(myShare, currency)
-#: src/group/ExpenseList.tsx:159
+#: src/group/ExpenseList.tsx:173
 msgid "your share {0}"
 msgstr "your share {0}"

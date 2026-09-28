@@ -9,6 +9,7 @@ import { CATEGORIES, categoryFor } from '../lib/categories'
 import { useFormatters } from '../lib/prefs'
 import { PillSelect } from '../ui/PillSelect'
 import { ExpenseDetailSheet } from './ExpenseDetailSheet'
+import { ExpenseFormSheet } from './ExpenseFormSheet'
 import type { Expense, Group } from './types'
 
 type Filters = {
@@ -22,9 +23,12 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
   const { t, i18n } = useLingui()
   const format = useFormatters()
   const [filters, setFilters] = useState<Filters>({})
-  const [selected, setSelected] = useState<Expense | null>(null)
+  // By id, so the open sheet always shows the live expense (e.g. after an edit).
+  const [open, setOpen] = useState<{ id: Id<'expenses'>; editing: boolean } | null>(null)
   const { data: expenses } = useQuery(convexQuery(api.expenses.list, { groupId: group._id, ...definedOnly(filters) }))
   const names = new Map<string, string>(group.participants.map((p) => [p._id, p.name]))
+  // An expense deleted meanwhile (by anyone) closes its sheet.
+  const selected = open ? expenses?.find((e) => e._id === open.id) : undefined
   const set = (key: keyof Filters, value: string) => setFilters((f) => ({ ...f, [key]: value || undefined }))
   const hasFilters = Object.values(filters).some(Boolean)
   const people = group.participants.map((p) => ({ value: p._id, label: p.name }))
@@ -102,7 +106,7 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
                 <ul className="card divide-y divide-line overflow-hidden">
                   {items.map((e) => (
                     <li key={e._id}>
-                      <ExpenseRow expense={e} payer={names.get(e.paidBy) ?? '?'} me={me} currency={group.currency} onClick={() => setSelected(e)} />
+                      <ExpenseRow expense={e} payer={names.get(e.paidBy) ?? '?'} me={me} currency={group.currency} onClick={() => setOpen({ id: e._id, editing: false })} />
                     </li>
                   ))}
                 </ul>
@@ -112,7 +116,17 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
         </>
       )}
 
-      {selected && <ExpenseDetailSheet expense={selected} group={group} onClose={() => setSelected(null)} />}
+      {selected && !open?.editing && (
+        <ExpenseDetailSheet
+          expense={selected}
+          group={group}
+          onEdit={() => setOpen({ id: selected._id, editing: true })}
+          onClose={() => setOpen(null)}
+        />
+      )}
+      {selected && open?.editing && (
+        <ExpenseFormSheet group={group} me={me} expense={selected} onClose={() => setOpen({ id: selected._id, editing: false })} />
+      )}
     </div>
   )
 }
