@@ -11,6 +11,7 @@ const ERRORS: Record<string, string> = {
   OTP_EXPIRED: 'Ce code a expiré. Demande un nouveau code.',
   TOO_MANY_ATTEMPTS: 'Trop de tentatives. Demande un nouveau code.',
   INVALID_EMAIL: 'Adresse email invalide.',
+  OTP_RATE_LIMITED: 'Trop de demandes de code. Réessaie dans quelques minutes.',
 }
 
 function errorMessage(error: { code?: string; message?: string } | null) {

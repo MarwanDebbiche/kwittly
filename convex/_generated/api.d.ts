@@ -15,6 +15,7 @@ import type * as groups from "../groups.js";
 import type * as http from "../http.js";
 import type * as lib_email from "../lib/email.js";
 import type * as lib_money from "../lib/money.js";
+import type * as lib_rateLimits from "../lib/rateLimits.js";
 import type * as memberships from "../memberships.js";
 
 import type {
@@ -31,6 +32,7 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   "lib/email": typeof lib_email;
   "lib/money": typeof lib_money;
+  "lib/rateLimits": typeof lib_rateLimits;
   memberships: typeof memberships;
 }>;
 
@@ -63,4 +65,5 @@ export declare const internal: FilterApi<
 export declare const components: {
   betterAuth: import("@convex-dev/better-auth/_generated/component.js").ComponentApi<"betterAuth">;
   resend: import("@convex-dev/resend/_generated/component.js").ComponentApi<"resend">;
+  rateLimiter: import("@convex-dev/rate-limiter/_generated/component.js").ComponentApi<"rateLimiter">;
 };
