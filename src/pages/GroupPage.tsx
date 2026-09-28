@@ -15,6 +15,7 @@ import { useMyGroups } from '../lib/myGroups'
 import { useFormatters } from '../lib/prefs'
 import { AvatarStack } from '../ui/Avatar'
 import { BalanceBadge } from '../ui/BalanceBadge'
+import { MoreMenu } from '../ui/MoreMenu'
 import { Sheet } from '../ui/Sheet'
 
 export function GroupPage({ groupId }: { groupId: string }) {
@@ -67,14 +68,12 @@ export function GroupPage({ groupId }: { groupId: string }) {
         <header className="mb-5 flex items-center justify-between">
           <BackLink />
           <div className="-mr-2 flex items-center">
-            <button className="btn-ghost" onClick={() => setSheet('share')}>
+            <button className="btn-ghost whitespace-nowrap" onClick={() => setSheet('share')}>
               <Share2 className="size-4" /> <Trans>Share</Trans>
             </button>
-            {/* Only groups in the user's list can be left. */}
+            {/* Secondary actions; only groups in the user's list can be left. */}
             {state.status === 'ready' && saved && (
-              <button className="btn-ghost hover:text-owe" onClick={() => setSheet('leave')}>
-                <LogOut className="size-4" /> <Trans>Leave group</Trans>
-              </button>
+              <MoreMenu items={[{ label: t`Leave group`, icon: LogOut, destructive: true, onSelect: () => setSheet('leave') }]} />
             )}
           </div>
         </header>
@@ -185,7 +184,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
 
 function BackLink() {
   return (
-    <Link to="/groups" className="btn-ghost -ml-3">
+    <Link to="/groups" className="btn-ghost -ml-3 whitespace-nowrap">
       <ArrowLeft className="size-4" /> <Trans>My groups</Trans>
     </Link>
   )
