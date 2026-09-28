@@ -18,10 +18,10 @@ Stack: [TanStack Start](https://tanstack.com/start) (React 19, Vite, file-based 
 npm install
 npx convex login
 npx convex dev --configure existing --dev-deployment local   # first time only: pick the kwittly project
-npm run dev                                                   # app on http://localhost:5173
+npm run dev:all                                               # Convex + app on http://localhost:5173
 ```
 
-Afterwards `npx convex dev` (or `npm run dev:backend`) is enough. The local deployment keeps local work separate from the deployed dev environment.
+`npm run dev:all` runs the Convex backend and the app in one terminal. They can also be run separately with `npm run dev:backend` and `npm run dev`. The local deployment keeps local work separate from the deployed dev environment.
 
 Auth needs these Convex environment variables (`npx convex env set NAME value`, add `--deployment <name>` to target another deployment):
 

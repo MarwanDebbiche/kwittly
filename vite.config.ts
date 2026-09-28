@@ -21,4 +21,7 @@ export default defineConfig({
   ssr: {
     noExternal: ['@convex-dev/better-auth'],
   },
+  // Fixed port: fail instead of silently moving to another one (SITE_URL and
+  // the preview config expect 5173).
+  server: { port: 5173, strictPort: true },
 })

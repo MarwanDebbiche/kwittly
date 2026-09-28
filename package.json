@@ -14,7 +14,8 @@
     "i18n:extract": "lingui extract --clean",
     "i18n:check": "lingui extract && lingui compile --strict",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "dev:all": "convex dev --start 'npm run dev'"
   },
   "dependencies": {
     "@convex-dev/better-auth": "^0.12.5",
