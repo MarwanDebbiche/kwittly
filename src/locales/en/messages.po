@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-#: src/group/ParticipantsSheet.tsx:87
+#: src/group/ParticipantsSheet.tsx:93
 msgid "(you)"
 msgstr "(you)"
 
@@ -41,6 +41,10 @@ msgstr "{0} too much"
 msgid "{0}'s share"
 msgstr "{0}'s share"
 
+#: src/group/ParticipantsSheet.tsx:178
+msgid "{count, plural, one {{name} is in # expense or reimbursement. Delete it or take {name} out of it first.} other {{name} is in # expenses or reimbursements. Delete them or take {name} out of them first.}}"
+msgstr "{count, plural, one {{name} is in # expense or reimbursement. Delete it or take {name} out of it first.} other {{name} is in # expenses or reimbursements. Delete them or take {name} out of them first.}}"
+
 #: src/routes/_app.g.$groupId.tsx:38
 msgid "{count, plural, one {# participant} other {# participants}} · Join the group to share expenses on Kwittly."
 msgstr "{count, plural, one {# participant} other {# participants}} · Join the group to share expenses on Kwittly."
@@ -62,11 +66,15 @@ msgstr "<0>{0}</0> paid"
 msgid "6-digit code"
 msgstr "6-digit code"
 
+#: src/group/ParticipantsSheet.tsx:176
+msgid "A group needs at least one participant."
+msgstr "A group needs at least one participant."
+
 #: src/lib/categories.ts:11
 msgid "Activities"
 msgstr "Activities"
 
-#: src/group/ParticipantsSheet.tsx:152
+#: src/group/ParticipantsSheet.tsx:164
 #: src/pages/NewGroupPage.tsx:103
 msgid "Add"
 msgstr "Add"
@@ -79,7 +87,7 @@ msgstr "Add a first name"
 msgid "Add expense"
 msgstr "Add expense"
 
-#: src/group/ParticipantsSheet.tsx:147
+#: src/group/ParticipantsSheet.tsx:159
 msgid "Add someone"
 msgstr "Add someone"
 
@@ -158,8 +166,8 @@ msgid "By who paid, by who is involved, by category, by text. Combine them, no s
 msgstr "By who paid, by who is involved, by category, by text. Combine them, no subscription."
 
 #: src/group/LeaveGroupSheet.tsx:44
-#: src/group/ParticipantsSheet.tsx:75
-#: src/group/ParticipantsSheet.tsx:94
+#: src/group/ParticipantsSheet.tsx:80
+#: src/group/ParticipantsSheet.tsx:100
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -301,7 +309,7 @@ msgstr "Expense"
 msgid "Expenses"
 msgstr "Expenses"
 
-#: src/group/ParticipantsSheet.tsx:150
+#: src/group/ParticipantsSheet.tsx:162
 msgid "First name"
 msgstr "First name"
 
@@ -470,7 +478,7 @@ msgstr "My groups"
 msgid "My groups · Kwittly"
 msgstr "My groups · Kwittly"
 
-#: src/group/ParticipantsSheet.tsx:70
+#: src/group/ParticipantsSheet.tsx:75
 msgid "Name"
 msgstr "Name"
 
@@ -571,14 +579,10 @@ msgstr "Paid by {who}"
 msgid "Paid by you"
 msgstr "Paid by you"
 
-#: src/group/ParticipantsSheet.tsx:59
+#: src/group/ParticipantsSheet.tsx:64
 #: src/pages/GroupPage.tsx:78
 msgid "Participants"
 msgstr "Participants"
-
-#: src/group/ParticipantsSheet.tsx:137
-msgid "People who appear in an expense or a reimbursement can be renamed, not removed."
-msgstr "People who appear in an expense or a reimbursement can be renamed, not removed."
 
 #: src/pages/LandingPage.tsx:150
 msgid "Pingo Doce groceries"
@@ -606,13 +610,13 @@ msgstr "Record reimbursement"
 msgid "Reimbursement"
 msgstr "Reimbursement"
 
-#: src/group/ParticipantsSheet.tsx:103
+#: src/group/ParticipantsSheet.tsx:109
 #: src/pages/GroupsPage.tsx:100
 msgid "Remove"
 msgstr "Remove"
 
 #. placeholder {0}: p.name
-#: src/group/ParticipantsSheet.tsx:125
+#: src/group/ParticipantsSheet.tsx:139
 msgid "Remove {0}"
 msgstr "Remove {0}"
 
@@ -625,7 +629,7 @@ msgid "Remove from my list"
 msgstr "Remove from my list"
 
 #. placeholder {0}: p.name
-#: src/group/ParticipantsSheet.tsx:114
+#: src/group/ParticipantsSheet.tsx:121
 msgid "Rename {0}"
 msgstr "Rename {0}"
 
@@ -641,7 +645,7 @@ msgstr "Resend code"
 msgid "Restaurant"
 msgstr "Restaurant"
 
-#: src/group/ParticipantsSheet.tsx:72
+#: src/group/ParticipantsSheet.tsx:77
 msgid "Save"
 msgstr "Save"
 
@@ -690,7 +694,7 @@ msgstr "Shared expenses, <0>without the headache.</0>"
 msgid "Something went wrong"
 msgstr "Something went wrong"
 
-#: src/group/ParticipantsSheet.tsx:141
+#: src/group/ParticipantsSheet.tsx:153
 #: src/pages/LoginPage.tsx:19
 msgid "Something went wrong, please try again."
 msgstr "Something went wrong, please try again."

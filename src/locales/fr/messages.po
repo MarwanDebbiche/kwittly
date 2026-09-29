@@ -7,7 +7,7 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: fr\n"
 
-#: src/group/ParticipantsSheet.tsx:87
+#: src/group/ParticipantsSheet.tsx:93
 msgid "(you)"
 msgstr "(toi)"
 
@@ -41,6 +41,10 @@ msgstr "{0} en trop"
 msgid "{0}'s share"
 msgstr "Part de {0}"
 
+#: src/group/ParticipantsSheet.tsx:178
+msgid "{count, plural, one {{name} is in # expense or reimbursement. Delete it or take {name} out of it first.} other {{name} is in # expenses or reimbursements. Delete them or take {name} out of them first.}}"
+msgstr "{count, plural, one {{name} apparaît dans # dépense ou remboursement, à supprimer ou modifier d'abord.} other {{name} apparaît dans # dépenses ou remboursements, à supprimer ou modifier d'abord.}}"
+
 #: src/routes/_app.g.$groupId.tsx:38
 msgid "{count, plural, one {# participant} other {# participants}} · Join the group to share expenses on Kwittly."
 msgstr "{count, plural, one {# participant} other {# participants}} · Rejoins le groupe pour partager les dépenses sur Kwittly."
@@ -62,11 +66,15 @@ msgstr "<0>{0}</0> a payé"
 msgid "6-digit code"
 msgstr "Code à 6 chiffres"
 
+#: src/group/ParticipantsSheet.tsx:176
+msgid "A group needs at least one participant."
+msgstr "Un groupe a besoin d'au moins un participant."
+
 #: src/lib/categories.ts:11
 msgid "Activities"
 msgstr "Activités"
 
-#: src/group/ParticipantsSheet.tsx:152
+#: src/group/ParticipantsSheet.tsx:164
 #: src/pages/NewGroupPage.tsx:103
 msgid "Add"
 msgstr "Ajouter"
@@ -79,7 +87,7 @@ msgstr "Ajouter un prénom"
 msgid "Add expense"
 msgstr "Ajouter la dépense"
 
-#: src/group/ParticipantsSheet.tsx:147
+#: src/group/ParticipantsSheet.tsx:159
 msgid "Add someone"
 msgstr "Ajouter quelqu'un"
 
@@ -158,8 +166,8 @@ msgid "By who paid, by who is involved, by category, by text. Combine them, no s
 msgstr "Par personne qui a payé, par participant concerné, par catégorie, par texte. Combinables, sans abonnement."
 
 #: src/group/LeaveGroupSheet.tsx:44
-#: src/group/ParticipantsSheet.tsx:75
-#: src/group/ParticipantsSheet.tsx:94
+#: src/group/ParticipantsSheet.tsx:80
+#: src/group/ParticipantsSheet.tsx:100
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -301,7 +309,7 @@ msgstr "Dépense"
 msgid "Expenses"
 msgstr "Dépenses"
 
-#: src/group/ParticipantsSheet.tsx:150
+#: src/group/ParticipantsSheet.tsx:162
 msgid "First name"
 msgstr "Prénom"
 
@@ -470,7 +478,7 @@ msgstr "Mes groupes"
 msgid "My groups · Kwittly"
 msgstr "Mes groupes · Kwittly"
 
-#: src/group/ParticipantsSheet.tsx:70
+#: src/group/ParticipantsSheet.tsx:75
 msgid "Name"
 msgstr "Nom"
 
@@ -571,14 +579,10 @@ msgstr "Payé par {who}"
 msgid "Paid by you"
 msgstr "Payé par toi"
 
-#: src/group/ParticipantsSheet.tsx:59
+#: src/group/ParticipantsSheet.tsx:64
 #: src/pages/GroupPage.tsx:78
 msgid "Participants"
 msgstr "Participants"
-
-#: src/group/ParticipantsSheet.tsx:137
-msgid "People who appear in an expense or a reimbursement can be renamed, not removed."
-msgstr "Les personnes présentes dans une dépense ou un remboursement peuvent être renommées, pas retirées."
 
 #: src/pages/LandingPage.tsx:150
 msgid "Pingo Doce groceries"
@@ -606,13 +610,13 @@ msgstr "Enregistrer le remboursement"
 msgid "Reimbursement"
 msgstr "Remboursement"
 
-#: src/group/ParticipantsSheet.tsx:103
+#: src/group/ParticipantsSheet.tsx:109
 #: src/pages/GroupsPage.tsx:100
 msgid "Remove"
 msgstr "Retirer"
 
 #. placeholder {0}: p.name
-#: src/group/ParticipantsSheet.tsx:125
+#: src/group/ParticipantsSheet.tsx:139
 msgid "Remove {0}"
 msgstr "Retirer {0}"
 
@@ -625,7 +629,7 @@ msgid "Remove from my list"
 msgstr "Retirer de ma liste"
 
 #. placeholder {0}: p.name
-#: src/group/ParticipantsSheet.tsx:114
+#: src/group/ParticipantsSheet.tsx:121
 msgid "Rename {0}"
 msgstr "Renommer {0}"
 
@@ -641,7 +645,7 @@ msgstr "Renvoyer le code"
 msgid "Restaurant"
 msgstr "Restaurant"
 
-#: src/group/ParticipantsSheet.tsx:72
+#: src/group/ParticipantsSheet.tsx:77
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -690,7 +694,7 @@ msgstr "Les comptes entre amis, <0>sans prise de tête.</0>"
 msgid "Something went wrong"
 msgstr "Oups, quelque chose s'est mal passé"
 
-#: src/group/ParticipantsSheet.tsx:141
+#: src/group/ParticipantsSheet.tsx:153
 #: src/pages/LoginPage.tsx:19
 msgid "Something went wrong, please try again."
 msgstr "Une erreur est survenue, réessaie."
