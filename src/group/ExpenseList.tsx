@@ -17,6 +17,7 @@ import type { Expense, Group } from './types'
 type Filters = {
   paidBy?: Id<'participants'>
   involving?: Id<'participants'>
+  createdBy?: Id<'participants'>
   category?: string
   search?: string
 }
@@ -55,6 +56,14 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
             <Trans>Involves me</Trans>
           </button>
         )}
+        {me && (
+          <button
+            className={`chip whitespace-nowrap ${filters.createdBy === me ? 'chip-on' : ''}`}
+            onClick={() => set('createdBy', filters.createdBy === me ? '' : me)}
+          >
+            <Trans>Added by me</Trans>
+          </button>
+        )}
         <PillSelect
           placeholder={t`Paid by`}
           value={filters.paidBy}
@@ -66,6 +75,12 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
           value={filters.involving}
           onChange={(v) => set('involving', v)}
           options={people.map((p) => ({ ...p, label: t`Involves ${p.label}` }))}
+        />
+        <PillSelect
+          placeholder={t`Added by`}
+          value={filters.createdBy}
+          onChange={(v) => set('createdBy', v)}
+          options={people.map((p) => ({ ...p, label: t`Added by ${p.label}` }))}
         />
         <PillSelect
           placeholder={t`Category`}

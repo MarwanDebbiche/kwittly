@@ -171,6 +171,37 @@ describe("expenses.list", () => {
   });
 });
 
+test("remembers who added an expense, and filters by it", async () => {
+  const { t, groupId, alice, bob, chloe } = await setup();
+  const other = await t.mutation(api.groups.create, { name: "Other", currency: "EUR", participants: ["Zed"] });
+  const add = (title: string, createdBy?: string) =>
+    t.mutation(api.expenses.add, {
+      groupId, ...base, title, amountCents: 100, paidBy: alice, createdBy, split: { mode: "equal", participants: [alice] },
+    });
+  await add("By Bob", bob);
+  await add("Unknown");
+  await add("Invalid", "not-an-id");
+  await add("Other group", other.participantIds[0]);
+  await t.mutation(api.expenses.addTransfer, { groupId, from: chloe, to: alice, amountCents: 100, date: 0, createdBy: bob });
+
+  const expenses = await t.query(api.expenses.list, { groupId });
+  expect(expenses.filter((e) => e.createdBy !== undefined).map((e) => e.title)).toEqual(["By Bob", ""]);
+  expect((await t.query(api.expenses.list, { groupId, createdBy: bob })).map((e) => e.kind ?? e.title)).toEqual([
+    "By Bob",
+    "transfer",
+  ]);
+});
+
+test("removing a participant keeps the expenses they added, without an author", async () => {
+  const { t, groupId, alice, bob, chloe } = await setup();
+  await t.mutation(api.expenses.add, {
+    groupId, ...base, amountCents: 100, paidBy: alice, createdBy: chloe, split: { mode: "equal", participants: [alice, bob] },
+  });
+  await t.mutation(api.groups.removeParticipant, { participantId: chloe });
+  const [expense] = await t.query(api.expenses.list, { groupId });
+  expect(expense.createdBy).toBeUndefined();
+});
+
 test("expenses.remove deletes the expense", async () => {
   const { t, groupId, alice } = await setup();
   const expenseId = await t.mutation(api.expenses.add, {

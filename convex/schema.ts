@@ -19,6 +19,9 @@ export default defineSchema({
     // "transfer": a reimbursement, `paidBy` paid back the single participant
     // in `splits`. Missing on regular expenses.
     kind: v.optional(v.literal("transfer")),
+    // Participant who added it (the device's "who are you"), if known.
+    // Missing on older expenses and when added without picking an identity.
+    createdBy: v.optional(v.id("participants")),
     title: v.string(),
     // Amounts are stored in integer cents to avoid floating point errors.
     amountCents: v.number(),

@@ -50,6 +50,7 @@ export function ExpenseDetailSheet({
             </p>
           </div>
         </div>
+        <AddedBy expense={expense} group={group} me={me} />
         <Actions isTransfer onEdit={onEdit} onRemove={remove} />
       </Sheet>
     )
@@ -103,8 +104,19 @@ export function ExpenseDetailSheet({
         ))}
       </div>
 
+      <AddedBy expense={expense} group={group} me={me} />
       <Actions onEdit={onEdit} onRemove={remove} />
     </Sheet>
+  )
+}
+
+function AddedBy({ expense, group, me }: { expense: Expense; group: Group; me?: string }) {
+  const name = group.participants.find((p) => p._id === expense.createdBy)?.name
+  if (!name) return null
+  return (
+    <p className="mt-4 px-1 text-xs text-muted">
+      {expense.createdBy === me ? <Trans>Added by you</Trans> : <Trans>Added by {name}</Trans>}
+    </p>
   )
 }
 

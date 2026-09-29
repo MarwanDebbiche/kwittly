@@ -114,7 +114,7 @@ export function ExpenseFormSheet({
         split: split.payload,
       }
       if (expense) await updateExpense({ expenseId: expense._id, ...fields })
-      else await addExpense({ groupId: group._id, ...fields })
+      else await addExpense({ groupId: group._id, createdBy: me, ...fields })
       onClose()
     } finally {
       setSubmitting(false)

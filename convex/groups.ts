@@ -129,6 +129,10 @@ export const removeParticipant = mutation({
       .collect();
     if (expenses.some((e) => involves(e, participant._id)))
       throw new Error("This participant appears in expenses");
+    // Expenses they only added stay, without an author.
+    for (const e of expenses)
+      if (e.createdBy === participant._id)
+        await ctx.db.patch(e._id, { createdBy: undefined });
     await ctx.db.delete(participant._id);
   },
 });

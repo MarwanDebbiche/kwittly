@@ -58,7 +58,7 @@ export function TransferSheet({
       // Noon local time keeps the day stable across timezones.
       const fields = { from, to, amountCents, date: new Date(`${date}T12:00:00`).getTime() }
       if (transfer) await updateTransfer({ expenseId: transfer._id, ...fields })
-      else await addTransfer({ groupId: group._id, ...fields })
+      else await addTransfer({ groupId: group._id, createdBy: me, ...fields })
       onClose()
     } finally {
       setSubmitting(false)

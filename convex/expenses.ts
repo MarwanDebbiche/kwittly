@@ -9,6 +9,7 @@ export const list = query({
     // Free filters (the whole point vs Tricount): all optional, combinable.
     paidBy: v.optional(v.id("participants")),
     involving: v.optional(v.id("participants")),
+    createdBy: v.optional(v.id("participants")),
     category: v.optional(v.string()),
     from: v.optional(v.number()),
     to: v.optional(v.number()),
@@ -43,6 +44,7 @@ export const list = query({
         (!args.involving ||
           e.paidBy === args.involving ||
           e.splits.some((s) => s.participantId === args.involving)) &&
+        (!args.createdBy || e.createdBy === args.createdBy) &&
         (!args.category || e.category === args.category) &&
         (!search || e.title.toLowerCase().includes(search)),
     );
@@ -125,11 +127,26 @@ async function buildSplits(
   };
 }
 
+/**
+ * Who adds an expense comes from the device's identity (localStorage), so it
+ * is a plain string, and ignored when it is not a participant of the group.
+ */
+async function creator(ctx: MutationCtx, groupId: Id<"groups">, raw: string | undefined) {
+  const id = raw === undefined ? null : ctx.db.normalizeId("participants", raw);
+  const participant = id && (await ctx.db.get(id));
+  return participant && participant.groupId === groupId ? participant._id : undefined;
+}
+
 export const add = mutation({
-  args: { groupId: v.id("groups"), ...expenseFields },
-  handler: async (ctx, { groupId, split, ...expense }) => {
+  args: { groupId: v.id("groups"), createdBy: v.optional(v.string()), ...expenseFields },
+  handler: async (ctx, { groupId, createdBy, split, ...expense }) => {
     const splits = await buildSplits(ctx, groupId, { ...expense, split });
-    return await ctx.db.insert("expenses", { groupId, ...expense, ...splits });
+    return await ctx.db.insert("expenses", {
+      groupId,
+      createdBy: await creator(ctx, groupId, createdBy),
+      ...expense,
+      ...splits,
+    });
   },
 });
 
@@ -174,13 +191,14 @@ async function buildTransfer(
 
 /** Records that `from` paid `to` back. */
 export const addTransfer = mutation({
-  args: { groupId: v.string(), ...transferFields },
-  handler: async (ctx, { groupId: rawGroupId, ...transfer }) => {
+  args: { groupId: v.string(), createdBy: v.optional(v.string()), ...transferFields },
+  handler: async (ctx, { groupId: rawGroupId, createdBy, ...transfer }) => {
     const groupId = ctx.db.normalizeId("groups", rawGroupId);
     if (!groupId || !(await ctx.db.get(groupId)))
       throw new Error("Group not found");
     return await ctx.db.insert("expenses", {
       groupId,
+      createdBy: await creator(ctx, groupId, createdBy),
       ...(await buildTransfer(ctx, groupId, transfer)),
     });
   },
