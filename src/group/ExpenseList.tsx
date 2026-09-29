@@ -1,15 +1,17 @@
 import { convexQuery } from '@convex-dev/react-query'
 import { Plural, Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
-import { Search, X } from 'lucide-react'
+import { HandCoins, Search, X } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import type { Id } from '../../convex/_generated/dataModel'
+import { spentCents } from '../../convex/lib/money'
 import { CATEGORIES, categoryFor } from '../lib/categories'
 import { useFormatters } from '../lib/prefs'
 import { PillSelect } from '../ui/PillSelect'
 import { ExpenseDetailSheet } from './ExpenseDetailSheet'
 import { ExpenseFormSheet } from './ExpenseFormSheet'
+import { TransferSheet, TransferTitle } from './TransferSheet'
 import type { Expense, Group } from './types'
 
 type Filters = {
@@ -90,10 +92,7 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
             <p className="mt-4 text-sm text-muted">
               <Plural value={expenses.length} one="# expense" other="# expenses" /> ·{' '}
               <span className="font-medium text-ink tabular-nums">
-                {format.money(
-                  expenses.reduce((sum, e) => sum + e.amountCents, 0),
-                  group.currency,
-                )}
+                {format.money(spentCents(expenses), group.currency)}
               </span>
             </p>
           )}
@@ -106,7 +105,7 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
                 <ul className="card divide-y divide-line overflow-hidden">
                   {items.map((e) => (
                     <li key={e._id}>
-                      <ExpenseRow expense={e} payer={names.get(e.paidBy) ?? '?'} me={me} currency={group.currency} onClick={() => setOpen({ id: e._id, editing: false })} />
+                      <ExpenseRow expense={e} group={group} payer={names.get(e.paidBy) ?? '?'} me={me} onClick={() => setOpen({ id: e._id, editing: false })} />
                     </li>
                   ))}
                 </ul>
@@ -120,11 +119,15 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
         <ExpenseDetailSheet
           expense={selected}
           group={group}
+          me={me}
           onEdit={() => setOpen({ id: selected._id, editing: true })}
           onClose={() => setOpen(null)}
         />
       )}
-      {selected && open?.editing && (
+      {selected && open?.editing && selected.kind === 'transfer' && (
+        <TransferSheet group={group} me={me} transfer={selected} onClose={() => setOpen({ id: selected._id, editing: false })} />
+      )}
+      {selected && open?.editing && selected.kind !== 'transfer' && (
         <ExpenseFormSheet group={group} me={me} expense={selected} onClose={() => setOpen({ id: selected._id, editing: false })} />
       )}
     </div>
@@ -133,18 +136,36 @@ export function ExpenseList({ group, me }: { group: Group; me?: Id<'participants
 
 function ExpenseRow({
   expense,
+  group,
   payer,
   me,
-  currency,
   onClick,
 }: {
   expense: Expense
+  group: Group
   payer: string
   me?: string
-  currency: string
   onClick: () => void
 }) {
   const format = useFormatters()
+  const currency = group.currency
+  if (expense.kind === 'transfer')
+    return (
+      <button onClick={onClick} className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-canvas">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-ink/5 text-ink">
+          <HandCoins className="size-5" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block truncate font-medium">
+            <TransferTitle transfer={expense} group={group} me={me} />
+          </span>
+          <span className="block text-sm text-muted">
+            <Trans>Reimbursement</Trans>
+          </span>
+        </span>
+        <span className="font-semibold text-muted tabular-nums">{format.money(expense.amountCents, currency)}</span>
+      </button>
+    )
   const category = categoryFor(expense.category)
   const Icon = category.icon
   const myShare = expense.splits.find((s) => s.participantId === me)?.shareCents ?? 0

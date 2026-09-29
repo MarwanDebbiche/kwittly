@@ -1,32 +1,58 @@
 import { Plural, Trans, useLingui } from '@lingui/react/macro'
 import { useMutation } from 'convex/react'
-import { Pencil, Trash2 } from 'lucide-react'
+import { HandCoins, Pencil, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { categoryFor } from '../lib/categories'
 import { useFormatters } from '../lib/prefs'
 import { Avatar } from '../ui/Avatar'
 import { Sheet } from '../ui/Sheet'
+import { TransferTitle } from './TransferSheet'
 import type { Expense, Group } from './types'
 
 export function ExpenseDetailSheet({
   expense,
   group,
+  me,
   onEdit,
   onClose,
 }: {
   expense: Expense
   group: Group
+  me?: string
   onEdit: () => void
   onClose: () => void
 }) {
-  const { i18n } = useLingui()
+  const { t, i18n } = useLingui()
   const format = useFormatters()
   const removeExpense = useMutation(api.expenses.remove)
-  const [confirming, setConfirming] = useState(false)
   const names = new Map<string, string>(group.participants.map((p) => [p._id, p.name]))
   const category = categoryFor(expense.category)
   const Icon = category.icon
+  const isTransfer = expense.kind === 'transfer'
+  async function remove() {
+    await removeExpense({ expenseId: expense._id })
+    onClose()
+  }
+  const date = format.date(expense.date, { day: 'numeric', month: 'long', year: 'numeric' })
+
+  if (isTransfer)
+    return (
+      <Sheet title={t`Reimbursement`} onClose={onClose}>
+        <div className="flex items-center gap-3">
+          <span className="flex size-12 items-center justify-center rounded-2xl bg-ink/5 text-ink">
+            <HandCoins className="size-6" />
+          </span>
+          <div>
+            <p className="font-display text-3xl font-semibold tabular-nums">{format.money(expense.amountCents, group.currency)}</p>
+            <p className="text-sm text-muted">
+              <TransferTitle transfer={expense} group={group} me={me} /> · {date}
+            </p>
+          </div>
+        </div>
+        <Actions isTransfer onEdit={onEdit} onRemove={remove} />
+      </Sheet>
+    )
 
   return (
     <Sheet title={expense.title} onClose={onClose}>
@@ -37,8 +63,7 @@ export function ExpenseDetailSheet({
         <div>
           <p className="font-display text-3xl font-semibold tabular-nums">{format.money(expense.amountCents, group.currency)}</p>
           <p className="text-sm text-muted">
-            {expense.category ? i18n._(category.label) : <Trans>No category</Trans>} ·{' '}
-            {format.date(expense.date, { day: 'numeric', month: 'long', year: 'numeric' })}
+            {expense.category ? i18n._(category.label) : <Trans>No category</Trans>} · {date}
           </p>
         </div>
       </div>
@@ -78,19 +103,34 @@ export function ExpenseDetailSheet({
         ))}
       </div>
 
+      <Actions onEdit={onEdit} onRemove={remove} />
+    </Sheet>
+  )
+}
+
+function Actions({ isTransfer, onEdit, onRemove }: { isTransfer?: boolean; onEdit: () => void; onRemove: () => Promise<void> }) {
+  const [confirming, setConfirming] = useState(false)
+  return (
+    <>
       <button className="btn-ghost mt-5 w-full border border-line text-ink" onClick={onEdit}>
-        <Pencil className="size-4" /> <Trans>Edit expense</Trans>
+        <Pencil className="size-4" /> {isTransfer ? <Trans>Edit reimbursement</Trans> : <Trans>Edit expense</Trans>}
       </button>
       <button
         className={`mt-2 w-full ${confirming ? 'btn-primary bg-owe hover:bg-owe/90' : 'btn-ghost text-owe hover:bg-owe/10 hover:text-owe'}`}
         onClick={async () => {
           if (!confirming) return setConfirming(true)
-          await removeExpense({ expenseId: expense._id })
-          onClose()
+          await onRemove()
         }}
       >
-        <Trash2 className="size-4" /> {confirming ? <Trans>Confirm deletion</Trans> : <Trans>Delete expense</Trans>}
+        <Trash2 className="size-4" />{' '}
+        {confirming ? (
+          <Trans>Confirm deletion</Trans>
+        ) : isTransfer ? (
+          <Trans>Delete reimbursement</Trans>
+        ) : (
+          <Trans>Delete expense</Trans>
+        )}
       </button>
-    </Sheet>
+    </>
   )
 }

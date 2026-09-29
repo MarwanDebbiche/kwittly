@@ -25,17 +25,18 @@ export function splitByShares(totalCents: number, shares: number[]): number[] {
   return parts;
 }
 
-type ExpenseLike = {
-  paidBy: string;
+type ExpenseLike<Id extends string = string> = {
+  kind?: "transfer";
+  paidBy: Id;
   amountCents: number;
-  splits: { participantId: string; shareCents: number }[];
+  splits: { participantId: Id; shareCents: number }[];
 };
 
 /** Net balance per participant: positive = is owed money, negative = owes money. */
-export function computeBalances(
-  participantIds: string[],
-  expenses: ExpenseLike[],
-): Map<string, number> {
+export function computeBalances<Id extends string>(
+  participantIds: Id[],
+  expenses: ExpenseLike<Id>[],
+): Map<Id, number> {
   const balances = new Map(participantIds.map((id) => [id, 0]));
   for (const e of expenses) {
     balances.set(e.paidBy, (balances.get(e.paidBy) ?? 0) + e.amountCents);
@@ -49,20 +50,28 @@ export function computeBalances(
   return balances;
 }
 
-export type Settlement = { from: string; to: string; amountCents: number };
+/** Total spent by the group: reimbursements move money between members, they are not spending. */
+export function spentCents(expenses: ExpenseLike[]): number {
+  return expenses.reduce(
+    (sum, e) => (e.kind === "transfer" ? sum : sum + e.amountCents),
+    0,
+  );
+}
+
+export type Settlement<Id extends string = string> = { from: Id; to: Id; amountCents: number };
 
 /**
  * Greedy debt simplification: repeatedly match the biggest debtor with the
  * biggest creditor. Yields at most n-1 transfers.
  */
-export function settle(balances: Map<string, number>): Settlement[] {
+export function settle<Id extends string>(balances: Map<Id, number>): Settlement<Id>[] {
   const debtors = [...balances]
     .filter(([, b]) => b < 0)
     .map(([id, b]) => ({ id, amount: -b }));
   const creditors = [...balances]
     .filter(([, b]) => b > 0)
     .map(([id, b]) => ({ id, amount: b }));
-  const settlements: Settlement[] = [];
+  const settlements: Settlement<Id>[] = [];
 
   while (debtors.length && creditors.length) {
     debtors.sort((a, b) => b.amount - a.amount);

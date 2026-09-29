@@ -1,13 +1,17 @@
 import { Trans, useLingui } from '@lingui/react/macro'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, HandCoins } from 'lucide-react'
+import { useState } from 'react'
 import type { Id } from '../../convex/_generated/dataModel'
 import { useFormatters } from '../lib/prefs'
 import { Avatar } from '../ui/Avatar'
+import { TransferSheet } from './TransferSheet'
 import type { BalancesData, Group } from './types'
 
 export function Balances({ group, data, me }: { group: Group; data: BalancesData | undefined; me?: Id<'participants'> }) {
   const { t } = useLingui()
   const format = useFormatters()
+  // Reimbursement being recorded: a suggested settlement, or blank.
+  const [recording, setRecording] = useState<BalancesData['settlements'][number] | 'blank' | null>(null)
   if (!data) return <div className="h-48 animate-pulse rounded-2xl bg-line" />
   const names = new Map<string, string>(group.participants.map((p) => [p._id, p.name]))
   const label = (id: string) => (id === me ? t`You` : (names.get(id) ?? '?'))
@@ -62,22 +66,39 @@ export function Balances({ group, data, me }: { group: Group; data: BalancesData
             {data.settlements.map((s, i) => {
               const involvesMe = s.from === me || s.to === me
               return (
-                <li key={i} className={`card flex items-center gap-3 px-4 py-3 ${involvesMe ? 'border-ink/30 ring-1 ring-ink/10' : ''}`}>
-                  <Avatar name={names.get(s.from) ?? '?'} size="sm" />
-                  <span className="text-sm font-medium">{label(s.from)}</span>
-                  <ArrowRight className="size-4 text-muted" />
-                  <Avatar name={names.get(s.to) ?? '?'} size="sm" />
-                  <span className="flex-1 text-sm font-medium">{label(s.to)}</span>
-                  <span className="font-semibold tabular-nums">{format.money(s.amountCents, group.currency)}</span>
+                <li key={i}>
+                  <button
+                    onClick={() => setRecording(s)}
+                    className={`card flex w-full items-center gap-3 px-4 py-3 text-left transition hover:border-ink/30 ${involvesMe ? 'border-ink/30 ring-1 ring-ink/10' : ''}`}
+                  >
+                    <Avatar name={names.get(s.from) ?? '?'} size="sm" />
+                    <span className="min-w-0 truncate text-sm font-medium">{label(s.from)}</span>
+                    <ArrowRight className="size-4 shrink-0 text-muted" />
+                    <Avatar name={names.get(s.to) ?? '?'} size="sm" />
+                    <span className="min-w-0 flex-1 truncate text-sm font-medium">{label(s.to)}</span>
+                    <span className="font-semibold tabular-nums">{format.money(s.amountCents, group.currency)}</span>
+                  </button>
                 </li>
               )
             })}
           </ul>
         )}
         <p className="mt-2 px-1 text-xs text-muted">
-          <Trans>The fewest transfers needed for everyone to be even.</Trans>
+          <Trans>The fewest transfers needed for everyone to be even. Tap one once it's paid to record it.</Trans>
         </p>
+        <button className="btn-ghost mt-3 w-full border border-line text-ink" onClick={() => setRecording('blank')}>
+          <HandCoins className="size-4" /> <Trans>Record a reimbursement</Trans>
+        </button>
       </section>
+
+      {recording && (
+        <TransferSheet
+          group={group}
+          me={me}
+          initial={recording === 'blank' ? undefined : recording}
+          onClose={() => setRecording(null)}
+        />
+      )}
     </div>
   )
 }

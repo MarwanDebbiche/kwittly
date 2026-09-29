@@ -6,6 +6,7 @@ import { api } from '../../convex/_generated/api'
 import type { Id } from '../../convex/_generated/dataModel'
 import { splitByShares } from '../../convex/lib/money'
 import { CATEGORIES } from '../lib/categories'
+import { localDay } from '../lib/dates'
 import { parseCents, sanitizeAmountInput } from '../lib/money'
 import { useFormatters, usePrefs } from '../lib/prefs'
 import { Avatar } from '../ui/Avatar'
@@ -16,11 +17,6 @@ type ParticipantId = Id<'participants'>
 type SplitMode = 'equal' | 'shares' | 'amounts'
 
 const MAX_SHARES = 1000
-
-/** Calendar day of a timestamp in the browser's time zone, as YYYY-MM-DD (toISOString would give the UTC day). */
-function localDay(timestamp: number) {
-  return new Intl.DateTimeFormat('en-CA').format(new Date(timestamp))
-}
 
 /** Creates an expense, or edits `expense` when given. */
 export function ExpenseFormSheet({

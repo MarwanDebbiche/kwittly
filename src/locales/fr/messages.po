@@ -8,32 +8,32 @@ msgstr ""
 "Language: fr\n"
 
 #. placeholder {0}: expenses.length
-#: src/group/ExpenseList.tsx:91
+#: src/group/ExpenseList.tsx:93
 msgid "{0, plural, one {# expense} other {# expenses}}"
 msgstr "{0, plural, one {# dépense} other {# dépenses}}"
 
 #. placeholder {0}: s.shares
-#: src/group/ExpenseDetailSheet.tsx:72
+#: src/group/ExpenseDetailSheet.tsx:97
 msgid "{0, plural, one {# share} other {# shares}}"
 msgstr "{0, plural, one {# part} other {# parts}}"
 
 #. placeholder {0}: format.money(Math.floor(amountCents / split.count), group.currency)
-#: src/group/ExpenseFormSheet.tsx:206
+#: src/group/ExpenseFormSheet.tsx:202
 msgid "{0} each"
 msgstr "{0} chacun"
 
 #. placeholder {0}: format.money(split.remaining, group.currency)
-#: src/group/ExpenseFormSheet.tsx:270
+#: src/group/ExpenseFormSheet.tsx:266
 msgid "{0} left to assign"
 msgstr "Reste à répartir : {0}"
 
 #. placeholder {0}: format.money(-split.remaining, group.currency)
-#: src/group/ExpenseFormSheet.tsx:272
+#: src/group/ExpenseFormSheet.tsx:268
 msgid "{0} too much"
 msgstr "{0} en trop"
 
 #. placeholder {0}: names.get(s.participantId)
-#: src/group/ExpenseDetailSheet.tsx:68
+#: src/group/ExpenseDetailSheet.tsx:93
 msgid "{0}'s share"
 msgstr "Part de {0}"
 
@@ -41,8 +41,16 @@ msgstr "Part de {0}"
 msgid "{count, plural, one {# participant} other {# participants}} · Join the group to share expenses on Kwittly."
 msgstr "{count, plural, one {# participant} other {# participants}} · Rejoins le groupe pour partager les dépenses sur Kwittly."
 
+#: src/group/TransferSheet.tsx:140
+msgid "{from} paid {to} back"
+msgstr "{from} a remboursé {to}"
+
+#: src/group/TransferSheet.tsx:139
+msgid "{from} paid you back"
+msgstr "{from} t'a remboursé"
+
 #. placeholder {0}: names.get(expense.paidBy)
-#: src/group/ExpenseDetailSheet.tsx:59
+#: src/group/ExpenseDetailSheet.tsx:84
 msgid "<0>{0}</0> paid"
 msgstr "<0>{0}</0> a payé"
 
@@ -62,7 +70,7 @@ msgstr "Ajouter"
 msgid "Add a first name"
 msgstr "Ajouter un prénom"
 
-#: src/group/ExpenseFormSheet.tsx:303
+#: src/group/ExpenseFormSheet.tsx:299
 msgid "Add expense"
 msgstr "Ajouter la dépense"
 
@@ -74,12 +82,13 @@ msgstr "Ajoutez vos dépenses"
 msgid "Airport taxi"
 msgstr "Taxi aéroport"
 
-#: src/group/ExpenseFormSheet.tsx:147
+#: src/group/ExpenseFormSheet.tsx:143
+#: src/group/TransferSheet.tsx:96
 msgid "Amount"
 msgstr "Montant"
 
 #. placeholder {0}: nameOf(p._id)
-#: src/group/ExpenseFormSheet.tsx:260
+#: src/group/ExpenseFormSheet.tsx:256
 msgid "Amount for {0}"
 msgstr "Montant pour {0}"
 
@@ -97,7 +106,7 @@ msgstr "Retour"
 msgid "Back to home"
 msgstr "Retour à l'accueil"
 
-#: src/group/Balances.tsx:20
+#: src/group/Balances.tsx:24
 #: src/pages/GroupPage.tsx:123
 msgid "Balances"
 msgstr "Soldes"
@@ -106,11 +115,11 @@ msgstr "Soldes"
 msgid "Balances update on their own."
 msgstr "Les soldes se mettent à jour tout seuls."
 
-#: src/group/ExpenseFormSheet.tsx:131
+#: src/group/ExpenseFormSheet.tsx:127
 msgid "By amounts"
 msgstr "Par montants"
 
-#: src/group/ExpenseFormSheet.tsx:130
+#: src/group/ExpenseFormSheet.tsx:126
 msgid "By shares"
 msgstr "Par parts"
 
@@ -122,8 +131,8 @@ msgstr "Par personne qui a payé, par participant concerné, par catégorie, par
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/group/ExpenseFormSheet.tsx:280
-#: src/group/ExpenseList.tsx:69
+#: src/group/ExpenseFormSheet.tsx:276
+#: src/group/ExpenseList.tsx:71
 #: src/pages/LandingPage.tsx:192
 msgid "Category"
 msgstr "Catégorie"
@@ -140,7 +149,7 @@ msgstr "Vérifie tes emails"
 msgid "Checking…"
 msgstr "Vérification…"
 
-#: src/group/ExpenseList.tsx:76
+#: src/group/ExpenseList.tsx:78
 msgid "Clear"
 msgstr "Effacer"
 
@@ -153,7 +162,7 @@ msgstr "Fermer"
 msgid "Code sent to <0>{0}</0>. It expires in 10 minutes."
 msgstr "Code envoyé à <0>{0}</0>. Il expire dans 10 minutes."
 
-#: src/group/ExpenseDetailSheet.tsx:92
+#: src/group/ExpenseDetailSheet.tsx:127
 msgid "Confirm deletion"
 msgstr "Confirmer la suppression"
 
@@ -193,28 +202,38 @@ msgstr "Crée le groupe maintenant, ajoute les dépenses au fil de l'eau."
 msgid "Currency"
 msgstr "Devise"
 
-#: src/group/ExpenseFormSheet.tsx:297
+#: src/group/ExpenseFormSheet.tsx:293
+#: src/group/TransferSheet.tsx:120
 msgid "Date"
 msgstr "Date"
 
-#: src/group/ExpenseDetailSheet.tsx:92
+#: src/group/ExpenseDetailSheet.tsx:131
 msgid "Delete expense"
 msgstr "Supprimer la dépense"
+
+#: src/group/ExpenseDetailSheet.tsx:129
+msgid "Delete reimbursement"
+msgstr "Supprimer le remboursement"
 
 #: src/pages/LandingPage.tsx:148
 msgid "Dinner at Time Out"
 msgstr "Dîner Time Out"
 
-#: src/group/ExpenseDetailSheet.tsx:82
-#: src/group/ExpenseFormSheet.tsx:137
+#: src/group/ExpenseDetailSheet.tsx:116
+#: src/group/ExpenseFormSheet.tsx:133
 msgid "Edit expense"
 msgstr "Modifier la dépense"
+
+#: src/group/ExpenseDetailSheet.tsx:116
+#: src/group/TransferSheet.tsx:86
+msgid "Edit reimbursement"
+msgstr "Modifier le remboursement"
 
 #: src/pages/LoginPage.tsx:93
 msgid "Email"
 msgstr "Email"
 
-#: src/group/ExpenseFormSheet.tsx:129
+#: src/group/ExpenseFormSheet.tsx:125
 msgid "Equally"
 msgstr "À parts égales"
 
@@ -222,11 +241,11 @@ msgstr "À parts égales"
 msgid "Every filter, for free"
 msgstr "Tous les filtres, gratuitement"
 
-#: src/group/ExpenseFormSheet.tsx:214
+#: src/group/ExpenseFormSheet.tsx:210
 msgid "Everyone"
 msgstr "Tout le monde"
 
-#: src/group/Balances.tsx:58
+#: src/group/Balances.tsx:62
 msgid "Everyone is even."
 msgstr "Tout le monde est à l'équilibre."
 
@@ -234,7 +253,7 @@ msgstr "Tout le monde est à l'équilibre."
 msgid "Everyone joins in one tap, from their phone."
 msgstr "Chacun rejoint en un clic, depuis son téléphone."
 
-#: src/group/ExpenseFormSheet.tsx:268
+#: src/group/ExpenseFormSheet.tsx:264
 msgid "Everything is assigned."
 msgstr "Tout est réparti."
 
@@ -250,7 +269,7 @@ msgstr "Dépense"
 msgid "Expenses"
 msgstr "Dépenses"
 
-#: src/group/ExpenseFormSheet.tsx:165
+#: src/group/ExpenseFormSheet.tsx:161
 msgid "For whom"
 msgstr "Pour qui"
 
@@ -299,16 +318,16 @@ msgstr "Adresse email invalide."
 msgid "Invite to the group"
 msgstr "Inviter dans le groupe"
 
-#: src/group/ExpenseList.tsx:63
+#: src/group/ExpenseList.tsx:65
 msgid "Involves"
 msgstr "Concerne"
 
 #. placeholder {0}: p.label
-#: src/group/ExpenseList.tsx:66
+#: src/group/ExpenseList.tsx:68
 msgid "Involves {0}"
 msgstr "Concerne {0}"
 
-#: src/group/ExpenseList.tsx:53
+#: src/group/ExpenseList.tsx:55
 #: src/pages/LandingPage.tsx:186
 msgid "Involves me"
 msgstr "Me concerne"
@@ -392,7 +411,8 @@ msgstr "Se déconnecter"
 msgid "Made for groups who like to keep things even."
 msgstr "Fait pour les groupes qui aiment les bons comptes."
 
-#: src/group/ExpenseFormSheet.tsx:43
+#: src/group/ExpenseFormSheet.tsx:39
+#: src/group/TransferSheet.tsx:38
 msgid "Me"
 msgstr "Moi"
 
@@ -414,7 +434,7 @@ msgstr "Mes groupes"
 msgid "My groups · Kwittly"
 msgstr "Mes groupes · Kwittly"
 
-#: src/group/ExpenseFormSheet.tsx:137
+#: src/group/ExpenseFormSheet.tsx:133
 msgid "New expense"
 msgstr "Nouvelle dépense"
 
@@ -432,15 +452,15 @@ msgstr "Nouveau groupe · Kwittly"
 msgid "No account yet? It will be created automatically, with your current groups."
 msgstr "Pas encore de compte ? Il sera créé automatiquement, avec tes groupes actuels."
 
-#: src/group/ExpenseDetailSheet.tsx:40
+#: src/group/ExpenseDetailSheet.tsx:66
 msgid "No category"
 msgstr "Sans catégorie"
 
-#: src/group/ExpenseList.tsx:85
+#: src/group/ExpenseList.tsx:87
 msgid "No expenses match these filters."
 msgstr "Aucune dépense ne correspond à ces filtres."
 
-#: src/group/ExpenseList.tsx:85
+#: src/group/ExpenseList.tsx:87
 msgid "No expenses yet. Add the first one!"
 msgstr "Aucune dépense. Ajoute la première !"
 
@@ -452,7 +472,7 @@ msgstr "Aucun groupe pour l'instant"
 msgid "No sign-up"
 msgstr "Sans inscription"
 
-#: src/group/ExpenseFormSheet.tsx:214
+#: src/group/ExpenseFormSheet.tsx:210
 msgid "None"
 msgstr "Aucun"
 
@@ -460,15 +480,15 @@ msgstr "Aucun"
 msgid "Not in the list?"
 msgstr "Pas dans la liste ?"
 
-#: src/group/ExpenseList.tsx:177
+#: src/group/ExpenseList.tsx:198
 msgid "not involved"
 msgstr "non concerné"
 
-#: src/group/ExpenseFormSheet.tsx:231
+#: src/group/ExpenseFormSheet.tsx:227
 msgid "One share less"
 msgstr "Une part de moins"
 
-#: src/group/ExpenseFormSheet.tsx:237
+#: src/group/ExpenseFormSheet.tsx:233
 msgid "One share more"
 msgstr "Une part de plus"
 
@@ -484,18 +504,22 @@ msgstr "Autres participants"
 msgid "Page not found"
 msgstr "Page introuvable"
 
-#: src/group/ExpenseFormSheet.tsx:154
-#: src/group/ExpenseList.tsx:57
+#: src/group/TransferSheet.tsx:103
+msgid "Paid back by"
+msgstr "Remboursé par"
+
+#: src/group/ExpenseFormSheet.tsx:150
+#: src/group/ExpenseList.tsx:59
 #: src/pages/LandingPage.tsx:189
 msgid "Paid by"
 msgstr "Payé par"
 
 #. placeholder {0}: p.label
-#: src/group/ExpenseList.tsx:60
+#: src/group/ExpenseList.tsx:62
 msgid "Paid by {0}"
 msgstr "Payé par {0}"
 
-#: src/group/ExpenseList.tsx:161
+#: src/group/ExpenseList.tsx:182
 msgid "Paid by {payer}"
 msgstr "Payé par {payer}"
 
@@ -503,7 +527,7 @@ msgstr "Payé par {payer}"
 msgid "Paid by {who}"
 msgstr "Payé par {who}"
 
-#: src/group/ExpenseList.tsx:161
+#: src/group/ExpenseList.tsx:182
 msgid "Paid by you"
 msgstr "Payé par toi"
 
@@ -518,6 +542,20 @@ msgstr "Prêt en 30 secondes."
 #: src/pages/LandingPage.tsx:18
 msgid "Real time"
 msgstr "En temps réel"
+
+#: src/group/Balances.tsx:90
+#: src/group/TransferSheet.tsx:86
+msgid "Record a reimbursement"
+msgstr "Enregistrer un remboursement"
+
+#: src/group/TransferSheet.tsx:126
+msgid "Record reimbursement"
+msgstr "Enregistrer le remboursement"
+
+#: src/group/ExpenseDetailSheet.tsx:41
+#: src/group/ExpenseList.tsx:163
+msgid "Reimbursement"
+msgstr "Remboursement"
 
 #: src/pages/GroupsPage.tsx:100
 msgid "Remove"
@@ -543,11 +581,12 @@ msgstr "Renvoyer le code"
 msgid "Restaurant"
 msgstr "Restaurant"
 
-#: src/group/ExpenseFormSheet.tsx:303
+#: src/group/ExpenseFormSheet.tsx:299
+#: src/group/TransferSheet.tsx:126
 msgid "Save changes"
 msgstr "Enregistrer"
 
-#: src/group/ExpenseList.tsx:42
+#: src/group/ExpenseList.tsx:44
 msgid "Search expenses"
 msgstr "Rechercher une dépense"
 
@@ -591,25 +630,25 @@ msgstr "Oups, quelque chose s'est mal passé"
 msgid "Something went wrong, please try again."
 msgstr "Une erreur est survenue, réessaie."
 
-#: src/group/ExpenseDetailSheet.tsx:50
+#: src/group/ExpenseDetailSheet.tsx:75
 msgid "Split by amounts"
 msgstr "Réparti par montants"
 
-#: src/group/ExpenseDetailSheet.tsx:48
+#: src/group/ExpenseDetailSheet.tsx:73
 msgid "Split by shares"
 msgstr "Réparti par parts"
 
-#: src/group/ExpenseDetailSheet.tsx:52
+#: src/group/ExpenseDetailSheet.tsx:77
 msgid "Split equally"
 msgstr "Réparti à parts égales"
 
-#: src/group/ExpenseFormSheet.tsx:166
+#: src/group/ExpenseFormSheet.tsx:162
 msgid "Split mode"
 msgstr "Mode de répartition"
 
-#: src/group/Balances.tsx:78
-msgid "The fewest transfers needed for everyone to be even."
-msgstr "Nombre minimal de virements pour que tout le monde soit quitte."
+#: src/group/Balances.tsx:87
+msgid "The fewest transfers needed for everyone to be even. Tap one once it's paid to record it."
+msgstr "Nombre minimal de virements pour que tout le monde soit quitte. Touche-en un une fois payé pour l'enregistrer."
 
 #: src/pages/LandingPage.tsx:28
 msgid "The fewest transfers possible"
@@ -635,11 +674,15 @@ msgstr "La page n'a pas pu être chargée. Vérifie ta connexion et réessaie."
 msgid "This code has expired. Request a new one."
 msgstr "Ce code a expiré. Demande un nouveau code."
 
-#: src/group/Balances.tsx:54
+#: src/group/TransferSheet.tsx:113
+msgid "To"
+msgstr "À"
+
+#: src/group/Balances.tsx:58
 msgid "To settle up"
 msgstr "Pour équilibrer"
 
-#: src/group/ExpenseList.tsx:197
+#: src/group/ExpenseList.tsx:218
 msgid "Today"
 msgstr "Aujourd'hui"
 
@@ -679,7 +722,7 @@ msgstr "Réessayer"
 msgid "Weekend in Lisbon"
 msgstr "Week-end à Lisbonne"
 
-#: src/group/ExpenseFormSheet.tsx:152
+#: src/group/ExpenseFormSheet.tsx:148
 msgid "What for? (e.g. Supermarket)"
 msgstr "Pour quoi ? (ex : Courses Carrefour)"
 
@@ -696,11 +739,11 @@ msgstr "Qui es-tu ?"
 msgid "Wrong code. Check the latest email you received."
 msgstr "Code incorrect. Vérifie le dernier email reçu."
 
-#: src/group/ExpenseList.tsx:198
+#: src/group/ExpenseList.tsx:219
 msgid "Yesterday"
 msgstr "Hier"
 
-#: src/group/Balances.tsx:13
+#: src/group/Balances.tsx:17
 msgid "You"
 msgstr "Toi"
 
@@ -722,7 +765,7 @@ msgid "You can also share a link so everyone can join the group."
 msgstr "Tu pourras aussi partager un lien pour que chacun rejoigne le groupe."
 
 #. placeholder {0}: format.money(lent, currency)
-#: src/group/ExpenseList.tsx:169
+#: src/group/ExpenseList.tsx:190
 msgid "you lent {0}"
 msgstr "tu prêtes {0}"
 
@@ -730,6 +773,10 @@ msgstr "tu prêtes {0}"
 #: src/ui/BalanceBadge.tsx:15
 msgid "You owe"
 msgstr "Tu dois"
+
+#: src/group/TransferSheet.tsx:138
+msgid "You paid {to} back"
+msgstr "Tu as remboursé {to}"
 
 #: src/pages/LoginPage.tsx:100
 msgid "you@example.com"
@@ -750,6 +797,6 @@ msgid "Your session has expired. Log in again to sync your groups."
 msgstr "Ta session a expiré. Reconnecte-toi pour synchroniser tes groupes."
 
 #. placeholder {0}: format.money(myShare, currency)
-#: src/group/ExpenseList.tsx:173
+#: src/group/ExpenseList.tsx:194
 msgid "your share {0}"
 msgstr "ta part {0}"

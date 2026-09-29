@@ -1,7 +1,8 @@
 import { v } from "convex/values";
+import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 import { isLocale } from "./lib/locale";
-import { computeBalances } from "./lib/money";
+import { computeBalances, spentCents } from "./lib/money";
 
 export const create = mutation({
   args: {
@@ -78,9 +79,9 @@ export const summaries = query({
           name: group.name,
           currency: group.currency,
           participants: participants.map((p) => ({ id: p._id, name: p.name })),
-          totalCents: expenses.reduce((sum, e) => sum + e.amountCents, 0),
+          totalCents: spentCents(expenses),
           myBalanceCents:
-            item.me !== undefined ? (balances.get(item.me) ?? null) : null,
+            item.me !== undefined ? (balances.get(item.me as Id<"participants">) ?? null) : null,
         };
       }),
     );

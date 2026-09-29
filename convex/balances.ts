@@ -1,6 +1,6 @@
 import { v } from "convex/values";
 import { query } from "./_generated/server";
-import { computeBalances, settle } from "./lib/money";
+import { computeBalances, settle, spentCents } from "./lib/money";
 
 export const get = query({
   args: { groupId: v.id("groups") },
@@ -24,7 +24,7 @@ export const get = query({
         balanceCents: balances.get(p._id) ?? 0,
       })),
       settlements: settle(balances),
-      totalCents: expenses.reduce((sum, e) => sum + e.amountCents, 0),
+      totalCents: spentCents(expenses),
     };
   },
 });

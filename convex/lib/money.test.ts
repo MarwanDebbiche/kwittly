@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { computeBalances, settle, splitByShares, splitEqually } from "./money";
+import { computeBalances, settle, spentCents, splitByShares, splitEqually } from "./money";
 
 const sum = (values: number[]) => values.reduce((a, b) => a + b, 0);
 
@@ -93,4 +93,14 @@ describe("settle", () => {
   test("needs no transfer when everyone is even", () => {
     expect(settle(new Map([["a", 0], ["b", 0]]))).toEqual([]);
   });
+});
+
+test("spentCents leaves reimbursements out", () => {
+  const split = [{ participantId: "b", shareCents: 500 }];
+  expect(
+    spentCents([
+      { paidBy: "a", amountCents: 500, splits: split },
+      { kind: "transfer", paidBy: "b", amountCents: 300, splits: [{ participantId: "a", shareCents: 300 }] },
+    ]),
+  ).toBe(500);
 });

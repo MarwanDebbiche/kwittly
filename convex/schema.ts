@@ -16,6 +16,9 @@ export default defineSchema({
 
   expenses: defineTable({
     groupId: v.id("groups"),
+    // "transfer": a reimbursement, `paidBy` paid back the single participant
+    // in `splits`. Missing on regular expenses.
+    kind: v.optional(v.literal("transfer")),
     title: v.string(),
     // Amounts are stored in integer cents to avoid floating point errors.
     amountCents: v.number(),

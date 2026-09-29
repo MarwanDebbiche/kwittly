@@ -138,9 +138,62 @@ export const update = mutation({
   handler: async (ctx, { expenseId, split, ...expense }) => {
     const existing = await ctx.db.get(expenseId);
     if (!existing) throw new Error("Expense not found");
+    if (existing.kind === "transfer")
+      throw new Error("This is a reimbursement, not an expense");
     const splits = await buildSplits(ctx, existing.groupId, { ...expense, split });
     // `category: undefined` clears the field when the category is removed.
     await ctx.db.patch(expenseId, { ...expense, category: expense.category, ...splits });
+  },
+});
+
+const transferFields = {
+  from: v.id("participants"),
+  to: v.id("participants"),
+  amountCents: v.number(),
+  date: v.number(),
+};
+
+/**
+ * A reimbursement is stored as an expense paid by `from` and owed entirely by
+ * `to`, so balances and settlements need no special case.
+ */
+async function buildTransfer(
+  ctx: MutationCtx,
+  groupId: Id<"groups">,
+  { from, to, amountCents, date }: { from: Id<"participants">; to: Id<"participants">; amountCents: number; date: number },
+) {
+  if (from === to)
+    throw new Error("A reimbursement needs two different participants");
+  const splits = await buildSplits(ctx, groupId, {
+    amountCents,
+    paidBy: from,
+    split: { mode: "amounts", amounts: [{ participantId: to, amountCents }] },
+  });
+  return { kind: "transfer" as const, title: "", amountCents, paidBy: from, date, category: undefined, ...splits };
+}
+
+/** Records that `from` paid `to` back. */
+export const addTransfer = mutation({
+  args: { groupId: v.string(), ...transferFields },
+  handler: async (ctx, { groupId: rawGroupId, ...transfer }) => {
+    const groupId = ctx.db.normalizeId("groups", rawGroupId);
+    if (!groupId || !(await ctx.db.get(groupId)))
+      throw new Error("Group not found");
+    return await ctx.db.insert("expenses", {
+      groupId,
+      ...(await buildTransfer(ctx, groupId, transfer)),
+    });
+  },
+});
+
+export const updateTransfer = mutation({
+  args: { expenseId: v.id("expenses"), ...transferFields },
+  handler: async (ctx, { expenseId, ...transfer }) => {
+    const existing = await ctx.db.get(expenseId);
+    if (!existing) throw new Error("Expense not found");
+    if (existing.kind !== "transfer")
+      throw new Error("This is an expense, not a reimbursement");
+    await ctx.db.patch(expenseId, await buildTransfer(ctx, existing.groupId, transfer));
   },
 });
 

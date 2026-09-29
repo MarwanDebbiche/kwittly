@@ -179,3 +179,53 @@ test("expenses.remove deletes the expense", async () => {
   await t.mutation(api.expenses.remove, { expenseId });
   expect(await t.query(api.expenses.list, { groupId })).toEqual([]);
 });
+
+describe("reimbursements", () => {
+  test("settle balances and are not counted as spending", async () => {
+    const { t, groupId, alice, bob, chloe } = await setup();
+    await t.mutation(api.expenses.add, {
+      groupId, ...base, amountCents: 9000, paidBy: alice, split: { mode: "equal", participants: [alice, bob, chloe] },
+    });
+    await t.mutation(api.expenses.addTransfer, { groupId, from: bob, to: alice, amountCents: 3000, date: base.date });
+    await t.mutation(api.expenses.addTransfer, { groupId, from: chloe, to: alice, amountCents: 1000, date: base.date });
+
+    const { balances, settlements, totalCents } = await t.query(api.balances.get, { groupId });
+    expect(totalCents).toBe(9000);
+    expect(balances.map((b) => b.balanceCents)).toEqual([2000, 0, -2000]);
+    expect(settlements).toEqual([{ from: chloe, to: alice, amountCents: 2000 }]);
+
+    const [transfer] = await t.query(api.expenses.list, { groupId, paidBy: chloe });
+    expect(transfer).toMatchObject({ kind: "transfer", paidBy: chloe, splits: [{ participantId: alice, shareCents: 1000 }] });
+  });
+
+  test("can be edited, but not through the expense mutation (and vice versa)", async () => {
+    const { t, groupId, alice, bob, chloe } = await setup();
+    const transferId = await t.mutation(api.expenses.addTransfer, { groupId, from: bob, to: alice, amountCents: 500, date: 0 });
+    await t.mutation(api.expenses.updateTransfer, { expenseId: transferId, from: chloe, to: bob, amountCents: 700, date: 0 });
+    const [transfer] = await t.query(api.expenses.list, { groupId });
+    expect(transfer).toMatchObject({ paidBy: chloe, amountCents: 700, splits: [{ participantId: bob, shareCents: 700 }] });
+
+    await expect(
+      t.mutation(api.expenses.update, {
+        expenseId: transferId, ...base, amountCents: 700, paidBy: chloe, split: { mode: "equal", participants: [bob] },
+      }),
+    ).rejects.toThrowError("reimbursement");
+    const expenseId = await t.mutation(api.expenses.add, {
+      groupId, ...base, amountCents: 100, paidBy: alice, split: { mode: "equal", participants: [alice] },
+    });
+    await expect(
+      t.mutation(api.expenses.updateTransfer, { expenseId, from: bob, to: alice, amountCents: 100, date: 0 }),
+    ).rejects.toThrowError("not a reimbursement");
+  });
+
+  test("are validated", async () => {
+    const { t, groupId, alice, bob } = await setup();
+    const add = (args: Partial<{ groupId: string; from: typeof alice; to: typeof alice; amountCents: number }>) =>
+      t.mutation(api.expenses.addTransfer, { groupId, from: bob, to: alice, amountCents: 100, date: 0, ...args });
+    await expect(add({ to: bob })).rejects.toThrowError("two different participants");
+    await expect(add({ amountCents: 0 })).rejects.toThrowError("positive number of cents");
+    await expect(add({ groupId: "not-an-id" })).rejects.toThrowError("Group not found");
+    const other = await t.mutation(api.groups.create, { name: "Other", currency: "EUR", participants: ["Zed"] });
+    await expect(add({ to: other.participantIds[0] })).rejects.toThrowError("not in this group");
+  });
+});
