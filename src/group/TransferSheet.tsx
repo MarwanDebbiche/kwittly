@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import type { Id } from '../../convex/_generated/dataModel'
 import { localDay } from '../lib/dates'
+import { queueInstallOffer } from '../lib/install'
 import { parseCents, sanitizeAmountInput } from '../lib/money'
 import { usePrefs } from '../lib/prefs'
 import { Avatar } from '../ui/Avatar'
@@ -58,7 +59,10 @@ export function TransferSheet({
       // Noon local time keeps the day stable across timezones.
       const fields = { from, to, amountCents, date: new Date(`${date}T12:00:00`).getTime() }
       if (transfer) await updateTransfer({ expenseId: transfer._id, ...fields })
-      else await addTransfer({ groupId: group._id, createdBy: me, ...fields })
+      else {
+        await addTransfer({ groupId: group._id, createdBy: me, ...fields })
+        queueInstallOffer()
+      }
       onClose()
     } finally {
       setSubmitting(false)

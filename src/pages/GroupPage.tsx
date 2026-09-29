@@ -2,16 +2,18 @@ import { convexQuery } from '@convex-dev/react-query'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { ArrowLeft, LogOut, Plus, Share2, Users } from 'lucide-react'
+import { ArrowLeft, LogOut, Plus, Share2, SquarePlus, Users } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { Balances } from '../group/Balances'
 import { ExpenseFormSheet } from '../group/ExpenseFormSheet'
 import { ExpenseList } from '../group/ExpenseList'
+import { InstallSheet } from '../group/InstallSheet'
 import { LeaveGroupSheet } from '../group/LeaveGroupSheet'
 import { ParticipantsSheet } from '../group/ParticipantsSheet'
 import { ShareSheet } from '../group/ShareSheet'
 import { WhoAreYou } from '../group/WhoAreYou'
+import { installOffer, useInstallMethod } from '../lib/install'
 import { useMyGroups } from '../lib/myGroups'
 import { useFormatters } from '../lib/prefs'
 import { AvatarStack } from '../ui/Avatar'
@@ -31,8 +33,11 @@ export function GroupPage({ groupId }: { groupId: string }) {
   const { state, save, forget } = useMyGroups()
   const saved = state.status === 'ready' ? state.groups.find((g) => g.id === groupId) : undefined
   const [tab, setTab] = useState<'expenses' | 'balances'>('expenses')
-  const [sheet, setSheet] = useState<'add' | 'share' | 'identity' | 'leave' | 'participants' | null>(null)
+  const [sheet, setSheet] = useState<'add' | 'share' | 'identity' | 'leave' | 'participants' | 'install' | null>(null)
   const [joinDismissed, setJoinDismissed] = useState(false)
+  const install = useInstallMethod()
+  // Offered once on phones, right after the first expense added on this device.
+  const offerInstall = installOffer.useValue() === 'pending' && install?.touch && sheet === null
 
   if (group === undefined) return <GroupSkeleton />
   if (group === null)
@@ -76,6 +81,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
             <MoreMenu
               items={[
                 { label: t`Participants`, icon: Users, onSelect: () => setSheet('participants') },
+                ...(install ? [{ label: t`Add to home screen`, icon: SquarePlus, onSelect: () => setSheet('install') }] : []),
                 ...(state.status === 'ready' && saved
                   ? [{ label: t`Leave group`, icon: LogOut, destructive: true, onSelect: () => setSheet('leave') }]
                   : []),
@@ -153,6 +159,15 @@ export function GroupPage({ groupId }: { groupId: string }) {
 
       {sheet === 'add' && <ExpenseFormSheet group={group} me={me?._id} onClose={() => setSheet(null)} />}
       {sheet === 'participants' && <ParticipantsSheet group={group} me={me?._id} onClose={() => setSheet(null)} />}
+      {install && (sheet === 'install' || offerInstall) && (
+        <InstallSheet
+          install={install}
+          onClose={() => {
+            installOffer.set('done')
+            setSheet(null)
+          }}
+        />
+      )}
       {sheet === 'share' && <ShareSheet group={group} onClose={() => setSheet(null)} />}
       {sheet === 'leave' && state.status === 'ready' && (
         <LeaveGroupSheet

@@ -22,17 +22,17 @@ msgid "{0, plural, one {# share} other {# shares}}"
 msgstr "{0, plural, one {# share} other {# shares}}"
 
 #. placeholder {0}: format.money(Math.floor(amountCents / split.count), group.currency)
-#: src/group/ExpenseFormSheet.tsx:202
+#: src/group/ExpenseFormSheet.tsx:206
 msgid "{0} each"
 msgstr "{0} each"
 
 #. placeholder {0}: format.money(split.remaining, group.currency)
-#: src/group/ExpenseFormSheet.tsx:266
+#: src/group/ExpenseFormSheet.tsx:270
 msgid "{0} left to assign"
 msgstr "{0} left to assign"
 
 #. placeholder {0}: format.money(-split.remaining, group.currency)
-#: src/group/ExpenseFormSheet.tsx:268
+#: src/group/ExpenseFormSheet.tsx:272
 msgid "{0} too much"
 msgstr "{0} too much"
 
@@ -49,11 +49,11 @@ msgstr "{count, plural, one {{name} is in # expense or reimbursement. Delete it 
 msgid "{count, plural, one {# participant} other {# participants}} · Join the group to share expenses on Kwittly."
 msgstr "{count, plural, one {# participant} other {# participants}} · Join the group to share expenses on Kwittly."
 
-#: src/group/TransferSheet.tsx:140
+#: src/group/TransferSheet.tsx:144
 msgid "{from} paid {to} back"
 msgstr "{from} paid {to} back"
 
-#: src/group/TransferSheet.tsx:139
+#: src/group/TransferSheet.tsx:143
 msgid "{from} paid you back"
 msgstr "{from} paid you back"
 
@@ -83,13 +83,22 @@ msgstr "Add"
 msgid "Add a first name"
 msgstr "Add a first name"
 
-#: src/group/ExpenseFormSheet.tsx:299
+#: src/group/ExpenseFormSheet.tsx:303
 msgid "Add expense"
 msgstr "Add expense"
+
+#: src/group/InstallSheet.tsx:21
+msgid "Add it to your home screen to get back to this group in one tap, like an app. No store, nothing to download."
+msgstr "Add it to your home screen to get back to this group in one tap, like an app. No store, nothing to download."
 
 #: src/group/ParticipantsSheet.tsx:159
 msgid "Add someone"
 msgstr "Add someone"
+
+#: src/group/InstallSheet.tsx:61
+#: src/pages/GroupPage.tsx:84
+msgid "Add to home screen"
+msgstr "Add to home screen"
 
 #: src/pages/LandingPage.tsx:36
 msgid "Add your expenses"
@@ -120,13 +129,13 @@ msgstr "Added by you"
 msgid "Airport taxi"
 msgstr "Airport taxi"
 
-#: src/group/ExpenseFormSheet.tsx:143
-#: src/group/TransferSheet.tsx:96
+#: src/group/ExpenseFormSheet.tsx:147
+#: src/group/TransferSheet.tsx:100
 msgid "Amount"
 msgstr "Amount"
 
 #. placeholder {0}: nameOf(p._id)
-#: src/group/ExpenseFormSheet.tsx:256
+#: src/group/ExpenseFormSheet.tsx:260
 msgid "Amount for {0}"
 msgstr "Amount for {0}"
 
@@ -145,7 +154,7 @@ msgid "Back to home"
 msgstr "Back to home"
 
 #: src/group/Balances.tsx:24
-#: src/pages/GroupPage.tsx:129
+#: src/pages/GroupPage.tsx:135
 msgid "Balances"
 msgstr "Balances"
 
@@ -153,11 +162,11 @@ msgstr "Balances"
 msgid "Balances update on their own."
 msgstr "Balances update on their own."
 
-#: src/group/ExpenseFormSheet.tsx:127
+#: src/group/ExpenseFormSheet.tsx:131
 msgid "By amounts"
 msgstr "By amounts"
 
-#: src/group/ExpenseFormSheet.tsx:126
+#: src/group/ExpenseFormSheet.tsx:130
 msgid "By shares"
 msgstr "By shares"
 
@@ -171,7 +180,7 @@ msgstr "By who paid, by who is involved, by category, by text. Combine them, no 
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/group/ExpenseFormSheet.tsx:276
+#: src/group/ExpenseFormSheet.tsx:280
 #: src/group/ExpenseList.tsx:86
 #: src/pages/LandingPage.tsx:192
 msgid "Category"
@@ -188,6 +197,10 @@ msgstr "Check your email"
 #: src/pages/LoginPage.tsx:148
 msgid "Checking…"
 msgstr "Checking…"
+
+#: src/group/InstallSheet.tsx:39
+msgid "Choose <0/> <1>Add to Home Screen</1>"
+msgstr "Choose <0/> <1>Add to Home Screen</1>"
 
 #: src/group/ExpenseList.tsx:93
 msgid "Clear"
@@ -214,7 +227,7 @@ msgstr "Copied"
 msgid "Copy"
 msgstr "Copy"
 
-#: src/pages/GroupsPage.tsx:70
+#: src/pages/GroupsPage.tsx:79
 #: src/pages/LandingPage.tsx:34
 #: src/pages/LandingPage.tsx:51
 #: src/pages/LandingPage.tsx:74
@@ -222,7 +235,7 @@ msgstr "Copy"
 msgid "Create a group"
 msgstr "Create a group"
 
-#: src/pages/GroupsPage.tsx:67
+#: src/pages/GroupsPage.tsx:76
 msgid "Create a group for your next trip or your flatshare, or open a link a friend sent you."
 msgstr "Create a group for your next trip or your flatshare, or open a link a friend sent you."
 
@@ -242,8 +255,8 @@ msgstr "Create the group now, add expenses as you go."
 msgid "Currency"
 msgstr "Currency"
 
-#: src/group/ExpenseFormSheet.tsx:293
-#: src/group/TransferSheet.tsx:120
+#: src/group/ExpenseFormSheet.tsx:297
+#: src/group/TransferSheet.tsx:124
 msgid "Date"
 msgstr "Date"
 
@@ -260,12 +273,12 @@ msgid "Dinner at Time Out"
 msgstr "Dinner at Time Out"
 
 #: src/group/ExpenseDetailSheet.tsx:128
-#: src/group/ExpenseFormSheet.tsx:133
+#: src/group/ExpenseFormSheet.tsx:137
 msgid "Edit expense"
 msgstr "Edit expense"
 
 #: src/group/ExpenseDetailSheet.tsx:128
-#: src/group/TransferSheet.tsx:86
+#: src/group/TransferSheet.tsx:90
 msgid "Edit reimbursement"
 msgstr "Edit reimbursement"
 
@@ -273,7 +286,7 @@ msgstr "Edit reimbursement"
 msgid "Email"
 msgstr "Email"
 
-#: src/group/ExpenseFormSheet.tsx:125
+#: src/group/ExpenseFormSheet.tsx:129
 msgid "Equally"
 msgstr "Equally"
 
@@ -281,7 +294,7 @@ msgstr "Equally"
 msgid "Every filter, for free"
 msgstr "Every filter, for free"
 
-#: src/group/ExpenseFormSheet.tsx:210
+#: src/group/ExpenseFormSheet.tsx:214
 msgid "Everyone"
 msgstr "Everyone"
 
@@ -293,7 +306,7 @@ msgstr "Everyone is even."
 msgid "Everyone joins in one tap, from their phone."
 msgstr "Everyone joins in one tap, from their phone."
 
-#: src/group/ExpenseFormSheet.tsx:264
+#: src/group/ExpenseFormSheet.tsx:268
 msgid "Everything is assigned."
 msgstr "Everything is assigned."
 
@@ -301,11 +314,11 @@ msgstr "Everything is assigned."
 msgid "Everything you need, nothing to pay."
 msgstr "Everything you need, nothing to pay."
 
-#: src/pages/GroupPage.tsx:150
+#: src/pages/GroupPage.tsx:156
 msgid "Expense"
 msgstr "Expense"
 
-#: src/pages/GroupPage.tsx:129
+#: src/pages/GroupPage.tsx:135
 msgid "Expenses"
 msgstr "Expenses"
 
@@ -313,7 +326,7 @@ msgstr "Expenses"
 msgid "First name"
 msgstr "First name"
 
-#: src/group/ExpenseFormSheet.tsx:161
+#: src/group/ExpenseFormSheet.tsx:165
 msgid "For whom"
 msgstr "For whom"
 
@@ -333,6 +346,10 @@ msgstr "Get your groups on all your devices. No password: we email you a code."
 msgid "Give it a name and add the participants."
 msgstr "Give it a name and add the participants."
 
+#: src/group/InstallSheet.tsx:66
+msgid "Got it"
+msgstr "Got it"
+
 #: src/lib/categories.ts:7
 msgid "Groceries"
 msgstr "Groceries"
@@ -341,14 +358,18 @@ msgstr "Groceries"
 msgid "Group name"
 msgstr "Group name"
 
-#: src/pages/GroupPage.tsx:42
-#: src/pages/GroupsPage.tsx:98
+#: src/pages/GroupPage.tsx:47
+#: src/pages/GroupsPage.tsx:107
 msgid "Group not found"
 msgstr "Group not found"
 
 #: src/routes/_app.g.$groupId.tsx:29
 msgid "Group not found · Kwittly"
 msgstr "Group not found · Kwittly"
+
+#: src/pages/GroupsPage.tsx:56
+msgid "Groups opened in your browser don't show up here yet. Log in to get them back, or open a group's link again."
+msgstr "Groups opened in your browser don't show up here yet. Log in to get them back, or open a group's link again."
 
 #: src/pages/LandingPage.tsx:106
 msgid "How it works"
@@ -385,7 +406,7 @@ msgid "Join"
 msgstr "Join"
 
 #. placeholder {0}: group.name
-#: src/pages/GroupPage.tsx:169
+#: src/pages/GroupPage.tsx:184
 msgid "Join “{0}”"
 msgstr "Join “{0}”"
 
@@ -397,6 +418,10 @@ msgstr "Join “{0}” on Kwittly"
 #: src/group/WhoAreYou.tsx:58
 msgid "Just view, without joining"
 msgstr "Just view, without joining"
+
+#: src/group/InstallSheet.tsx:17
+msgid "Keep Kwittly on your phone"
+msgstr "Keep Kwittly on your phone"
 
 #: src/routes/index.tsx:25
 msgid "Kwittly · Shared expenses without the headache"
@@ -415,7 +440,7 @@ msgid "Leave “{groupName}”?"
 msgstr "Leave “{groupName}”?"
 
 #: src/group/LeaveGroupSheet.tsx:58
-#: src/pages/GroupPage.tsx:80
+#: src/pages/GroupPage.tsx:86
 msgid "Leave group"
 msgstr "Leave group"
 
@@ -427,7 +452,8 @@ msgstr "Lisbon weekend"
 msgid "Lodging"
 msgstr "Lodging"
 
-#: src/pages/GroupsPage.tsx:49
+#: src/pages/GroupsPage.tsx:51
+#: src/pages/GroupsPage.tsx:57
 #: src/pages/LandingPage.tsx:48
 #: src/pages/LoginPage.tsx:86
 #: src/pages/LoginPage.tsx:148
@@ -439,11 +465,11 @@ msgstr "Log in"
 msgid "Log in · Kwittly"
 msgstr "Log in · Kwittly"
 
-#: src/pages/GroupsPage.tsx:46
+#: src/pages/GroupsPage.tsx:48
 msgid "Log in again"
 msgstr "Log in again"
 
-#: src/pages/GroupsPage.tsx:49
+#: src/pages/GroupsPage.tsx:51
 msgid "Log in to get your groups on all your devices."
 msgstr "Log in to get your groups on all your devices."
 
@@ -455,8 +481,8 @@ msgstr "Log out"
 msgid "Made for groups who like to keep things even."
 msgstr "Made for groups who like to keep things even."
 
-#: src/group/ExpenseFormSheet.tsx:39
-#: src/group/TransferSheet.tsx:38
+#: src/group/ExpenseFormSheet.tsx:40
+#: src/group/TransferSheet.tsx:39
 msgid "Me"
 msgstr "Me"
 
@@ -468,9 +494,9 @@ msgstr "More actions"
 msgid "My account"
 msgstr "My account"
 
-#: src/pages/GroupPage.tsx:49
-#: src/pages/GroupPage.tsx:195
-#: src/pages/GroupsPage.tsx:42
+#: src/pages/GroupPage.tsx:54
+#: src/pages/GroupPage.tsx:210
+#: src/pages/GroupsPage.tsx:44
 msgid "My groups"
 msgstr "My groups"
 
@@ -482,12 +508,12 @@ msgstr "My groups · Kwittly"
 msgid "Name"
 msgstr "Name"
 
-#: src/group/ExpenseFormSheet.tsx:133
+#: src/group/ExpenseFormSheet.tsx:137
 msgid "New expense"
 msgstr "New expense"
 
-#: src/pages/GroupsPage.tsx:35
-#: src/pages/GroupsPage.tsx:35
+#: src/pages/GroupsPage.tsx:37
+#: src/pages/GroupsPage.tsx:37
 #: src/pages/NewGroupPage.tsx:62
 msgid "New group"
 msgstr "New group"
@@ -512,7 +538,7 @@ msgstr "No expenses match these filters."
 msgid "No expenses yet. Add the first one!"
 msgstr "No expenses yet. Add the first one!"
 
-#: src/pages/GroupsPage.tsx:64
+#: src/pages/GroupsPage.tsx:73
 msgid "No groups yet"
 msgstr "No groups yet"
 
@@ -520,7 +546,7 @@ msgstr "No groups yet"
 msgid "No sign-up"
 msgstr "No sign-up"
 
-#: src/group/ExpenseFormSheet.tsx:210
+#: src/group/ExpenseFormSheet.tsx:214
 msgid "None"
 msgstr "None"
 
@@ -532,11 +558,15 @@ msgstr "Not in the list?"
 msgid "not involved"
 msgstr "not involved"
 
-#: src/group/ExpenseFormSheet.tsx:227
+#: src/group/InstallSheet.tsx:66
+msgid "Not now"
+msgstr "Not now"
+
+#: src/group/ExpenseFormSheet.tsx:231
 msgid "One share less"
 msgstr "One share less"
 
-#: src/group/ExpenseFormSheet.tsx:233
+#: src/group/ExpenseFormSheet.tsx:237
 msgid "One share more"
 msgstr "One share more"
 
@@ -552,11 +582,11 @@ msgstr "Other participants"
 msgid "Page not found"
 msgstr "Page not found"
 
-#: src/group/TransferSheet.tsx:103
+#: src/group/TransferSheet.tsx:107
 msgid "Paid back by"
 msgstr "Paid back by"
 
-#: src/group/ExpenseFormSheet.tsx:150
+#: src/group/ExpenseFormSheet.tsx:154
 #: src/group/ExpenseList.tsx:68
 #: src/pages/LandingPage.tsx:189
 msgid "Paid by"
@@ -580,7 +610,7 @@ msgid "Paid by you"
 msgstr "Paid by you"
 
 #: src/group/ParticipantsSheet.tsx:64
-#: src/pages/GroupPage.tsx:78
+#: src/pages/GroupPage.tsx:83
 msgid "Participants"
 msgstr "Participants"
 
@@ -597,11 +627,11 @@ msgid "Real time"
 msgstr "Real time"
 
 #: src/group/Balances.tsx:90
-#: src/group/TransferSheet.tsx:86
+#: src/group/TransferSheet.tsx:90
 msgid "Record a reimbursement"
 msgstr "Record a reimbursement"
 
-#: src/group/TransferSheet.tsx:126
+#: src/group/TransferSheet.tsx:130
 msgid "Record reimbursement"
 msgstr "Record reimbursement"
 
@@ -611,7 +641,7 @@ msgid "Reimbursement"
 msgstr "Reimbursement"
 
 #: src/group/ParticipantsSheet.tsx:109
-#: src/pages/GroupsPage.tsx:100
+#: src/pages/GroupsPage.tsx:109
 msgid "Remove"
 msgstr "Remove"
 
@@ -624,7 +654,7 @@ msgstr "Remove {0}"
 msgid "Remove {other}"
 msgstr "Remove {other}"
 
-#: src/pages/GroupPage.tsx:53
+#: src/pages/GroupPage.tsx:58
 msgid "Remove from my list"
 msgstr "Remove from my list"
 
@@ -649,8 +679,8 @@ msgstr "Restaurant"
 msgid "Save"
 msgstr "Save"
 
-#: src/group/ExpenseFormSheet.tsx:299
-#: src/group/TransferSheet.tsx:126
+#: src/group/ExpenseFormSheet.tsx:303
+#: src/group/TransferSheet.tsx:130
 msgid "Save changes"
 msgstr "Save changes"
 
@@ -670,7 +700,8 @@ msgstr "Sending…"
 msgid "Settled up"
 msgstr "Settled up"
 
-#: src/pages/GroupPage.tsx:73
+#: src/group/InstallSheet.tsx:31
+#: src/pages/GroupPage.tsx:78
 msgid "Share"
 msgstr "Share"
 
@@ -711,9 +742,17 @@ msgstr "Split by shares"
 msgid "Split equally"
 msgstr "Split equally"
 
-#: src/group/ExpenseFormSheet.tsx:162
+#: src/group/ExpenseFormSheet.tsx:166
 msgid "Split mode"
 msgstr "Split mode"
+
+#: src/group/InstallSheet.tsx:30
+msgid "Tap <0/> Share in Safari (in the ⋯ menu on recent iPhones)"
+msgstr "Tap <0/> Share in Safari (in the ⋯ menu on recent iPhones)"
+
+#: src/group/InstallSheet.tsx:47
+msgid "Tap <0>Add</0>"
+msgstr "Tap <0>Add</0>"
 
 #: src/group/Balances.tsx:87
 msgid "The fewest transfers needed for everyone to be even. Tap one once it's paid to record it."
@@ -731,7 +770,7 @@ msgstr "The group will be removed from this device only."
 msgid "The group will be removed from your account, on all your devices."
 msgstr "The group will be removed from your account, on all your devices."
 
-#: src/pages/GroupPage.tsx:45
+#: src/pages/GroupPage.tsx:50
 msgid "The link may be wrong, or the group was deleted."
 msgstr "The link may be wrong, or the group was deleted."
 
@@ -743,7 +782,7 @@ msgstr "The page could not be loaded. Check your connection and try again."
 msgid "This code has expired. Request a new one."
 msgstr "This code has expired. Request a new one."
 
-#: src/group/TransferSheet.tsx:113
+#: src/group/TransferSheet.tsx:117
 msgid "To"
 msgstr "To"
 
@@ -767,7 +806,7 @@ msgstr "Too many code requests. Try again in a few minutes."
 msgid "Total"
 msgstr "Total"
 
-#: src/pages/GroupPage.tsx:112
+#: src/pages/GroupPage.tsx:118
 msgid "Total spent"
 msgstr "Total spent"
 
@@ -791,16 +830,16 @@ msgstr "Try again"
 msgid "Weekend in Lisbon"
 msgstr "Weekend in Lisbon"
 
-#: src/group/ExpenseFormSheet.tsx:148
+#: src/group/ExpenseFormSheet.tsx:152
 msgid "What for? (e.g. Supermarket)"
 msgstr "What for? (e.g. Supermarket)"
 
-#: src/pages/GroupPage.tsx:171
+#: src/pages/GroupPage.tsx:186
 msgid "Who are you in this group? It lets us show what you owe or are owed."
 msgstr "Who are you in this group? It lets us show what you owe or are owed."
 
-#: src/pages/GroupPage.tsx:92
-#: src/pages/GroupPage.tsx:177
+#: src/pages/GroupPage.tsx:98
+#: src/pages/GroupPage.tsx:192
 msgid "Who are you?"
 msgstr "Who are you?"
 
@@ -817,7 +856,7 @@ msgid "You"
 msgstr "You"
 
 #. placeholder {0}: me.name
-#: src/pages/GroupPage.tsx:92
+#: src/pages/GroupPage.tsx:98
 msgid "You are {0}"
 msgstr "You are {0}"
 
@@ -843,7 +882,7 @@ msgstr "you lent {0}"
 msgid "You owe"
 msgstr "You owe"
 
-#: src/group/TransferSheet.tsx:138
+#: src/group/TransferSheet.tsx:142
 msgid "You paid {to} back"
 msgstr "You paid {to} back"
 
@@ -851,7 +890,7 @@ msgstr "You paid {to} back"
 msgid "you@example.com"
 msgstr "you@example.com"
 
-#: src/pages/GroupPage.tsx:100
+#: src/pages/GroupPage.tsx:106
 #: src/pages/LandingPage.tsx:170
 msgid "Your balance"
 msgstr "Your balance"
@@ -861,7 +900,7 @@ msgstr "Your balance"
 msgid "Your first name"
 msgstr "Your first name"
 
-#: src/pages/GroupsPage.tsx:46
+#: src/pages/GroupsPage.tsx:48
 msgid "Your session has expired. Log in again to sync your groups."
 msgstr "Your session has expired. Log in again to sync your groups."
 

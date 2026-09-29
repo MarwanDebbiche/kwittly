@@ -63,6 +63,7 @@ English (source) and French, with [Lingui](https://lingui.dev) v6. Strings live 
 - `/`: landing page, server-rendered for SEO. Visitors who already have groups in localStorage are redirected to `/groups` (inline script in `__root.tsx` for full page loads, `beforeLoad` for client navigations).
 - `/login`: email + one-time code login (Better Auth `emailOTP` plugin). Accounts are optional.
 - `/api/auth/*`: proxies Better Auth to Convex so the session cookie lives on the app domain.
+- `/manifest.webmanifest`: web app manifest (installable on the home screen). On a group page it starts the installed app on that group, since on iOS the home screen app does not share Safari's storage.
 - `/groups`, `/g/:groupId`: server-rendered. Group data is public to anyone with the link and always in the HTML; for logged-in users the `_app` layout also authenticates Convex with the session cookie on the server, so their groups, identity and balances are in the HTML too. Anonymous users' identity lives in localStorage and appears right after hydration. React Query (`@convex-dev/react-query`) then keeps everything live over the Convex WebSocket.
 - `/groups/new`, `/login`: rendered in the browser only (`ssr: false`).
 

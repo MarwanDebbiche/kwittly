@@ -7,6 +7,7 @@ import type { Id } from '../../convex/_generated/dataModel'
 import { splitByShares } from '../../convex/lib/money'
 import { CATEGORIES } from '../lib/categories'
 import { localDay } from '../lib/dates'
+import { queueInstallOffer } from '../lib/install'
 import { parseCents, sanitizeAmountInput } from '../lib/money'
 import { useFormatters, usePrefs } from '../lib/prefs'
 import { Avatar } from '../ui/Avatar'
@@ -114,7 +115,10 @@ export function ExpenseFormSheet({
         split: split.payload,
       }
       if (expense) await updateExpense({ expenseId: expense._id, ...fields })
-      else await addExpense({ groupId: group._id, createdBy: me, ...fields })
+      else {
+        await addExpense({ groupId: group._id, createdBy: me, ...fields })
+        queueInstallOffer()
+      }
       onClose()
     } finally {
       setSubmitting(false)

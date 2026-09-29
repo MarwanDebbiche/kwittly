@@ -22,6 +22,12 @@ const getRequestPrefs = createServerFn({ method: 'GET' }).handler((): Prefs => {
   return { locale: resolveLocale(headers), timeZone: isTimeZone(timeZone) ? timeZone : 'UTC' }
 })
 
+/** On a group page, the app installed from it opens on that group. */
+function manifestHref(matches: { params: Record<string, string> }[]) {
+  const groupId = matches.find((m) => m.params.groupId)?.params.groupId
+  return groupId ? `/manifest.webmanifest?start=${encodeURIComponent(`/g/${groupId}`)}` : '/manifest.webmanifest'
+}
+
 /** In the browser, reuse what the server rendered with (kept on <html>). */
 function documentPrefs(): Prefs {
   const root = document.documentElement
@@ -42,15 +48,21 @@ export const Route = createRootRouteWithContext<{
     if (i18n.locale !== prefs.locale) i18n.activate(prefs.locale)
     return { prefs }
   },
-  head: () => ({
+  head: ({ matches }) => ({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
       { name: 'theme-color', content: '#f6f4ef' },
+      // Installed on the home screen (iOS reads these rather than the manifest).
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      { name: 'apple-mobile-web-app-title', content: 'Kwittly' },
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
       { title: 'Kwittly' },
     ],
     links: [
       { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+      { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      { rel: 'manifest', href: manifestHref(matches) },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
       {

@@ -5,6 +5,7 @@ import { Link } from '@tanstack/react-router'
 import { ChevronRight, Cloud, Plus, Users } from 'lucide-react'
 import { api } from '../../convex/_generated/api'
 import { useConvexUnreachable } from '../lib/connection'
+import { useIsStandalone } from '../lib/install'
 import { summaryItems, useMyGroups } from '../lib/myGroups'
 import { useFormatters } from '../lib/prefs'
 import { AccountMenu } from '../ui/AccountMenu'
@@ -24,6 +25,7 @@ export function GroupsPage() {
   // Groups load over the Convex WebSocket, which retries forever: show an
   // error instead of an endless skeleton when it cannot connect.
   const unreachable = useConvexUnreachable()
+  const standalone = useIsStandalone()
   const loading = saved === undefined || (saved.length > 0 && summaries === undefined)
 
   return (
@@ -47,6 +49,13 @@ export function GroupsPage() {
       )}
       {state.status === 'ready' && state.mode === 'anonymous' && state.groups.length > 0 && (
         <Banner text={t`Log in to get your groups on all your devices.`} cta={t`Log in`} />
+      )}
+      {/* On iOS, the home screen app does not share Safari's storage. */}
+      {standalone && state.status === 'ready' && state.mode === 'anonymous' && state.groups.length === 0 && (
+        <Banner
+          text={t`Groups opened in your browser don't show up here yet. Log in to get them back, or open a group's link again.`}
+          cta={t`Log in`}
+        />
       )}
 
       {loading && unreachable ? (
