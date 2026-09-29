@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: fr\n"
 
+#: src/group/ParticipantsSheet.tsx:87
+msgid "(you)"
+msgstr "(toi)"
+
 #. placeholder {0}: expenses.length
 #: src/group/ExpenseList.tsx:93
 msgid "{0, plural, one {# expense} other {# expenses}}"
@@ -62,6 +66,7 @@ msgstr "Code à 6 chiffres"
 msgid "Activities"
 msgstr "Activités"
 
+#: src/group/ParticipantsSheet.tsx:152
 #: src/pages/NewGroupPage.tsx:103
 msgid "Add"
 msgstr "Ajouter"
@@ -73,6 +78,10 @@ msgstr "Ajouter un prénom"
 #: src/group/ExpenseFormSheet.tsx:299
 msgid "Add expense"
 msgstr "Ajouter la dépense"
+
+#: src/group/ParticipantsSheet.tsx:147
+msgid "Add someone"
+msgstr "Ajouter quelqu'un"
 
 #: src/pages/LandingPage.tsx:36
 msgid "Add your expenses"
@@ -107,7 +116,7 @@ msgid "Back to home"
 msgstr "Retour à l'accueil"
 
 #: src/group/Balances.tsx:24
-#: src/pages/GroupPage.tsx:123
+#: src/pages/GroupPage.tsx:129
 msgid "Balances"
 msgstr "Soldes"
 
@@ -128,6 +137,8 @@ msgid "By who paid, by who is involved, by category, by text. Combine them, no s
 msgstr "Par personne qui a payé, par participant concerné, par catégorie, par texte. Combinables, sans abonnement."
 
 #: src/group/LeaveGroupSheet.tsx:44
+#: src/group/ParticipantsSheet.tsx:75
+#: src/group/ParticipantsSheet.tsx:94
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -261,13 +272,17 @@ msgstr "Tout est réparti."
 msgid "Everything you need, nothing to pay."
 msgstr "Tout ce qu'il faut, rien de payant."
 
-#: src/pages/GroupPage.tsx:144
+#: src/pages/GroupPage.tsx:150
 msgid "Expense"
 msgstr "Dépense"
 
-#: src/pages/GroupPage.tsx:123
+#: src/pages/GroupPage.tsx:129
 msgid "Expenses"
 msgstr "Dépenses"
+
+#: src/group/ParticipantsSheet.tsx:150
+msgid "First name"
+msgstr "Prénom"
 
 #: src/group/ExpenseFormSheet.tsx:161
 msgid "For whom"
@@ -297,7 +312,7 @@ msgstr "Courses"
 msgid "Group name"
 msgstr "Nom du groupe"
 
-#: src/pages/GroupPage.tsx:41
+#: src/pages/GroupPage.tsx:42
 #: src/pages/GroupsPage.tsx:98
 msgid "Group not found"
 msgstr "Groupe introuvable"
@@ -341,7 +356,7 @@ msgid "Join"
 msgstr "Rejoindre"
 
 #. placeholder {0}: group.name
-#: src/pages/GroupPage.tsx:162
+#: src/pages/GroupPage.tsx:169
 msgid "Join “{0}”"
 msgstr "Rejoindre « {0} »"
 
@@ -371,7 +386,7 @@ msgid "Leave “{groupName}”?"
 msgstr "Quitter « {groupName} » ?"
 
 #: src/group/LeaveGroupSheet.tsx:58
-#: src/pages/GroupPage.tsx:76
+#: src/pages/GroupPage.tsx:80
 msgid "Leave group"
 msgstr "Quitter le groupe"
 
@@ -424,8 +439,8 @@ msgstr "Plus d'actions"
 msgid "My account"
 msgstr "Mon compte"
 
-#: src/pages/GroupPage.tsx:48
-#: src/pages/GroupPage.tsx:188
+#: src/pages/GroupPage.tsx:49
+#: src/pages/GroupPage.tsx:195
 #: src/pages/GroupsPage.tsx:42
 msgid "My groups"
 msgstr "Mes groupes"
@@ -433,6 +448,10 @@ msgstr "Mes groupes"
 #: src/routes/_app.groups.index.tsx:23
 msgid "My groups · Kwittly"
 msgstr "Mes groupes · Kwittly"
+
+#: src/group/ParticipantsSheet.tsx:70
+msgid "Name"
+msgstr "Nom"
 
 #: src/group/ExpenseFormSheet.tsx:133
 msgid "New expense"
@@ -531,6 +550,15 @@ msgstr "Payé par {who}"
 msgid "Paid by you"
 msgstr "Payé par toi"
 
+#: src/group/ParticipantsSheet.tsx:59
+#: src/pages/GroupPage.tsx:78
+msgid "Participants"
+msgstr "Participants"
+
+#: src/group/ParticipantsSheet.tsx:137
+msgid "People who appear in an expense or a reimbursement can be renamed, not removed."
+msgstr "Les personnes présentes dans une dépense ou un remboursement peuvent être renommées, pas retirées."
+
 #: src/pages/LandingPage.tsx:150
 msgid "Pingo Doce groceries"
 msgstr "Courses Pingo Doce"
@@ -557,17 +585,28 @@ msgstr "Enregistrer le remboursement"
 msgid "Reimbursement"
 msgstr "Remboursement"
 
+#: src/group/ParticipantsSheet.tsx:103
 #: src/pages/GroupsPage.tsx:100
 msgid "Remove"
 msgstr "Retirer"
+
+#. placeholder {0}: p.name
+#: src/group/ParticipantsSheet.tsx:125
+msgid "Remove {0}"
+msgstr "Retirer {0}"
 
 #: src/pages/NewGroupPage.tsx:117
 msgid "Remove {other}"
 msgstr "Retirer {other}"
 
-#: src/pages/GroupPage.tsx:52
+#: src/pages/GroupPage.tsx:53
 msgid "Remove from my list"
 msgstr "Retirer de ma liste"
+
+#. placeholder {0}: p.name
+#: src/group/ParticipantsSheet.tsx:114
+msgid "Rename {0}"
+msgstr "Renommer {0}"
 
 #: src/pages/LoginPage.tsx:155
 msgid "Resend ({cooldown}s)"
@@ -580,6 +619,10 @@ msgstr "Renvoyer le code"
 #: src/lib/categories.ts:8
 msgid "Restaurant"
 msgstr "Restaurant"
+
+#: src/group/ParticipantsSheet.tsx:72
+msgid "Save"
+msgstr "Enregistrer"
 
 #: src/group/ExpenseFormSheet.tsx:299
 #: src/group/TransferSheet.tsx:126
@@ -602,7 +645,7 @@ msgstr "Envoi…"
 msgid "Settled up"
 msgstr "À l'équilibre"
 
-#: src/pages/GroupPage.tsx:72
+#: src/pages/GroupPage.tsx:73
 msgid "Share"
 msgstr "Partager"
 
@@ -626,6 +669,7 @@ msgstr "Les comptes entre amis, <0>sans prise de tête.</0>"
 msgid "Something went wrong"
 msgstr "Oups, quelque chose s'est mal passé"
 
+#: src/group/ParticipantsSheet.tsx:141
 #: src/pages/LoginPage.tsx:19
 msgid "Something went wrong, please try again."
 msgstr "Une erreur est survenue, réessaie."
@@ -662,7 +706,7 @@ msgstr "Le groupe sera retiré de cet appareil uniquement."
 msgid "The group will be removed from your account, on all your devices."
 msgstr "Le groupe sera retiré de ton compte, sur tous tes appareils."
 
-#: src/pages/GroupPage.tsx:44
+#: src/pages/GroupPage.tsx:45
 msgid "The link may be wrong, or the group was deleted."
 msgstr "Le lien est peut-être incorrect, ou le groupe a été supprimé."
 
@@ -698,7 +742,7 @@ msgstr "Trop de demandes de code. Réessaie dans quelques minutes."
 msgid "Total"
 msgstr "Total"
 
-#: src/pages/GroupPage.tsx:106
+#: src/pages/GroupPage.tsx:112
 msgid "Total spent"
 msgstr "Total dépensé"
 
@@ -726,12 +770,12 @@ msgstr "Week-end à Lisbonne"
 msgid "What for? (e.g. Supermarket)"
 msgstr "Pour quoi ? (ex : Courses Carrefour)"
 
-#: src/pages/GroupPage.tsx:164
+#: src/pages/GroupPage.tsx:171
 msgid "Who are you in this group? It lets us show what you owe or are owed."
 msgstr "Qui es-tu dans ce groupe ? Ça permet d'afficher ce que tu dois ou ce qu'on te doit."
 
-#: src/pages/GroupPage.tsx:86
-#: src/pages/GroupPage.tsx:170
+#: src/pages/GroupPage.tsx:92
+#: src/pages/GroupPage.tsx:177
 msgid "Who are you?"
 msgstr "Qui es-tu ?"
 
@@ -748,7 +792,7 @@ msgid "You"
 msgstr "Toi"
 
 #. placeholder {0}: me.name
-#: src/pages/GroupPage.tsx:86
+#: src/pages/GroupPage.tsx:92
 msgid "You are {0}"
 msgstr "Tu es {0}"
 
@@ -782,7 +826,7 @@ msgstr "Tu as remboursé {to}"
 msgid "you@example.com"
 msgstr "toi@exemple.fr"
 
-#: src/pages/GroupPage.tsx:94
+#: src/pages/GroupPage.tsx:100
 #: src/pages/LandingPage.tsx:170
 msgid "Your balance"
 msgstr "Ton solde"

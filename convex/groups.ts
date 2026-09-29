@@ -1,6 +1,6 @@
 import { v } from "convex/values";
-import type { Id } from "./_generated/dataModel";
-import { mutation, query } from "./_generated/server";
+import type { Doc, Id } from "./_generated/dataModel";
+import { mutation, query, type MutationCtx } from "./_generated/server";
 import { isLocale } from "./lib/locale";
 import { computeBalances, spentCents } from "./lib/money";
 
@@ -89,8 +89,66 @@ export const summaries = query({
 });
 
 export const addParticipant = mutation({
-  args: { groupId: v.id("groups"), name: v.string() },
-  handler: async (ctx, { groupId, name }) => {
-    return await ctx.db.insert("participants", { groupId, name });
+  args: { groupId: v.string(), name: v.string() },
+  handler: async (ctx, args) => {
+    const groupId = ctx.db.normalizeId("groups", args.groupId);
+    if (!groupId || !(await ctx.db.get(groupId)))
+      throw new Error("Group not found");
+    return await ctx.db.insert("participants", {
+      groupId,
+      name: requireName(args.name),
+    });
   },
 });
+
+export const renameParticipant = mutation({
+  args: { participantId: v.string(), name: v.string() },
+  handler: async (ctx, args) => {
+    const participant = await getParticipant(ctx, args.participantId);
+    await ctx.db.patch(participant._id, { name: requireName(args.name) });
+  },
+});
+
+/**
+ * Only participants who appear in no expense can be removed: removing someone
+ * who paid or owes would silently change everyone else's balance.
+ */
+export const removeParticipant = mutation({
+  args: { participantId: v.string() },
+  handler: async (ctx, args) => {
+    const participant = await getParticipant(ctx, args.participantId);
+    const participants = await ctx.db
+      .query("participants")
+      .withIndex("by_group", (q) => q.eq("groupId", participant.groupId))
+      .collect();
+    if (participants.length === 1)
+      throw new Error("A group needs at least one participant");
+    const expenses = await ctx.db
+      .query("expenses")
+      .withIndex("by_group_date", (q) => q.eq("groupId", participant.groupId))
+      .collect();
+    if (expenses.some((e) => involves(e, participant._id)))
+      throw new Error("This participant appears in expenses");
+    await ctx.db.delete(participant._id);
+  },
+});
+
+async function getParticipant(ctx: MutationCtx, rawId: string) {
+  const id = ctx.db.normalizeId("participants", rawId);
+  const participant = id && (await ctx.db.get(id));
+  if (!participant) throw new Error("Participant not found");
+  return participant;
+}
+
+function requireName(name: string) {
+  const trimmed = name.trim();
+  if (!trimmed) throw new Error("A participant needs a name");
+  return trimmed;
+}
+
+function involves(expense: Doc<"expenses">, participantId: Id<"participants">) {
+  return (
+    expense.paidBy === participantId ||
+    expense.splits.some((s) => s.participantId === participantId)
+  );
+}

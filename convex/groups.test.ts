@@ -61,11 +61,44 @@ describe("groups.summaries", () => {
   });
 });
 
-test("groups.addParticipant adds someone to the group", async () => {
-  const t = convexTest(schema, modules);
-  const { groupId } = await t.mutation(api.groups.create, { name: "X", currency: "EUR", participants: ["A"] });
-  await t.mutation(api.groups.addParticipant, { groupId, name: "B" });
-  expect((await t.query(api.groups.get, { groupId }))?.participants.map((p) => p.name)).toEqual(["A", "B"]);
+describe("participants", () => {
+  const names = async (t: ReturnType<typeof convexTest>, groupId: string) =>
+    (await t.query(api.groups.get, { groupId }))?.participants.map((p) => p.name);
+
+  test("addParticipant adds someone to the group", async () => {
+    const t = convexTest(schema, modules);
+    const { groupId } = await t.mutation(api.groups.create, { name: "X", currency: "EUR", participants: ["A"] });
+    await t.mutation(api.groups.addParticipant, { groupId, name: " B " });
+    expect(await names(t, groupId)).toEqual(["A", "B"]);
+    await expect(t.mutation(api.groups.addParticipant, { groupId, name: " " })).rejects.toThrowError("needs a name");
+    await expect(t.mutation(api.groups.addParticipant, { groupId: "nope", name: "C" })).rejects.toThrowError("Group not found");
+  });
+
+  test("renameParticipant renames, and requires a name", async () => {
+    const t = convexTest(schema, modules);
+    const { groupId, participantIds: [a] } = await t.mutation(api.groups.create, { name: "X", currency: "EUR", participants: ["A"] });
+    await t.mutation(api.groups.renameParticipant, { participantId: a, name: "Alice" });
+    expect(await names(t, groupId)).toEqual(["Alice"]);
+    await expect(t.mutation(api.groups.renameParticipant, { participantId: a, name: "" })).rejects.toThrowError("needs a name");
+    await expect(t.mutation(api.groups.renameParticipant, { participantId: "nope", name: "B" })).rejects.toThrowError("not found");
+  });
+
+  test("removeParticipant only removes people without expenses, and never the last one", async () => {
+    const t = convexTest(schema, modules);
+    const { groupId, participantIds: [a, b, c] } = await t.mutation(api.groups.create, {
+      name: "X", currency: "EUR", participants: ["A", "B", "C"],
+    });
+    await t.mutation(api.expenses.addTransfer, { groupId, from: a, to: b, amountCents: 100, date: 0 });
+    await expect(t.mutation(api.groups.removeParticipant, { participantId: a })).rejects.toThrowError("appears in expenses");
+    await expect(t.mutation(api.groups.removeParticipant, { participantId: b })).rejects.toThrowError("appears in expenses");
+    await t.mutation(api.groups.removeParticipant, { participantId: c });
+    expect(await names(t, groupId)).toEqual(["A", "B"]);
+
+    const solo = await t.mutation(api.groups.create, { name: "Y", currency: "EUR", participants: ["Z"] });
+    await expect(
+      t.mutation(api.groups.removeParticipant, { participantId: solo.participantIds[0] }),
+    ).rejects.toThrowError("at least one participant");
+  });
 });
 
 test("balances.get returns balances summing to zero and settlements", async () => {

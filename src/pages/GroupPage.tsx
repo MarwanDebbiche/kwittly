@@ -2,13 +2,14 @@ import { convexQuery } from '@convex-dev/react-query'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { ArrowLeft, LogOut, Plus, Share2 } from 'lucide-react'
+import { ArrowLeft, LogOut, Plus, Share2, Users } from 'lucide-react'
 import { useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { Balances } from '../group/Balances'
 import { ExpenseFormSheet } from '../group/ExpenseFormSheet'
 import { ExpenseList } from '../group/ExpenseList'
 import { LeaveGroupSheet } from '../group/LeaveGroupSheet'
+import { ParticipantsSheet } from '../group/ParticipantsSheet'
 import { ShareSheet } from '../group/ShareSheet'
 import { WhoAreYou } from '../group/WhoAreYou'
 import { useMyGroups } from '../lib/myGroups'
@@ -30,7 +31,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
   const { state, save, forget } = useMyGroups()
   const saved = state.status === 'ready' ? state.groups.find((g) => g.id === groupId) : undefined
   const [tab, setTab] = useState<'expenses' | 'balances'>('expenses')
-  const [sheet, setSheet] = useState<'add' | 'share' | 'identity' | 'leave' | null>(null)
+  const [sheet, setSheet] = useState<'add' | 'share' | 'identity' | 'leave' | 'participants' | null>(null)
   const [joinDismissed, setJoinDismissed] = useState(false)
 
   if (group === undefined) return <GroupSkeleton />
@@ -72,9 +73,14 @@ export function GroupPage({ groupId }: { groupId: string }) {
               <Share2 className="size-4" /> <Trans>Share</Trans>
             </button>
             {/* Secondary actions; only groups in the user's list can be left. */}
-            {state.status === 'ready' && saved && (
-              <MoreMenu items={[{ label: t`Leave group`, icon: LogOut, destructive: true, onSelect: () => setSheet('leave') }]} />
-            )}
+            <MoreMenu
+              items={[
+                { label: t`Participants`, icon: Users, onSelect: () => setSheet('participants') },
+                ...(state.status === 'ready' && saved
+                  ? [{ label: t`Leave group`, icon: LogOut, destructive: true, onSelect: () => setSheet('leave') }]
+                  : []),
+              ]}
+            />
           </div>
         </header>
 
@@ -146,6 +152,7 @@ export function GroupPage({ groupId }: { groupId: string }) {
       </div>
 
       {sheet === 'add' && <ExpenseFormSheet group={group} me={me?._id} onClose={() => setSheet(null)} />}
+      {sheet === 'participants' && <ParticipantsSheet group={group} me={me?._id} onClose={() => setSheet(null)} />}
       {sheet === 'share' && <ShareSheet group={group} onClose={() => setSheet(null)} />}
       {sheet === 'leave' && state.status === 'ready' && (
         <LeaveGroupSheet
